@@ -25,25 +25,3 @@ a {
         background: black;
     }
 }
-
-.noscriptBackground {
-    font-family: montserrat;
-    background-image: url(/background.svg);
-    color: aliceblue;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    overflow-y: scroll;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.noscriptText {
-    margin-left: 100px;
-    margin-right: 100px;
-}

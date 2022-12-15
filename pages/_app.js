@@ -1,11 +1,15 @@
-import State from "../components/StateProvider.js";
+import Head from "next/head";
 import "../styles/globals.css";
+
 
 function NewMD({ Component, pageProps }) {
     return (
-        <State>
+        <>
+            <Head>
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+            </Head>
             <Component {...pageProps} />
-        </State>
+        </>
     );
 }
 

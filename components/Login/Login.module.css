@@ -1,14 +1,18 @@
 .background {
     position: fixed;
+    background-color: #314159;
     width: 100%;
     height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+}
+
+.backgroundImage {
+    object-fit: cover;
+    object-position: center;
+    z-index: -1;
 }
 
 .centerContainer {
@@ -23,11 +27,17 @@
 .logo {
     background: transparent;
     display: block;
+    position: relative;
     width: 100%;
     max-width: 1030px;
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 60px;
+}
+
+.img {
+    width: 100%;
+    height: 100%;
 }
 
 .center {
