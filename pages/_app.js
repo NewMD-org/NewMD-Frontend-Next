@@ -1,7 +1,12 @@
-import '../styles/globals.css'
+import State from "../components/StateProvider.js";
+import "../styles/globals.css";
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+function NewMD({ Component, pageProps }) {
+    return (
+        <State.Provider>
+            <Component {...pageProps} />
+        </State.Provider>
+    );
 }
 
-export default MyApp
+export default NewMD;

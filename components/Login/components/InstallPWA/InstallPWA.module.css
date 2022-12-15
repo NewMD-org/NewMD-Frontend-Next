@@ -1,0 +1,18 @@
+.pwa_container {
+    position: fixed;
+    bottom: 0;
+    right: 0%;
+}
+
+.pwa_button {
+    position: relative;
+    background: #dba154;
+    border: none;
+    border-top-left-radius: 10px;
+    font-size: 15px;
+    color: #e9f4fb;
+    padding: 2px 10px;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+}

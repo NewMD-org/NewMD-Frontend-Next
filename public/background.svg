@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2503.28 1770">
+    <defs>
+        <style>
+        .cls-1{
+            fill:#303149;
+        }
+        
+        .cls-2{
+            fill:#33405a;
+        }
+        
+        .cls-3{
+            fill:#30364f;
+        }
+        
+        .cls-4{
+            fill:#2f293f;
+        }
+        </style>
+    </defs>
+    <polygon class="cls-1" points="0 0 2503.26 1769.98 1251.63 1769.98 0 0" />
+    <polygon class="cls-2" points="1251.63 0 2503.26 1769.98 0 0 1251.63 0" />
+    <polygon class="cls-1" points="1877.47 0 1877.47 885 1570.29 0 1877.47 0" />
+    <polygon class="cls-3" points="1877.47 885 1251.63 0 1570.29 0 1877.47 885" />
+    <polygon class="cls-4" points="2503.28 0 1877.47 885 1877.47 0 2503.28 0" />
+    <polygon class="cls-1" points="2503.28 0 2503.28 1002.21 1877.47 885 2503.28 0" />
+    <polygon class="cls-2" points="2503.28 1002.21 2503.28 1125.1 1877.47 885 2503.28 1002.21" />
+    <polygon class="cls-1" points="2503.28 1125.1 2503.28 1327.67 1877.47 885 2503.28 1125.1" />
+    <polygon class="cls-4" points="2503.28 1327.67 2503.28 1770 1877.47 885 2503.28 1327.67" />
+    <polygon class="cls-4" points="625.81 885 0 439.73 0 0 625.81 885" />
+    <polygon class="cls-1" points="625.81 885 0 664.25 0 439.73 625.81 885" />
+    <polygon class="cls-2" points="625.81 885 0 1770 0 664.25 625.81 885" />
+    <polygon class="cls-1" points="704.3 1770 0 1770 625.81 885 704.3 1770" />
+    <polygon class="cls-4" points="784.94 1770 704.3 1770 625.81 885 784.94 1770" />
+    <polygon class="cls-3" points="938.16 1770 784.94 1770 625.81 885 938.16 1770" />
+    <polygon class="cls-2" points="1251.62 1770 938.16 1770 625.81 885 1251.62 1770" />
+</svg>
