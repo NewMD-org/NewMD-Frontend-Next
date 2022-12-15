@@ -3,9 +3,9 @@ import "../styles/globals.css";
 
 function NewMD({ Component, pageProps }) {
     return (
-        <State.Provider>
+        <State>
             <Component {...pageProps} />
-        </State.Provider>
+        </State>
     );
 }
 
