@@ -1,20 +1,38 @@
-import { useRouter, useEffect } from "next/router";
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 import cookie from "react-cookies";
 
 
-export default function Table(props) {
-    // const router = useRouter();
+export default function Table() {
+    const router = useRouter();
 
-    // console.log(state);
+    const [userDataStatus, setUserDataStatus] = useState(null);
 
-    // if (!state) {
-    //     localStorage.clear();
-    //     cookie.remove("navigate");
-    //     console.log("Catch error, clear local storage and cookie");
-    //     router.push("/login");
-    // };
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.sessionStorage) {
+            const userDataStatusFromSessionStorage = sessionStorage.getItem("userDataStatus");
+            if (userDataStatusFromSessionStorage) {
+                setUserDataStatus(userDataStatusFromSessionStorage);
+            }
+            else if (router.query.userDataStatus) {
+                setUserDataStatus(router.query.userDataStatus);
+                sessionStorage.setItem("userDataStatus", router.query.userDataStatus);
+            }
+            else {
+                router.replace("/login", "/login");
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
-        <h1>Table Page</h1>
+        userDataStatus ? (
+            <>
+                <h1>Table Page</h1>
+                <h2>userDataStatus : {userDataStatus}</h2>
+            </>
+        ) : (
+            <></>
+        )
     );
 }

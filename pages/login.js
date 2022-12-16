@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import jwt_decode from "jwt-decode";
 import cookie from "react-cookies";
 import NewMD_API from "./api/NewMD_API";
 import LoginPage from "../components/Login/index";
 import { Loader } from "../components/Login/components/Loader";
-import { useRouter } from "next/router";
 
 
 function isValidAuth() {
@@ -20,12 +20,10 @@ function isValidAuth() {
     };
 }
 
-export default function Login({ state, setState }) {
+export default function Login() {
     const router = useRouter();
 
-    const [success, setSuccess] = useState(false);
     const [isLoading, setLoading] = useState(true);
-    // const [userDataStatus, setUserDataStatus] = useState("false");
 
     const autoLogin = async () => {
         console.log("Auto login : start");
@@ -40,15 +38,17 @@ export default function Login({ state, setState }) {
                 if (cookie.load("navigate") === "true") {
                     console.log("Cookie - navigate : found");
                     const response = await new NewMD_API(10).login(ID, PWD, rememberMe.toString());
+
                     if (response["error"] === false) {
                         localStorage.setItem("authorization", response["data"]["authorization"]);
                         cookie.save("navigate", "true", { path: "/", maxAge: 60 * 60 * 24 * 7 });
                         const t1 = performance.now();
                         console.log(`Auto login : success (took ${Math.round(t1 - t0) / 1000} seconds)`);
-                        setState();
-                        router.push({
+                        return router.replace({
                             pathname: "/table",
-                            query: { "userDataStatus": response["data"]["userDataStatus"] }
+                            query: {
+                                userDataStatus: response["data"]["userDataStatus"]
+                            }
                         }, "/table");
                     }
                     else {
@@ -59,9 +59,7 @@ export default function Login({ state, setState }) {
                     cookie.remove("navigate");
                     console.log("Cookie - navigate : not found");
                     console.log("Auto login : failed");
-
-                    setLoading(false);
-                    return setSuccess(false);
+                    return setLoading(false);
                 };
             }
             else {
@@ -71,19 +69,17 @@ export default function Login({ state, setState }) {
         catch (err) {
             console.log(err.message);
             console.log("Auto login : failed");
-            console.log("Clear local storage and cookie");
-
+            console.log("Clear local storage, session storage and cookie");
             localStorage.clear();
+            sessionStorage.clear();
             cookie.remove("navigate");
-            setLoading(false);
-            return setSuccess(false);
+            return setLoading(false);
         };
     };
 
     useEffect(() => {
         autoLogin();
-        // setSuccess(false);
-        // setLoading(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -91,11 +87,6 @@ export default function Login({ state, setState }) {
             <Loader />
         ) : (
             <LoginPage />
-            // success ? (
-            //     router.push("/table")
-            // ) : (
-            //     <LoginPage />
-            // )
         )
     );
 }

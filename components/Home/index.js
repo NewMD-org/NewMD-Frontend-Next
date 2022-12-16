@@ -8,8 +8,8 @@ export default function HomePage() {
     return (
         <div className={styles.container}>
             <Head>
-                <meta charset="utf-8" />
-                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                <meta charSet="utf-8" />
+                <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
                 <title>NewMD Timetable - Beautiful & Faster version of MDHS timetable</title>
@@ -23,8 +23,8 @@ export default function HomePage() {
                 <link rel="manifest" href="/manifest.json" />
 
                 {/* <!-- Search Engine Optimization --> */}
-                <meta name="keywords" Lang="EN" content="NewMD, Timetable, Mingdao, MDHS" />
-                <meta name="keywords" Lang="zh-TW" content="NewMD, 課表, 明道, 明道中學" />
+                <meta name="keywords" lang="EN" content="NewMD, Timetable, Mingdao, MDHS" />
+                <meta name="keywords" lang="zh-TW" content="NewMD, 課表, 明道, 明道中學" />
                 <meta name="distribution" content="local" />
                 <meta name="revisit-after" content="1" />
 

@@ -14,7 +14,7 @@ export default function Document() {
 
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta http-equiv="content-language" content="zh-TW" />
-                <meta http-equiv="widow-target" Content="_top" />
+                <meta http-equiv="widow-target" content="_top" />
                 {/* <meta http-equiv="Content-Security-Policy" content={`
                 default-src
                     "self"
@@ -42,7 +42,7 @@ export default function Document() {
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=optional" />
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" />
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css"
-                    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
+                    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossOrigin="anonymous" />
             </Head>
             <body>
                 <Main />
