@@ -1,14 +1,17 @@
 import Head from "next/head";
+import { useState } from "react";
 import "../styles/globals.css";
 
 
 function NewMD({ Component, pageProps }) {
+    const [state, setState] = useState({});
+
     return (
         <>
             <Head>
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
-            <Component {...pageProps} />
+            <Component {...pageProps} state={state} setState={setState} />
         </>
     );
 }
