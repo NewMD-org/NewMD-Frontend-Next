@@ -10,7 +10,6 @@ import NewMD_API from "../../pages/api/NewMD_API";
 
 import styles from "./LoginPage.module.css";
 import logo from "./logo.svg";
-import background from "./background.svg";
 
 
 function join(...array) {
@@ -120,7 +119,7 @@ export default function LoginPage() {
                 <title>Login | NewMD</title>
             </Head>
             <div className={join(styles.background, "noselect")}>
-                <Image className={styles.backgroundImage} alt="background image" src={background} draggable="false" fill />
+                <Image className={styles.backgroundImage} alt="background image" src="/background.svg" draggable="false" fill />
                 <div className={styles.centerContainer}>
                     <div className={styles.logo}>
                         <Image className={styles.img} alt="logo" src={logo} draggable="false" />

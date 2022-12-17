@@ -8,6 +8,7 @@ export default function Table() {
     const router = useRouter();
 
     const [userDataStatus, setUserDataStatus] = useState(null);
+    const [authorization, setAuthorization] = useState(null);
 
     useEffect(() => {
         if (typeof window !== 'undefined' && window.sessionStorage) {
@@ -22,12 +23,14 @@ export default function Table() {
             else {
                 router.replace("/login", "/login");
             }
+
+            setAuthorization(localStorage.getItem("authorization"));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
-        userDataStatus ? (
+        (userDataStatus && authorization) ? (
             <>
                 <Head>
                     <title>Table | NewMD</title>

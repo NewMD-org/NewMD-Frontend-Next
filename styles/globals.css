@@ -26,3 +26,67 @@ a {
         color: rgb(230, 230, 230);
     }
 }
+
+.noselect {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.yesselect {
+    user-select: all;
+    -webkit-user-select: all;
+    -moz-user-select: all;
+    -ms-user-select: all;
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    -webkit-animation: fadeIn ease var(--fadeInDuration);
+    animation: fadeIn ease var(--fadeInDuration);
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* 網頁捲軸【背景】顏色 */
+::-webkit-scrollbar-track {
+    background: #404566;
+}
+
+/* 網頁捲軸【把手】顏色 */
+::-webkit-scrollbar-thumb {
+    background: #2b2e46;
+}
+
+/* 網頁捲軸【滑過時】把手的顏色 */
+::-webkit-scrollbar-thumb:hover {
+    background: #30344e;
+}
+
+* {
+    transition: all 0.3s;
+}

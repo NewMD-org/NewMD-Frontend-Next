@@ -1,0 +1,88 @@
+.markdown_body {
+    margin-bottom: 60px;
+}
+
+.switch_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.switch_button {
+    background: rgba(255, 255, 255, 0.56);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    width: 240px;
+    height: 35px;
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: #155FFF;
+    position: relative;
+    padding-right: 120px;
+    font-family: montserrat;
+    position: relative;
+}
+
+.switch_button:before {
+    content: "English";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 120px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.switch_button_checkbox {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 2;
+}
+
+.switch_button_checkbox:checked+.switch_button_label:before {
+    transform: translateX(120px);
+    transition: transform 300ms linear;
+}
+
+.switch_button_checkbox+.switch_button_label {
+    position: relative;
+    padding: 7px 0;
+    display: block;
+    user-select: none;
+    pointer-events: none;
+}
+
+.switch_button_checkbox+.switch_button_label:before {
+    content: "";
+    background: #eeeeee;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    transform: translateX(0);
+    transition: transform 300ms;
+}
+
+.switch_button_checkbox+.switch_button_label .switch_button_label_span {
+    position: relative;
+}
+
+.switch_button_label {
+    margin-bottom: 0%;
+    font-family: montserrat;
+}

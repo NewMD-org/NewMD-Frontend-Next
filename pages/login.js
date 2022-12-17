@@ -7,7 +7,7 @@ import cookie from "react-cookies";
 import NewMD_API from "./api/NewMD_API";
 
 import LoginPage from "../components/LoginPage/index";
-import { Loader } from "../components/LoginPage/components/Loader";
+import { Loader } from "../components/Loader";
 
 
 function isValidAuth() {
