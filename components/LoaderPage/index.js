@@ -17,7 +17,7 @@ const messages = [
     "We will update your data at 24:00 every day."
 ];
 
-export function Loader() {
+export default function Loader() {
     const [message, setMessage] = useState();
 
     useEffect(() => {

@@ -34,7 +34,7 @@ async function testAPI() {
             timeout: 2 * 1000
         });
 
-        if (cloud1.data === "Service is running.") {
+        if (cloud1.data === "Service is running") {
             status1 = true;
             availableURL.push(cloud1.config?.url.replace("/ping", ""));
             console.log("Refresh NewMD_API: cloud1 available");

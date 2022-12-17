@@ -1,19 +1,15 @@
 import { useEffect, useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
-import cookie from "react-cookies";
-import { NavbarTop } from "./components/NavbarTop";
+
+import NavbarTop from "./components/NavbarTop";
 import { ClassesTable } from "./components/ClassesTable";
-import { Loader } from "./components/Loader";
-// import snowdrift from "./snowdrift.png";
+import Loader from "./components/Loader";
+
 import styles from "./Table.module.css";
+// import snowdrift from "./snowdrift.png";
 
 
 export default function TablePage({ state, authorization }) {
     const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        document.title = "Time Table | NewMD";
-    }, []);
 
     return (
         <>

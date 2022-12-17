@@ -4,10 +4,10 @@ import { useRouter } from "next/router";
 import jwt_decode from "jwt-decode";
 import cookie from "react-cookies";
 
-import NewMD_API from "./api/NewMD_API";
+import NewMD_API from "../api/NewMD_API";
 
-import LoginPage from "../components/LoginPage/index";
-import { Loader } from "../components/Loader";
+import LoginPage from "../components/LoginPage";
+import Loader from "../components/LoaderPage";
 
 
 function isValidAuth() {
@@ -50,7 +50,7 @@ export default function Login() {
                         return router.replace({
                             pathname: "/table",
                             query: {
-                                userDataStatus: response["data"]["userDataStatus"]
+                                "userDataStatus": response["data"]["userDataStatus"]
                             }
                         }, "/table");
                     }

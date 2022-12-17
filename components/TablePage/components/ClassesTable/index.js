@@ -1,17 +1,21 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+
 import cookie from "react-cookies";
 import axios from "axios";
-import { Detail } from "./components/Detail";
-import NewMD_API from "../../../../api/NewMD_API.js";
+
+import NewMD_API from "../../../../api/NewMD_API";
+
+import Detail from "./components/Detail";
+
 import styles from "./ClassesTable.module.css";
+import { useRouter } from "next/router";
 
 
 function join(...array) {
     return array.join(" ");
 }
 
-const shortenTableData = async (data) => {
+async function shortenTableData(data) {
     if (!data) return;
     const t0 = performance.now();
 
@@ -21,7 +25,7 @@ const shortenTableData = async (data) => {
 
     try {
         console.log("Getting classname replacement : start");
-        const replacementJSON = await axios.get("https://raw.githubusercontent.com/NewMD-org/Frontend-classnameReplacement/main/classnameReplacement.json");
+        const replacementJSON = await axios.get("https://raw.githubusercontent.com/NewMD-org/Configurations/main/Frontend/classnameReplacement.json");
         replacements = replacementJSON.data ? replacementJSON.data["replacements"] : [];
 
         const t1 = performance.now();
@@ -40,42 +44,13 @@ const shortenTableData = async (data) => {
 }
 
 export function ClassesTable({ isLoading, setIsLoading, state, authorization }) {
+    const router = useRouter();
+
     const [isBigScreen, setIsBigScreen] = useState(getWindowDimensions().width > 930);
     const [showDetail, setShowDetail] = useState(false);
     const [detail, setDetail] = useState({ "name": null, "classID": null });
     const [tableData, setTableData] = useState({});
     const [showSat, setShowSat] = useState(false);
-
-    const navigate = useNavigate();
-    const location = useLocation();
-
-    useEffect(() => {
-        fetchData(authorization);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        if (location.state["tableData"] ? true : false) {
-            (async function () {
-                setTableData(isBigScreen ? location.state["tableData"] : await shortenTableData(location.state["tableData"]));
-                setIsLoading(false);
-            })();
-            async function handleResize() {
-                setIsBigScreen(getWindowDimensions().width > 930);
-            }
-            window.addEventListener("resize", handleResize);
-            return () => window.removeEventListener("resize", handleResize);
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.state]);
-
-    useEffect(() => {
-        console.log(`Screen size : ${isBigScreen ? "big" : "small"}`);
-        (async function () {
-            setTableData(isBigScreen ? location.state["tableData"] : await shortenTableData(location.state["tableData"]));
-        })();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isBigScreen]);
 
     function getWindowDimensions() {
         const { innerWidth: width, innerHeight: height } = window;
@@ -95,22 +70,30 @@ export function ClassesTable({ isLoading, setIsLoading, state, authorization }) 
             };
         };
         return haveData;
-    }
+    };
 
     const fetchData = async (token) => {
         setIsLoading(true);
         const t0 = performance.now();
 
         try {
-            if (state["userDataStatus"]) {
+            console.log(state["userDataStatus"] );
+            if (state["userDataStatus"] === "true") {
                 console.log("Getting table data : start (from database)");
                 const response = await new NewMD_API(40).read(token);
                 if (response.status === 200) {
                     setTableData(isBigScreen ? response.data["table"] : await shortenTableData(response.data["table"]));
                     setShowSat(checkSat(response.data["table"]));
-                    navigate("/table", { state: { "userDataStatus": state["userDataStatus"], "tableData": response.data["table"], "year": response.data["year"] }, replace: true });
                     const t1 = performance.now();
                     console.log(`Getting table data : success (took ${Math.round(t1 - t0) / 1000} seconds)`);
+                    router.replace({
+                        pathname: "/table",
+                        query: {
+                            "userDataStatus": state["userDataStatus"],
+                            "tableData": JSON.stringify(response.data["table"]),
+                            "year": response.data["year"]
+                        }
+                    }, "/table");
                 }
                 else {
                     throw Error("Joanne is smart");
@@ -122,9 +105,16 @@ export function ClassesTable({ isLoading, setIsLoading, state, authorization }) 
                 if (response.status === 200) {
                     setTableData(isBigScreen ? response.data["table"] : await shortenTableData(response.data["table"]));
                     setShowSat(checkSat(response.data["table"]));
-                    navigate("/table", { state: { "userDataStatus": state["userDataStatus"], "tableData": response.data["table"], "year": response.data["year"] }, replace: true });
                     const t1 = performance.now();
                     console.log(`Getting table data : success (took ${Math.round(t1 - t0) / 1000} seconds)`);
+                    router.replace({
+                        pathname: "/table",
+                        query: {
+                            "userDataStatus": state["userDataStatus"],
+                            "tableData": JSON.stringify(response.data["table"]),
+                            "year": response.data["year"]
+                        }
+                    }, "/table");
                 }
                 else {
                     throw Error("Joanne is smart");
@@ -136,15 +126,46 @@ export function ClassesTable({ isLoading, setIsLoading, state, authorization }) 
                 console.log("Getting table data : no server response");
             };
             console.log("Getting table data : failed");
-            console.log("Clear cookie");
+            localStorage.clear();
+            sessionStorage.clear();
             cookie.remove("navigate");
-            navigate("/");
+            return router.push({
+                pathname: "/login"
+            }, "/login");
         };
-    }
+    };
+
+    useEffect(() => {
+        fetchData(authorization);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        if (state["tableData"] ? true : false) {
+            (async function () {
+                setTableData(isBigScreen ? JSON.parse(state["tableData"]) : await shortenTableData(JSON.parse(state["tableData"])));
+                setIsLoading(false);
+            })();
+            async function handleResize() {
+                setIsBigScreen(getWindowDimensions().width > 930);
+            }
+            window.addEventListener("resize", handleResize);
+            return () => window.removeEventListener("resize", handleResize);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state]);
+
+    useEffect(() => {
+        console.log(`Screen size : ${isBigScreen ? "big" : "small"}`);
+        (async function () {
+            setTableData(isBigScreen ? JSON.parse(state["tableData"]) : await shortenTableData(JSON.parse(state["tableData"])));
+        })();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isBigScreen]);
 
     return (
         <div className={styles.container}>
-            {showDetail ? <Detail setShowDetail={setShowDetail} setDetail={setDetail} detail={detail} /> : <></>}
+            {showDetail ? <Detail setShowDetail={setShowDetail} setDetail={setDetail} detail={detail} state={state} /> : <></>}
             <table className={styles.table}>
                 <thead>
                     <tr className={"noselect"}>

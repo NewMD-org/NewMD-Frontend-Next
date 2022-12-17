@@ -6,7 +6,7 @@ import Head from "next/head";
 import jwt_decode from "jwt-decode";
 import cookie from "react-cookies";
 
-import NewMD_API from "../../pages/api/NewMD_API";
+import NewMD_API from "../../api/NewMD_API";
 
 import styles from "./LoginPage.module.css";
 import logo from "./logo.svg";

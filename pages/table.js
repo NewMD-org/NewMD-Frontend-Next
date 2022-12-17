@@ -3,6 +3,8 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+import TablePage from "../components/TablePage";
+
 
 export default function Table() {
     const router = useRouter();
@@ -11,21 +13,20 @@ export default function Table() {
     const [authorization, setAuthorization] = useState(null);
 
     useEffect(() => {
-        if (typeof window !== 'undefined' && window.sessionStorage) {
-            const userDataStatusFromSessionStorage = sessionStorage.getItem("userDataStatus");
-            if (userDataStatusFromSessionStorage) {
-                setUserDataStatus(userDataStatusFromSessionStorage);
-            }
-            else if (router.query.userDataStatus) {
-                setUserDataStatus(router.query.userDataStatus);
-                sessionStorage.setItem("userDataStatus", router.query.userDataStatus);
-            }
-            else {
-                router.replace("/login", "/login");
-            }
-
-            setAuthorization(localStorage.getItem("authorization"));
+        const userDataStatusFromSessionStorage = sessionStorage.getItem("userDataStatus");
+        if (userDataStatusFromSessionStorage) {
+            setUserDataStatus(userDataStatusFromSessionStorage);
         }
+        else if (router.query["userDataStatus"]) {
+            console.log(router.query["userDataStatus"]);
+            setUserDataStatus(router.query["userDataStatus"]);
+            sessionStorage.setItem("userDataStatus", router.query["userDataStatus"]);
+        }
+        else {
+            router.replace("/login", "/login");
+        }
+
+        setAuthorization(localStorage.getItem("authorization"));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -35,9 +36,7 @@ export default function Table() {
                 <Head>
                     <title>Table | NewMD</title>
                 </Head>
-                <h1>Table Page</h1>
-                <h2>userDataStatus : {userDataStatus}</h2>
-                <Link href="/logout">Logout</Link>
+                <TablePage state={{ "userDataStatus": userDataStatus, "tableData": router.query["tableData"] || null, "year": router.query["year"] || null }} authorization={authorization} />
             </>
         ) : (
             <></>

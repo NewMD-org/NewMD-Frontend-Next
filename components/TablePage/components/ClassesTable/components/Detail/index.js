@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import { useLocation } from "react-router";
-import NewMD_API from "../../../../../../api/NewMD_API.js";
+
+import NewMD_API from "../../../../../../api/NewMD_API";
+
 import styles from "./Detail.module.css";
 
 
@@ -26,13 +27,11 @@ const copyToClipboard = async (text) => {
     };
 };
 
-export function Detail({ setShowDetail, setDetail, detail }) {
+export default function Detail({ setShowDetail, setDetail, detail, state }) {
     const [isLoading, setIsLoading] = useState(true);
     const [message, setMessage] = useState({});
     const [copySuccess0, setCopySuccess0] = useState(false);
     const [copySuccess1, setCopySuccess1] = useState(false);
-
-    const location = useLocation();
 
     useEffect(() => {
         if (Object.keys(message).length !== 0) {
@@ -42,25 +41,24 @@ export function Detail({ setShowDetail, setDetail, detail }) {
     }, [message]);
 
     useEffect(() => {
-        viewVT(location.state["year"], detail["classID"]);
+        viewVT(state["year"], detail["classID"]);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const closeModal = useCallback(_ => {
         setDetail({ "name": null, "classID": null });
         setShowDetail(false);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [setShowDetail]);
+    }, [setDetail, setShowDetail]);
 
     const viewVT = async (year, classID) => {
         setIsLoading(true);
         const t0 = performance.now();
         try {
             var data = {};
-            if (location.state["userDataStatus"]) {
+            if (state["userDataStatus"] === "true") {
                 console.log("Getting VT : start (from database)");
-                const path = findPath(location.state["tableData"], classID);
-                const classObj = location.state["tableData"][path[0]][path[1]];
+                const path = findPath(JSON.parse(state["tableData"]), classID);
+                const classObj = JSON.parse(state["tableData"])[path[0]][path[1]];
                 data = {
                     meet: classObj["meet"],
                     classroom: classObj["classroom"]
@@ -70,6 +68,7 @@ export function Detail({ setShowDetail, setDetail, detail }) {
                 console.log("Getting VT : start (direct)");
                 data = await (await new NewMD_API(10).viewvt(year, classID)).data;
             };
+
             setMessage(
                 {
                     meet: data["meet"] === "" ? "none" : data["meet"],
@@ -81,6 +80,7 @@ export function Detail({ setShowDetail, setDetail, detail }) {
             console.log(`Getting VT : success (took ${Math.round(t1 - t0) / 1000} seconds)`);
         }
         catch (err) {
+            console.log(err);
             console.log("Getting VT : failed");
             closeModal();
         };
@@ -96,7 +96,7 @@ export function Detail({ setShowDetail, setDetail, detail }) {
                     </div>
                     <div className={styles.text_area}>
                         <p className={styles.title}>Waiting for too long ?</p>
-                        <p className={styles.content}>Try enabling the "Save Data" option !</p>
+                        <p className={styles.content}>Try enabling the &quot;Save Data&quot; option !</p>
                     </div>
                 </>
             ) : (
@@ -117,7 +117,7 @@ export function Detail({ setShowDetail, setDetail, detail }) {
                                     </>
                                 ) : (
                                     <>
-                                        <a className={join(styles.field, "yesselect")} href={message.meet} target="_blank">{message.meet}</a>
+                                        <a className={join(styles.field, "yesselect")} href={message.meet} target="_blank" rel="noreferrer">{message.meet}</a>
                                         <span title="Copy" onClick={() => { copyToClipboard(message.meet); setCopySuccess0(true); }} onMouseLeave={() => setCopySuccess0(false)}>{copySuccess0 ? <>&#x2714;</> : <>&#x1F4CB;</>}</span>
                                     </>
                                 )}

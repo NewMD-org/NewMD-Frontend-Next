@@ -130,11 +130,11 @@
     align-items: center;
 }
 
-li {
+.header li {
     border-top: 1px solid gray;
 }
 
-li:hover {
+.header li:hover {
     cursor: pointer;
     background-color: #ffffff1a;
 }
@@ -169,6 +169,6 @@ li:hover {
 
     .header .logo {
         font-size: 2rem;
-        padding: 10px 20px;
+        padding: 8px 20px;
     }
 }

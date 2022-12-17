@@ -1,28 +1,33 @@
 import { useRef, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/router";
+
 import cookie from "react-cookies";
-import NewMD_API from "../../../../api/NewMD_API.js";
-import { Attention } from "./components/Attention";
-import styles from "./NavbarTop.module.css"
+
+import NewMD_API from "../../../../api/NewMD_API";
+
+import Attention from "./components/Attention";
+
+import styles from "./NavbarTop.module.css";
 
 
 function removeCookie() {
     cookie.remove("navigate");
+    sessionStorage.clear();
 }
 
 function join(...array) {
     return array.join(" ");
 }
 
-export function NavbarTop({ state, authorization }) {
+export default function NavbarTop({ state, authorization }) {
+    const router = useRouter();
+    const saveDataInput = useRef(null);
+    const menu = useRef(null);
+
     const [userDataStatus, setUserDataStatus] = useState(state["userDataStatus"].toString());
     const [isLoading, setIsLoading] = useState(false);
     const [showAttention, setShowAttention] = useState(false);
-
-    const location = useLocation();
-    const navigate = useNavigate();
-    const saveDataInput = useRef(null);
-    const menu = useRef(null);
 
     const deleteData = async (token) => {
         setIsLoading(true);
@@ -32,9 +37,16 @@ export function NavbarTop({ state, authorization }) {
             const response = await new NewMD_API(5).delete(token);
             if (response.status === 200) {
                 setUserDataStatus("false");
-                navigate("/table", { state: { "userDataStatus": false, "tableData": location.state["tableData"], "year": location.state["year"] }, replace: true });
                 const t1 = performance.now();
                 console.log(`Delete user data : success (took ${Math.round(t1 - t0) / 1000} seconds)`);
+                return router.replace({
+                    pathname: "/table",
+                    query: {
+                        "userDataStatus": false,
+                        "tableData": state["tableData"],
+                        "year": state["year"]
+                    }
+                }, "/table");
             }
             else {
                 throw Error("Joanne is smart");
@@ -42,14 +54,17 @@ export function NavbarTop({ state, authorization }) {
         }
         catch (err) {
             setUserDataStatus("true");
+            console.log("Delete user data : failed");
             if (!err?.response) {
                 console.log("Delete user data : no server response");
             }
             else if (err.response?.status === 403) {
-                navigate("/login");
+                router.replace({
+                    pathname: "/login"
+                }, "/login");
             };
-            console.log("Delete user data : failed");
         };
+        console.log(123);
         return setIsLoading(false);
     };
 
@@ -66,7 +81,7 @@ export function NavbarTop({ state, authorization }) {
         <>
             {showAttention ? <Attention setIsLoading={setIsLoading} setShowAttention={setShowAttention} setUserDataStatus={setUserDataStatus} authorization={authorization} /> : <></>}
             <header className={styles.header}>
-                <Link to="/" className={join(styles.logo, "noselect")} onClick={removeCookie}>
+                <Link href="/" className={join(styles.logo, "noselect")} onClick={removeCookie}>
                     NewMD
                 </Link>
                 <input className={styles.menu_btn} type="checkbox" id="menu-btn" ref={menu} />
@@ -77,11 +92,11 @@ export function NavbarTop({ state, authorization }) {
                     <li>
                         <div className={styles.saveData} onClick={() => saveDataInput.current.click()} style={isLoading ? { "cursor": "not-allowed" } : {}}>
                             <div className={join(styles.switch, "noselect", "pretty", "p-switch", "p-fill")}>
-                                <input  className={styles.saveDataCheckbox} type="checkbox" name="userDataStatus" ref={saveDataInput} checked={userDataStatus === "true"} disabled={isLoading} onChange={(e) => userDataStatusChange(e.target.checked)} />
+                                <input className={styles.saveDataCheckbox} type="checkbox" name="userDataStatus" ref={saveDataInput} checked={userDataStatus === "true"} disabled={isLoading} onChange={(e) => userDataStatusChange(e.target.checked)} />
                                 <div className={"state p-success"}>
                                     <label>
                                         {isLoading ? (
-                                            location.state["userDataStatus"] ? (
+                                            state["userDataStatus"] === "true" ? (
                                                 <>Deleting</>
                                             ) : (
                                                 <>Saving</>
@@ -96,7 +111,7 @@ export function NavbarTop({ state, authorization }) {
                     </li>
                     <li>
                         <div className={join(styles.logout, "noselect")}>
-                            <Link to="/logout">
+                            <Link href="/logout">
                                 Logout
                             </Link>
                         </div>
