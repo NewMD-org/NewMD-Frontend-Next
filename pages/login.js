@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+
 import jwt_decode from "jwt-decode";
 import cookie from "react-cookies";
+
 import NewMD_API from "./api/NewMD_API";
-import LoginPage from "../components/Login/index";
-import { Loader } from "../components/Login/components/Loader";
+
+import LoginPage from "../components/LoginPage/index";
+import { Loader } from "../components/LoginPage/components/Loader";
 
 
 function isValidAuth() {

@@ -12,7 +12,7 @@ export default function Document() {
                 <meta name="theme-color" content="#2f3542" />
                 <meta name="copyright" content="Copyright (c) by OnCloud" />
 
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <meta http-equiv="content-Type" content="text/html; charset=utf-8" />
                 <meta http-equiv="content-language" content="zh-TW" />
                 <meta http-equiv="widow-target" content="_top" />
                 {/* <meta http-equiv="Content-Security-Policy" content={`

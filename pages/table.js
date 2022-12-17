@@ -1,6 +1,7 @@
-import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import cookie from "react-cookies";
+import Head from "next/head";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 
 export default function Table() {
@@ -28,8 +29,12 @@ export default function Table() {
     return (
         userDataStatus ? (
             <>
+                <Head>
+                    <title>Table | NewMD</title>
+                </Head>
                 <h1>Table Page</h1>
                 <h2>userDataStatus : {userDataStatus}</h2>
+                <Link href="/logout">Logout</Link>
             </>
         ) : (
             <></>
