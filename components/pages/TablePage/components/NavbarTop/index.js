@@ -39,10 +39,11 @@ export default function NavbarTop({ state, authorization }) {
                 setUserDataStatus("false");
                 const t1 = performance.now();
                 console.log(`Delete user data : success (took ${Math.round(t1 - t0) / 1000} seconds)`);
-                return router.replace({
+                sessionStorage.setItem("userDataStatus", "false");
+                router.replace({
                     pathname: "/table",
                     query: {
-                        "userDataStatus": false,
+                        "userDataStatus": "false",
                         "tableData": state["tableData"],
                         "year": state["year"]
                     }
@@ -64,7 +65,6 @@ export default function NavbarTop({ state, authorization }) {
                 }, "/login");
             };
         };
-        console.log(123);
         return setIsLoading(false);
     };
 

@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 
 import NewMD_API from "../../../../../../api/NewMD_API";
@@ -10,6 +11,8 @@ function join(...array) {
 }
 
 export default function Attention({ setIsLoading, setShowAttention, setUserDataStatus, authorization }) {
+    const router = useRouter();
+
     const [agree, setAgree] = useState(false);
 
     const saveData = async (token) => {
@@ -24,10 +27,11 @@ export default function Attention({ setIsLoading, setShowAttention, setUserDataS
                     setUserDataStatus("true");
                     const t1 = performance.now();
                     console.log(`Save user data : success (took ${Math.round(t1 - t0) / 1000} seconds)`);
+                    sessionStorage.setItem("userDataStatus", "true");
                     return router.replace({
                         pathname: "/table",
                         query: {
-                            "userDataStatus": true,
+                            "userDataStatus": "true",
                             "tableData": response.data["table"],
                             "year": response.data["year"]
                         }
