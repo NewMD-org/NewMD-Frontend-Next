@@ -77,7 +77,6 @@ export function ClassesTable({ isLoading, setIsLoading, state, authorization }) 
         const t0 = performance.now();
 
         try {
-            console.log(state["userDataStatus"] );
             if (state["userDataStatus"] === "true") {
                 console.log("Getting table data : start (from database)");
                 const response = await new NewMD_API(40).read(token);
