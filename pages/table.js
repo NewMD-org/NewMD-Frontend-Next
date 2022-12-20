@@ -17,7 +17,6 @@ export default function Table() {
             setUserDataStatus(userDataStatusFromSessionStorage);
         }
         else if (router.query["userDataStatus"]) {
-            console.log(router.query["userDataStatus"]);
             setUserDataStatus(router.query["userDataStatus"]);
             sessionStorage.setItem("userDataStatus", router.query["userDataStatus"]);
         }
