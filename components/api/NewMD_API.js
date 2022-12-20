@@ -17,7 +17,7 @@ async function testAPI() {
             }
         });
 
-        if (cloud0.data === "Service is running") {
+        if (cloud0.data === ("Service is running")) {
             status0 = true;
             availableURL.push(cloud0.config?.url.replace("/ping", ""));
             console.log("Refresh NewMD_API: cloud0 available");

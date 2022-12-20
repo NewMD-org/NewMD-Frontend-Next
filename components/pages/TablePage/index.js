@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import NavbarTop from "./components/NavbarTop";
 import { ClassesTable } from "./components/ClassesTable";

@@ -4,10 +4,10 @@ import { useRouter } from "next/router";
 import jwt_decode from "jwt-decode";
 import cookie from "react-cookies";
 
-import NewMD_API from "../api/NewMD_API";
+import NewMD_API from "../components/api/NewMD_API";
 
-import LoginPage from "../components/LoginPage";
-import Loader from "../components/LoaderPage";
+import LoginPage from "../components/pages/LoginPage";
+import Loader from "../components/pages/LoaderPage";
 
 
 function isValidAuth() {

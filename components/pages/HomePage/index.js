@@ -51,7 +51,7 @@ export default function HomePage() {
 
             <main className={styles.main}>
                 <h1 className={styles.title}>
-                    Welcome to <a href="https://nextjs.org">NewMD</a> !
+                    Welcome to <a href="https://newmd.eu.org">NewMD</a> !
                 </h1>
 
                 <p className={styles.description}>
