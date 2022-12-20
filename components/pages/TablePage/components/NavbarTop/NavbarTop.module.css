@@ -46,10 +46,10 @@
 
 .header .menu_icon {
     cursor: pointer;
-    display: inline-block;
+    display: block;
     float: right;
     margin: 0;
-    padding: 20px 20px;
+    padding: 24px 20px;
     position: relative;
     user-select: none;
 }
