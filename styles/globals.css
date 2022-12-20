@@ -7,13 +7,9 @@ body {
         Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
 * {
     box-sizing: border-box;
+    transition: all 0.3s;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -85,8 +81,4 @@ a {
 /* 網頁捲軸【滑過時】把手的顏色 */
 ::-webkit-scrollbar-thumb:hover {
     background: #30344e;
-}
-
-* {
-    transition: all 0.3s;
 }
