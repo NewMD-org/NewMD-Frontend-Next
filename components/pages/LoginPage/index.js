@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import Head from "next/head";
 
 import jwt_decode from "jwt-decode";
 import cookie from "react-cookies";
@@ -115,9 +114,6 @@ export default function LoginPage() {
 
     return (
         <>
-            <Head>
-                <title>Login | NewMD</title>
-            </Head>
             <div className={join(styles.background, "noselect")}>
                 <Image className={styles.backgroundImage} alt="background image" src="/background.svg" draggable="false" fill />
                 <div className={styles.centerContainer}>
