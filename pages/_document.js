@@ -13,9 +13,9 @@ export default function Document() {
                 <meta name="description" content="想快速看到明道課表嗎？ NewMD 課表提供更快速、更穩定的查詢，並擁有更好看的介面。快來試試吧！" />
                 <meta name="copyright" content="Copyright (c) by OnCloud" />
 
-                <meta http-equiv="content-Type" content="text/html; charset=utf-8" />
-                <meta http-equiv="content-language" content="zh-TW" />
-                <meta http-equiv="widow-target" content="_top" />
+                <meta httpEquiv="content-Type" content="text/html; charset=utf-8" />
+                <meta httpEquiv="content-language" content="zh-TW" />
+                <meta httpEquiv="widow-target" content="_top" />
 
                 {/* <!-- Twitter --> */}
                 <meta name="twitter:card" content="summary_large_image" />
