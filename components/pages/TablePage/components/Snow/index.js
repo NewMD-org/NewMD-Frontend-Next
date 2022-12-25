@@ -3,7 +3,7 @@ import Snowfall from "react-snowfall";
 
 import SettingsContext from "./settings";
 
-import styles from "./snow.module.css";
+import styles from "./Snow.module.css";
 
 
 export default function Snow() {
