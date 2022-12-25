@@ -20,9 +20,10 @@ function join(...array) {
     return array.join(" ");
 }
 
-export default function NavbarTop({ state, authorization }) {
+export default function NavbarTop({ state, authorization, enableSnow, setEnableSnow }) {
     const router = useRouter();
     const saveDataInput = useRef(null);
+    const setSnowInput = useRef(null);
     const menu = useRef(null);
 
     const [userDataStatus, setUserDataStatus] = useState(state["userDataStatus"].toString());
@@ -90,21 +91,31 @@ export default function NavbarTop({ state, authorization }) {
                 </label>
                 <ul className={styles.menu}>
                     <li>
-                        <div className={styles.saveData} onClick={() => saveDataInput.current.click()} style={isLoading ? { "cursor": "not-allowed" } : {}}>
+                        <div className={styles.saveData} style={{ cursor: "pointer" }} onClick={() => saveDataInput.current.click()}>
+                            Christmas Decoration
                             <div className={join(styles.switch, "noselect", "pretty", "p-switch", "p-fill")}>
-                                <input className={styles.saveDataCheckbox} type="checkbox" name="userDataStatus" ref={saveDataInput} checked={userDataStatus === "true"} disabled={isLoading} onChange={(e) => userDataStatusChange(e.target.checked)} />
+                                <input type="checkbox" name="Enable Christmas Decoration" ref={saveDataInput} checked={enableSnow} onChange={(e) => setEnableSnow(e.target.checked)} />
                                 <div className={"state p-success"}>
-                                    <label>
-                                        {isLoading ? (
-                                            state["userDataStatus"] === "true" ? (
-                                                <>Deleting</>
-                                            ) : (
-                                                <>Saving</>
-                                            )
-                                        ) : (
-                                            <>Save Data</>
-                                        )}
-                                    </label>
+                                    <label></label>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div className={styles.saveData} style={isLoading ? { cursor: "not-allowed", color: "GrayText" } : { cursor: "pointer" }} onClick={() => setSnowInput.current.click()}>
+                            {isLoading ? (
+                                state["userDataStatus"] === "true" ? (
+                                    <>Deleting</>
+                                ) : (
+                                    <>Saving</>
+                                )
+                            ) : (
+                                <>Save Data</>
+                            )}
+                            <div className={join(styles.switch, "noselect", "pretty", "p-switch", "p-fill")}>
+                                <input type="checkbox" name="userDataStatus" ref={setSnowInput} checked={userDataStatus === "true"} disabled={isLoading} onChange={(e) => userDataStatusChange(e.target.checked)} />
+                                <div className={"state p-success"}>
+                                    <label></label>
                                 </div>
                             </div>
                         </div>

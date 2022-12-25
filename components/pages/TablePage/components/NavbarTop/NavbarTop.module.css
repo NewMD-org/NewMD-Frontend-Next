@@ -117,7 +117,7 @@
 }
 
 .saveData .switch {
-    margin: 0;
+    margin-left: 5px;
     z-index: -1;
     pointer-events: none;
 }
@@ -135,7 +135,6 @@
 }
 
 .header li:hover {
-    cursor: pointer;
     background-color: #ffffff1a;
 }
 

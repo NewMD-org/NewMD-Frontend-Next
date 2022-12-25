@@ -43,7 +43,7 @@ async function shortenTableData(data) {
     return JSON.parse(dataString);
 }
 
-export function ClassesTable({ isLoading, setIsLoading, state, authorization }) {
+export default function ClassesTable({ isLoading, setIsLoading, state, authorization, enableSnow }) {
     const router = useRouter();
 
     const [isBigScreen, setIsBigScreen] = useState(getWindowDimensions().width > 930);
@@ -165,7 +165,7 @@ export function ClassesTable({ isLoading, setIsLoading, state, authorization }) 
     return (
         <div className={styles.container}>
             {showDetail ? <Detail setShowDetail={setShowDetail} setDetail={setDetail} detail={detail} state={state} /> : <></>}
-            <table className={styles.table}>
+            <table className={styles.table} style={enableSnow ? { paddingBottom: "60px" } : {}}>
                 <thead>
                     <tr className={"noselect"}>
                         <th className={isBigScreen ? styles.topLeftIndex : styles.indexMobile} colSpan={isBigScreen ? "2" : "1"}></th>
