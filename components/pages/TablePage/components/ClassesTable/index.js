@@ -165,7 +165,7 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
     return (
         <div className={styles.container}>
             {showDetail ? <Detail setShowDetail={setShowDetail} setDetail={setDetail} detail={detail} state={state} /> : <></>}
-            <table className={styles.table} style={enableSnow ? { paddingBottom: "40px" } : {}}>
+            <table className={styles.table} style={enableSnow ? { paddingBottom: "60px" } : {}}>
                 <thead>
                     <tr className={"noselect"}>
                         <th className={isBigScreen ? styles.topLeftIndex : styles.indexMobile} colSpan={isBigScreen ? "2" : "1"}></th>
