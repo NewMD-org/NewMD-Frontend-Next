@@ -91,7 +91,7 @@ export default function NavbarTop({ state, authorization, enableSnow, setEnableS
                 </label>
                 <ul className={styles.menu}>
                     <li>
-                        <div className={styles.saveData} onClick={() => saveDataInput.current.click()}>
+                        <div className={styles.saveData} style={{ cursor: "pointer" }} onClick={() => saveDataInput.current.click()}>
                             Christmas Decoration
                             <div className={join(styles.switch, "noselect", "pretty", "p-switch", "p-fill")}>
                                 <input type="checkbox" name="Enable Christmas Decoration" ref={saveDataInput} checked={enableSnow} onChange={(e) => setEnableSnow(e.target.checked)} />
