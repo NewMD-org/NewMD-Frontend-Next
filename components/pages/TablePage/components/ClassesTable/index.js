@@ -207,7 +207,7 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
                         </td>
                         {showSat ? (
                             <td className={isBigScreen ? styles.data : styles.dataMobile}>
-                                <div className={styles.classname} onClick={() => { setShowDetail(true); setDetail(); }}>{isLoading ? <></> : tableData["day6"]["1"]["classname"]}</div>
+                                <div className={styles.classname} onClick={() => { setDetail({ "name": tableData["day6"]["1"]["classname"], "classID": tableData["day6"]["1"]["classID"] }); setShowDetail(true); }}>{isLoading ? <></> : tableData["day6"]["1"]["classname"]}</div>
                                 <div>{isLoading ? <></> : tableData["day6"]["1"]["teacher"]}</div>
                             </td>
                         ) : (
@@ -239,7 +239,7 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
                         </td>
                         {showSat ? (
                             <td className={isBigScreen ? styles.data : styles.dataMobile}>
-                                <div className={styles.classname} onClick={() => { setShowDetail(true); setDetail(); }}>{isLoading ? <></> : tableData["day6"]["2"]["classname"]}</div>
+                                <div className={styles.classname} onClick={() => { setDetail({ "name": tableData["day6"]["2"]["classname"], "classID": tableData["day6"]["2"]["classID"] }); setShowDetail(true); }}>{isLoading ? <></> : tableData["day6"]["2"]["classname"]}</div>
                                 <div>{isLoading ? <></> : tableData["day6"]["2"]["teacher"]}</div>
                             </td>
                         ) : (
@@ -271,7 +271,7 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
                         </td>
                         {showSat ? (
                             <td className={isBigScreen ? styles.data : styles.dataMobile}>
-                                <div className={styles.classname} onClick={() => { setShowDetail(true); setDetail(); }}>{isLoading ? <></> : tableData["day6"]["3"]["classname"]}</div>
+                                <div className={styles.classname} onClick={() => { setDetail({ "name": tableData["day6"]["3"]["classname"], "classID": tableData["day6"]["3"]["classID"] }); setShowDetail(true); }}>{isLoading ? <></> : tableData["day6"]["3"]["classname"]}</div>
                                 <div>{isLoading ? <></> : tableData["day6"]["3"]["teacher"]}</div>
                             </td>
                         ) : (
@@ -303,7 +303,7 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
                         </td>
                         {showSat ? (
                             <td className={isBigScreen ? styles.data : styles.dataMobile}>
-                                <div className={styles.classname} onClick={() => { setShowDetail(true); setDetail(); }}>{isLoading ? <></> : tableData["day6"]["4"]["classname"]}</div>
+                                <div className={styles.classname} onClick={() => { setDetail({ "name": tableData["day6"]["4"]["classname"], "classID": tableData["day6"]["4"]["classID"] }); setShowDetail(true); }}>{isLoading ? <></> : tableData["day6"]["4"]["classname"]}</div>
                                 <div>{isLoading ? <></> : tableData["day6"]["4"]["teacher"]}</div>
                             </td>
                         ) : (
@@ -342,7 +342,7 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
                         </td>
                         {showSat ? (
                             <td className={isBigScreen ? styles.data : styles.dataMobile}>
-                                <div className={styles.classname} onClick={() => { setShowDetail(true); setDetail(); }}>{isLoading ? <></> : tableData["day6"]["5"]["classname"]}</div>
+                                <div className={styles.classname} onClick={() => { setDetail({ "name": tableData["day6"]["5"]["classname"], "classID": tableData["day6"]["5"]["classID"] }); setShowDetail(true); }}>{isLoading ? <></> : tableData["day6"]["5"]["classname"]}</div>
                                 <div>{isLoading ? <></> : tableData["day6"]["5"]["teacher"]}</div>
                             </td>
                         ) : (
@@ -374,7 +374,7 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
                         </td>
                         {showSat ? (
                             <td className={isBigScreen ? styles.data : styles.dataMobile}>
-                                <div className={styles.classname} onClick={() => { setShowDetail(true); setDetail(); }}>{isLoading ? <></> : tableData["day6"]["6"]["classname"]}</div>
+                                <div className={styles.classname} onClick={() => { setDetail({ "name": tableData["day6"]["6"]["classname"], "classID": tableData["day6"]["6"]["classID"] }); setShowDetail(true); }}>{isLoading ? <></> : tableData["day6"]["6"]["classname"]}</div>
                                 <div>{isLoading ? <></> : tableData["day6"]["6"]["teacher"]}</div>
                             </td>
                         ) : (
@@ -406,7 +406,7 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
                         </td>
                         {showSat ? (
                             <td className={isBigScreen ? styles.data : styles.dataMobile}>
-                                <div className={styles.classname} onClick={() => { setShowDetail(true); setDetail(); }}>{isLoading ? <></> : tableData["day6"]["7"]["classname"]}</div>
+                                <div className={styles.classname} onClick={() => { setDetail({ "name": tableData["day6"]["7"]["classname"], "classID": tableData["day6"]["7"]["classID"] }); setShowDetail(true); }}>{isLoading ? <></> : tableData["day6"]["7"]["classname"]}</div>
                                 <div>{isLoading ? <></> : tableData["day6"]["7"]["teacher"]}</div>
                             </td>
                         ) : (
@@ -438,7 +438,7 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
                         </td>
                         {showSat ? (
                             <td className={isBigScreen ? styles.data : styles.dataMobile}>
-                                <div className={styles.classname} onClick={() => { setShowDetail(true); setDetail(); }}>{isLoading ? <></> : tableData["day6"]["8"]["classname"]}</div>
+                                <div className={styles.classname} onClick={() => { setDetail({ "name": tableData["day6"]["8"]["classname"], "classID": tableData["day6"]["8"]["classID"] }); setShowDetail(true); }}>{isLoading ? <></> : tableData["day6"]["8"]["classname"]}</div>
                                 <div>{isLoading ? <></> : tableData["day6"]["8"]["teacher"]}</div>
                             </td>
                         ) : (
