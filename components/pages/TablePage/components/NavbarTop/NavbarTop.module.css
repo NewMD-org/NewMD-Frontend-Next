@@ -120,7 +120,6 @@
     margin-left: 5px;
     z-index: -1;
     pointer-events: none;
-    margin-right: 0;
 }
 
 .logout a {
@@ -129,7 +128,6 @@
     height: 100%;
     display: flex;
     align-items: center;
-    margin-right: 6px;
 }
 
 .header li {
