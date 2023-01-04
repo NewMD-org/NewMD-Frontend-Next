@@ -3,10 +3,10 @@ import Snowfall from "react-snowfall";
 
 import SettingsContext from "./settings";
 
-import styles from "./Snow.module.css";
+import styles from "./Christmas.module.css";
 
 
-export default function Snow() {
+export default function Christmas() {
     const settings = useContext(SettingsContext);
 
     return (
