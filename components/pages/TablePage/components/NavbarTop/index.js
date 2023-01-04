@@ -20,7 +20,7 @@ function join(...array) {
     return array.join(" ");
 }
 
-export default function NavbarTop({ state, authorization, enableSnow, setEnableSnow }) {
+export default function NavbarTop({ state, authorization, enableChristmas, _setEnableChristmas }) {
     const router = useRouter();
     const saveDataInput = useRef(null);
     const setSnowInput = useRef(null);
@@ -94,7 +94,7 @@ export default function NavbarTop({ state, authorization, enableSnow, setEnableS
                         <div className={styles.saveData} style={{ cursor: "pointer" }} onClick={() => saveDataInput.current.click()}>
                             Christmas Decoration
                             <div className={join(styles.switch, "noselect", "pretty", "p-switch", "p-fill")}>
-                                <input type="checkbox" name="Enable Christmas Decoration" ref={saveDataInput} checked={enableSnow} onChange={(e) => setEnableSnow(e.target.checked)} />
+                                <input type="checkbox" name="Enable Christmas Decoration" ref={saveDataInput} checked={enableChristmas} onChange={(e) => _setEnableChristmas(e.target.checked)} />
                                 <div className={"state p-success"}>
                                     <label></label>
                                 </div>

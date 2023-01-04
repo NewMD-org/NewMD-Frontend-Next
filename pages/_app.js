@@ -4,7 +4,7 @@ import Head from "next/head";
 import "../styles/globals.css";
 
 
-function NewMD({ Component, pageProps }) {
+export default function NewMD({ Component, pageProps }) {
     const [state, setState] = useState({});
 
     return (
@@ -16,5 +16,3 @@ function NewMD({ Component, pageProps }) {
         </>
     );
 }
-
-export default NewMD;

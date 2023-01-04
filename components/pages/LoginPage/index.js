@@ -81,18 +81,18 @@ export default function LoginPage() {
                 }, "/table");
             }
             else {
-                if (response["message"] === "Missing Username") {
+                if (response["errMessage"] === "Missing Username") {
                     IDRef.current.focus();
                 }
-                else if (response["message"] === "Missing Password") {
+                else if (response["errMessage"] === "Missing Password") {
                     PWDRef.current.focus();
                 }
                 else {
                     errRef.current.focus();
                 };
 
-                setErrMsg(response["message"]);
-                console.log(`Manual login : ${response["message"]}`);
+                setErrMsg(response["errMessage"]);
+                console.log(`Manual login : ${response["errMessage"]}`);
                 console.log("Manual login : failed");
                 console.log("Clear local storage, session storage and cookie");
                 localStorage.clear();
