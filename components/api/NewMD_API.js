@@ -4,6 +4,7 @@ import axios from "axios";
 async function testAPI() {
     console.log("Refresh NewMD_API: start");
 
+    var errorMsg = null;
     var status0 = false;
     var status1 = false;
 
@@ -46,9 +47,16 @@ async function testAPI() {
         console.log("Refresh NewMD_API: cloud1 unavailable");
     };
 
-    console.log("Refresh NewMD_API: using " + availableURL[0]);
+    if (availableURL[0]) {
+        console.log("Refresh NewMD_API: using " + availableURL[0]);
+    }
+    else {
+        errorMsg = "Refresh NewMD_API: all services unavailable";
+        console.log("Refresh NewMD_API: all services unavailable");
+    }
 
     return {
+        errorMsg,
         availableURL,
         availability: {
             "cloud0": status0,
@@ -66,7 +74,7 @@ export default class NewMD_API {
         const response = {
             error: true,
             status: null,
-            message: null,
+            errMessage: null,
             data: {
                 authorization: null,
                 userDataStatus: null
@@ -111,16 +119,16 @@ export default class NewMD_API {
             response["status"] = err.response?.status;
 
             if (errorMessageFilter.includes(err.message)) {
-                response["message"] = err.message;
+                response["errMessage"] = err.message;
             }
             else if (ststusCodeFilter.includes(err.response?.status)) {
-                response["message"] = err.response?.data;
+                response["errMessage"] = err.response?.data;
             }
             else if (!err?.response) {
-                response["message"] = "No Server Response";
+                response["errMessage"] = "No Server Response";
             }
             else {
-                response["message"] = "Unexpected Error";
+                response["errMessage"] = "Unexpected Error";
             };
         };
 
