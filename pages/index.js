@@ -1,9 +1,20 @@
 import Head from "next/head";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
-import HomePage from "../components/pages/HomePage";
+// import HomePage from "../components/pages/HomePage";
 
 
 export default function Home() {
+    const router = useRouter();
+
+    useEffect(() => {
+        router.replace({
+            pathname: "/login"
+        }, "/login");
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <>
             <Head>
@@ -27,7 +38,7 @@ export default function Home() {
                 <meta name="distribution" content="local" />
                 <meta name="revisit-after" content="1" />
             </Head>
-            <HomePage />
+            {/* <HomePage /> */}
         </>
     );
 }
