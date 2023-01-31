@@ -11,8 +11,10 @@ export default function Christmas() {
 
     return (
         <>
-            <Snowfall color={settings.color} snowflakeCount={settings.snowflakeCount} />
-            <div className={styles.snowdrift}></div>
+            <div className={styles.snowfall_container}>
+                <Snowfall color={settings.color} snowflakeCount={settings.snowflakeCount} />
+                <div className={styles.snowdrift} />
+            </div>
         </>
     );
 };
