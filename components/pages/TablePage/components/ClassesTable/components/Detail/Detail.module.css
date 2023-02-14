@@ -144,6 +144,8 @@
 
 .modal {
     display: block;
+    width: 95%;
+    max-width: fit-content;
     padding: 3rem 2rem;
     margin: 10px 10px;
     border-radius: .8rem;
@@ -160,15 +162,6 @@
 .modal__text {
     width: 100%;
     margin-bottom: 5px;
-}
-
-.field_container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 2px;
 }
 
 .field {
@@ -208,7 +201,6 @@
 .form {
     position: sticky;
     display: flex;
-    flex-wrap: wrap;
     width: 100%;
 }
 
