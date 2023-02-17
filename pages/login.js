@@ -73,9 +73,7 @@ export default function Login() {
         catch (err) {
             console.log(err.message);
             console.log("Auto login : failed");
-            console.log("Clear local storage, session storage and cookie");
-            localStorage.clear();
-            sessionStorage.clear();
+            console.log("Remove cookie : navigate");
             cookie.remove("navigate");
             return setLoading(false);
         };

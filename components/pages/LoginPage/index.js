@@ -102,9 +102,7 @@ export default function LoginPage() {
         }
         catch (err) {
             setErrMsg("Manual login : unexpected error");
-            console.log("Clear local storage, session storage and cookie");
-            localStorage.clear();
-            sessionStorage.clear();
+            console.log("Remove cookie : navigate");
             cookie.remove("navigate");
             errRef.current.focus();
         };
