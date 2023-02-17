@@ -81,15 +81,14 @@
 
 .textfield input {
     color: #000000;
-    padding: 0 15px;
+    padding: 0 25px;
     height: 50px;
-    width: 90%;
+    width: 100%;
     font-size: 16px;
     background: transparent;
     border: none;
     border-radius: 100px;
     outline: none;
-    margin-left: 10px;
     z-index: 999;
 }
 
