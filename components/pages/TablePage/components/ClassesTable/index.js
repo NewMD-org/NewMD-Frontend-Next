@@ -19,9 +19,9 @@ async function shortenTableData(data) {
     if (!data) return;
     const t0 = performance.now();
 
-    var dataString = JSON.stringify(data);
+    let dataString = JSON.stringify(data);
 
-    var replacements = [];
+    let replacements = [];
 
     try {
         console.log("Getting classname replacement : start");
