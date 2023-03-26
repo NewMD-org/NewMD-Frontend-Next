@@ -59,7 +59,7 @@ export default function TablePage({ state, authorization }) {
     function _setEnableChristmas(checked) {
         setEnableChristmas(checked);
         if (checked) {
-            var newThemeCookie = JSON.parse(getCookie("theme") || "{}");
+            let newThemeCookie = JSON.parse(getCookie("theme") || "{}");
             newThemeCookie["Christmas"] = true;
             setCookie(
                 "theme",
@@ -71,7 +71,7 @@ export default function TablePage({ state, authorization }) {
             );
         }
         else {
-            var newThemeCookie = JSON.parse(getCookie("theme") || "{}");
+            let newThemeCookie = JSON.parse(getCookie("theme") || "{}");
             newThemeCookie["Christmas"] = false;
             setCookie(
                 "theme",
