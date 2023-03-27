@@ -66,7 +66,7 @@ export default function Detail({ setShowDetail, setDetail, detail, state }) {
             }
             else {
                 console.log("Getting VT : start (direct)");
-                data = await (await new NewMD_API(10).viewvt(year, classID)).data["classObj"];
+                data = await (await new NewMD_API(10).viewvt(year, classID)).data;
             };
 
             setMessage(
