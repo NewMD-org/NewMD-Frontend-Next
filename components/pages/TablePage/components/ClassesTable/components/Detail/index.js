@@ -54,7 +54,7 @@ export default function Detail({ setShowDetail, setDetail, detail, state }) {
         setIsLoading(true);
         const t0 = performance.now();
         try {
-            var data = {};
+            let data = {};
             if (state["userDataStatus"] === "true") {
                 console.log("Getting VT : start (from database)");
                 const path = findPath(JSON.parse(state["tableData"]), classID);

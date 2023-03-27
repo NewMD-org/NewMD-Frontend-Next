@@ -7,6 +7,7 @@ import cookie from "react-cookies";
 
 import NewMD_API from "../../api/NewMD_API";
 
+import { InstallPWA } from "./components/InstallPWA";
 import styles from "./LoginPage.module.css";
 import logo from "./logo.svg";
 
@@ -81,18 +82,18 @@ export default function LoginPage() {
                 }, "/table");
             }
             else {
-                if (response["errMessage"] === "Missing Username") {
+                if (response["message"] === "Missing Username") {
                     IDRef.current.focus();
                 }
-                else if (response["errMessage"] === "Missing Password") {
+                else if (response["message"] === "Missing Password") {
                     PWDRef.current.focus();
                 }
                 else {
                     errRef.current.focus();
-                };
+                }
 
-                setErrMsg(response["errMessage"]);
-                console.log(`Manual login : ${response["errMessage"]}`);
+                setErrMsg(response["message"]);
+                console.log(`Manual login : ${response["message"]}`);
                 console.log("Manual login : failed");
                 console.log("Clear local storage, session storage and cookie");
                 localStorage.clear();
@@ -122,15 +123,15 @@ export default function LoginPage() {
                         <p ref={errRef} className={errMsg ? styles.errmsg : styles.offscreen} aria-live="assertive">{errMsg}</p>
                         <form className={styles.form} onSubmit={handleSubmit}>
                             <div className={styles.textfield}>
-                                <input type="text" name="ID" ref={IDRef} value={ID} onChange={(e) => setID(e.target.value)} placeholder="Username" />
+                                <input type="text" name="ID" ref={IDRef} value={ID} onChange={(e) => setID(e.target.value)} placeholder="Username" autoComplete="username" />
                                 <span className={styles.text_focusEffect}></span>
                             </div>
                             <div className={styles.textfield}>
-                                <input type="password" name="PWD" ref={PWDRef} value={PWD} onChange={(e) => setPWD(e.target.value)} placeholder="Password" />
+                                <input type="password" name="PWD" ref={PWDRef} value={PWD} onChange={(e) => setPWD(e.target.value)} placeholder="Password" autoComplete="current-password" />
                                 <span className={styles.text_focusEffect}></span>
                             </div>
                             <div className={join(styles.rememberme, "pretty", "p-default", "p-curve")}>
-                                <input type="checkbox" name="rememberMe" onChange={(e) => setRememberMe(e.target.checked ? "true" : "false")} checked={rememberMe === "true"} />
+                                <input type="checkbox" name="rememberMe" onChange={(e) => setRememberMe(e.target.checked ? "true" : "false")} checked={rememberMe === "true"} autoComplete="on" />
                                 <div className={join("state", "p-success-o")}>
                                     <label>Remember me for 7 days</label>
                                 </div>
@@ -147,6 +148,7 @@ export default function LoginPage() {
                         </form>
                     </div>
                 </div>
+                <InstallPWA />
             </div>
         </>
     );

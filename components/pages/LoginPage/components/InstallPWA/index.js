@@ -7,9 +7,10 @@ export function InstallPWA() {
     const [promptInstall, setPromptInstall] = useState(null);
 
     useEffect(() => {
+        console.log("PWA : checking for PWA support");
         const handler = e => {
             e.preventDefault();
-            console.log("we are being triggered :D");
+            console.log("PWA : PWA supported");
             setSupportsPWA(true);
             setPromptInstall(e);
         };
