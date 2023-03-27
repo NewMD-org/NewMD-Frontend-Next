@@ -1,11 +1,8 @@
 import axios from "axios";
 
 
-// const apiURL0 = "https://cloud0.newmd.eu.org/ping";
-// const apiURL1 = "https://cloud1.newmd.eu.org/ping";
-
-const apiURL0 = "http://127.0.0.1:3001";
-const apiURL1 = "http://127.0.0.1:3001";
+const apiURL0 = "https://cloud0.newmd.eu.org";
+const apiURL1 = "https://cloud1.newmd.eu.org";
 
 async function testAPI() {
     console.log("Refresh NewMD_API: start");
