@@ -1,17 +1,23 @@
 import axios from "axios";
 
 
+// const apiURL0 = "https://cloud0.newmd.eu.org/ping";
+// const apiURL1 = "https://cloud1.newmd.eu.org/ping";
+
+const apiURL0 = "http://127.0.0.1:3001";
+const apiURL1 = "http://127.0.0.1:3001";
+
 async function testAPI() {
     console.log("Refresh NewMD_API: start");
 
-    var errorMsg = null;
-    var status0 = false;
-    var status1 = false;
+    let errorMsg = null;
+    let status0 = false;
+    let status1 = false;
 
-    var availableURL = [];
+    let availableURL = [];
 
     try {
-        const cloud0 = await axios.get("https://cloud0.newmd.eu.org/ping", {
+        const cloud0 = await axios.get(`${apiURL0}/ping`, {
             timeout: 2 * 1000,
             validateStatus: function (status) {
                 return status >= 200 && status < 500; // default
@@ -31,7 +37,7 @@ async function testAPI() {
     };
 
     try {
-        const cloud1 = await axios.get("https://cloud1.newmd.eu.org/ping", {
+        const cloud1 = await axios.get(`${apiURL1}/ping`, {
             timeout: 2 * 1000
         });
 
@@ -73,8 +79,7 @@ export default class NewMD_API {
     async login(ID, PWD, rememberMe) {
         const response = {
             error: true,
-            status: null,
-            errMessage: null,
+            message: null,
             data: {
                 authorization: null,
                 userDataStatus: null
@@ -87,7 +92,7 @@ export default class NewMD_API {
             }
             else if (PWD === "") {
                 throw new Error("Missing Password");
-            };
+            }
 
             const res = await axios.post((await testAPI()).availableURL[0] + "/users/login",
                 JSON.stringify({ ID, PWD, rememberMe }),
@@ -100,36 +105,26 @@ export default class NewMD_API {
             );
 
             response["error"] = false;
-            response["status"] = res.status;
+            response["message"] = res.data["message"];
             response["data"]["authorization"] = res.headers["authorization"];
             response["data"]["userDataStatus"] = res.data["userDataStatus"];
         }
         catch (err) {
-            const errorMessageFilter = [
-                "Missing Username",
-                "Missing Password"
-            ];
-
             const ststusCodeFilter = [
                 400,
                 401,
                 500
             ];
 
-            response["status"] = err.response?.status;
-
-            if (errorMessageFilter.includes(err.message)) {
-                response["errMessage"] = err.message;
-            }
-            else if (ststusCodeFilter.includes(err.response?.status)) {
-                response["errMessage"] = err.response?.data;
+            if (ststusCodeFilter.includes(err.response?.status)) {
+                response["message"] = err.response?.data["message"];
             }
             else if (!err?.response) {
-                response["errMessage"] = "No Server Response";
+                response["message"] = "No Server Response";
             }
             else {
-                response["errMessage"] = "Unexpected Error";
-            };
+                response["message"] = "Unexpected Error";
+            }
         };
 
         return response;
