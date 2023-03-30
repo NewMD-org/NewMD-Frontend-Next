@@ -65,7 +65,7 @@ export default function LoginPage() {
         setLoading(true);
 
         try {
-            const response = await new NewMD_API(10).login(ID, PWD, rememberMe);
+            const response = await new NewMD_API(20).login(ID, PWD, rememberMe);
             if (response["error"] === false) {
                 cookie.save("navigate", "true", { path: "/", maxAge: 60 * 60 * 24 * 7 });
                 localStorage.setItem("authorization", response["data"]["authorization"]);
