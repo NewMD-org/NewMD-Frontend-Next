@@ -41,7 +41,7 @@ export default function Login() {
 
                 if (cookie.load("navigate") === "true") {
                     console.log("Cookie - navigate : found");
-                    const response = await new NewMD_API(10).login(ID, PWD, rememberMe.toString());
+                    const response = await new NewMD_API(20).login(ID, PWD, rememberMe.toString());
 
                     if (response["error"] === false) {
                         localStorage.setItem("authorization", response["data"]["authorization"]);
