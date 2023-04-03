@@ -60,7 +60,7 @@ export default function Chinese() {
                 </ul>
                 <h2 className={styles.atx} id="八、聯繫管道">八、聯繫管道</h2>
                 <ul>
-                    <li>對於本站之隱私權政策有任何疑問，或者想提出變更、移除個人資料之請求，請使用 Discord 聯繫<a title="Discord" href="https://discord.com/users/755269122597585018">꧁AAAA꧂#2713</a>。</li>
+                    <li>對於本站之隱私權政策有任何疑問，或者想提出變更、移除個人資料之請求，請使用 Discord 聯繫<a title="Discord" href="https://discord.com/users/755269122597585018">OnCloud#2713</a>。</li>
                 </ul>
             </div>
         </>

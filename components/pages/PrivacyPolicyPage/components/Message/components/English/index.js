@@ -45,7 +45,7 @@ export default function English() {
                 <h2 className={styles.atx} id="5access-to-your-personal-information">5.Access to Your Personal Information</h2>
                 <ul>
                     <li>You are entitled to view, amend, or delete the personal information that we hold. Please cocntact Discord:<a
-                        title="Discord" href="https://discord.com/users/755269122597585018">꧁AAAA꧂#2713</a> and we will work with you
+                        title="Discord" href="https://discord.com/users/755269122597585018">OnCloud#2713</a> and we will work with you
                         to remove any of your personal data we may have.</li>
                 </ul>
                 <h2 className={styles.atx} id="6changes-to-our-privacy-policy">6.Changes to Our Privacy Policy</h2>
