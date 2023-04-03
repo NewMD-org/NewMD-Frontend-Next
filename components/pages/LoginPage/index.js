@@ -9,7 +9,6 @@ import NewMD_API from "../../api/NewMD_API";
 
 import { InstallPWA } from "./components/InstallPWA";
 import styles from "./LoginPage.module.css";
-import logo from "./logo.svg";
 
 
 function join(...array) {
@@ -117,7 +116,7 @@ export default function LoginPage() {
                 <Image className={styles.backgroundImage} alt="background image" src="/background.svg" draggable="false" fill />
                 <div className={styles.centerContainer}>
                     <div className={styles.logo}>
-                        <Image className={styles.img} alt="logo" src={logo} draggable="false" />
+                        <Image className={styles.img} alt="logo" src="/logo.svg" width={709} height={225} draggable="false" priority />
                     </div>
                     <div className={styles.center}>
                         <p ref={errRef} className={errMsg ? styles.errmsg : styles.offscreen} aria-live="assertive">{errMsg}</p>
@@ -131,9 +130,9 @@ export default function LoginPage() {
                                 <span className={styles.text_focusEffect}></span>
                             </div>
                             <div className={join(styles.rememberme, "pretty", "p-default", "p-curve")}>
-                                <input type="checkbox" name="rememberMe" onChange={(e) => setRememberMe(e.target.checked ? "true" : "false")} checked={rememberMe === "true"} autoComplete="on" />
+                                <input id="rememberMe" type="checkbox" name="rememberMe" onChange={(e) => setRememberMe(e.target.checked ? "true" : "false")} checked={rememberMe === "true"} autoComplete="on" />
                                 <div className={join("state", "p-success-o")}>
-                                    <label>Remember me for 7 days</label>
+                                    <label htmlFor="rememberMe">Remember me for 7 days</label>
                                 </div>
                             </div>
                             <div className={styles.centerDiv}>

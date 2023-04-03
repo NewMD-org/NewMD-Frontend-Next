@@ -146,6 +146,7 @@
     -webkit-transition-duration: 0.4s;
 }
 
+.signin:focus-visible,
 .signin:hover {
     transition-duration: 0.5s;
     transform: scale(1.1);
