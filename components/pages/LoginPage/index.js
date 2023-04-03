@@ -130,9 +130,9 @@ export default function LoginPage() {
                                 <span className={styles.text_focusEffect}></span>
                             </div>
                             <div className={join(styles.rememberme, "pretty", "p-default", "p-curve")}>
-                                <input type="checkbox" name="rememberMe" onChange={(e) => setRememberMe(e.target.checked ? "true" : "false")} checked={rememberMe === "true"} autoComplete="on" />
+                                <input id="rememberMe" type="checkbox" name="rememberMe" onChange={(e) => setRememberMe(e.target.checked ? "true" : "false")} checked={rememberMe === "true"} autoComplete="on" />
                                 <div className={join("state", "p-success-o")}>
-                                    <label>Remember me for 7 days</label>
+                                    <label htmlFor="rememberMe">Remember me for 7 days</label>
                                 </div>
                             </div>
                             <div className={styles.centerDiv}>
