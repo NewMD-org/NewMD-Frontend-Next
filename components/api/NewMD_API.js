@@ -20,7 +20,7 @@ async function testAPI() {
                 return status >= 200 && status < 500; // default
             }
         });
-        console.log(cloud0.data);
+
         if (cloud0.data["service"] === "up") {
             status0 = true;
             availableURL.push(cloud0.config?.url.replace("/ping", ""));
