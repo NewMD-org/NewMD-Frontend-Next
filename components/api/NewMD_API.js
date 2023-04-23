@@ -21,7 +21,7 @@ async function testAPI() {
             }
         });
 
-        if (cloud0.data.includes("Service is up")) {
+        if (cloud0.data["service"] === "up") {
             status0 = true;
             availableURL.push(cloud0.config?.url.replace("/ping", ""));
             console.log("Refresh NewMD_API: cloud0 available");
@@ -38,7 +38,7 @@ async function testAPI() {
             timeout: 2 * 1000
         });
 
-        if (cloud1.data.includes("Service is up")) {
+        if (cloud1.data["service"] === "up") {
             status1 = true;
             availableURL.push(cloud1.config?.url.replace("/ping", ""));
             console.log("Refresh NewMD_API: cloud1 available");
