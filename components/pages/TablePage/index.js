@@ -86,12 +86,10 @@ export default function TablePage({ state, authorization }) {
 
     return (
         <>
-            <div className={styles.background}>
-                {isLoading ? <Loader /> : <></>}
-                <NavbarTop state={state} authorization={authorization} enableChristmas={enableChristmas} _setEnableChristmas={_setEnableChristmas} />
-                <ClassesTable isLoading={isLoading} setIsLoading={setIsLoading} state={state} authorization={authorization} enableSnow={enableChristmas} />
-                {enableChristmas ? <Christmas /> : <></>}
-            </div>
+            {isLoading ? <Loader /> : <></>}
+            <NavbarTop state={state} authorization={authorization} enableChristmas={enableChristmas} _setEnableChristmas={_setEnableChristmas} />
+            <ClassesTable isLoading={isLoading} setIsLoading={setIsLoading} state={state} authorization={authorization} enableSnow={enableChristmas} />
+            {enableChristmas ? <Christmas /> : <></>}
         </>
     );
 };

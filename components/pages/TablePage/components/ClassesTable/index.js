@@ -163,7 +163,7 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
     }, [isBigScreen]);
 
     return (
-        <div className={styles.container}>
+        <>
             {showDetail ? <Detail setShowDetail={setShowDetail} setDetail={setDetail} detail={detail} state={state} /> : <></>}
             <table className={styles.table} style={enableSnow ? { paddingBottom: "60px" } : {}}>
                 <thead>
@@ -591,6 +591,6 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
                     </tr>
                 </tbody>
             </table>
-        </div >
+        </>
     );
 }

@@ -9,8 +9,7 @@
     background-color: #333333;
     box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
     position: fixed;
-    display: block;
-    width: 100%;
+    width: 100vw;
     z-index: 9;
     color: white;
 }

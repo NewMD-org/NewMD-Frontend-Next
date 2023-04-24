@@ -12,11 +12,6 @@ body {
     transition: all 0.3s;
 }
 
-#__next {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
 
 @media (prefers-color-scheme: dark) {
     html {
