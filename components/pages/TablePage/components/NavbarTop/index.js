@@ -107,7 +107,7 @@ export default function NavbarTop({ state, authorization, enableChristmas, _setE
                 router.replace({
                     pathname: "/login"
                 }, "/login");
-            };
+            }
         };
         return setIsLoading(false);
     };
