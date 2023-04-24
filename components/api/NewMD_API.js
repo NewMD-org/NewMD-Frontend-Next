@@ -73,6 +73,15 @@ export default class NewMD_API {
         this.timeoutSeconds = timeoutSec * 1000 | 0;
     }
 
+    async ping() {
+        const res = await axios.get((await testAPI()).availableURL[0] + "/ping",
+            {
+                timeout: this.timeoutSeconds,
+            }
+        );
+        return res.data;
+    }
+
     async login(ID, PWD, rememberMe) {
         const response = {
             error: true,
