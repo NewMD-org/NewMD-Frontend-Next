@@ -77,14 +77,11 @@
 }
 
 .text_area>p {
-    margin: 0;
     align-content: center;
 }
 
 .title {
-    padding-bottom: 20px;
     font-size: 30px;
-
 }
 
 .content {
@@ -92,4 +89,14 @@
     padding-right: 50px;
     font-size: 15px;
     text-align: center;
+}
+
+.retry_times {
+    font-size: 12px;
+}
+
+.retry_times>span{
+    font-size: 130%;
+    margin-left: 5px;
+    margin-right: 5px;
 }

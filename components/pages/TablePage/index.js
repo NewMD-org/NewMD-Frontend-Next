@@ -7,6 +7,54 @@ import Loader from "./components/Loader";
 import Christmas from "../../Themes/Christmas";
 
 
+export default function TablePage({ state, authorization }) {
+    const [isLoading, setIsLoading] = useState(true);
+    const [enableChristmas, setEnableChristmas] = useState(false);
+    const [retryTimes, setRetryTimes] = useState(1);
+
+    useEffect(() => {
+        console.log(getCookie("theme") || "{}");
+        controlTheme("Christmas", setEnableChristmas);
+    }, []);
+
+    return (
+        <>
+            {isLoading ? <Loader retryTimes={retryTimes} /> : <></>}
+            <NavbarTop state={state} authorization={authorization} enableChristmas={enableChristmas} _setEnableChristmas={_setEnableChristmas} />
+            <ClassesTable isLoading={isLoading} setIsLoading={setIsLoading} state={state} authorization={authorization} enableSnow={enableChristmas} retryTimes={retryTimes} setRetryTimes={setRetryTimes} />
+            {enableChristmas ? <Christmas /> : <></>}
+        </>
+    );
+
+    function _setEnableChristmas(checked) {
+        setEnableChristmas(checked);
+        if (checked) {
+            let newThemeCookie = JSON.parse(getCookie("theme") || "{}");
+            newThemeCookie["Christmas"] = true;
+            setCookie(
+                "theme",
+                JSON.stringify(newThemeCookie),
+                {
+                    path: "/",
+                    maxAge: 60 * 60 * 24 * 400,
+                }
+            );
+        }
+        else {
+            let newThemeCookie = JSON.parse(getCookie("theme") || "{}");
+            newThemeCookie["Christmas"] = false;
+            setCookie(
+                "theme",
+                JSON.stringify(newThemeCookie),
+                {
+                    path: "/",
+                    maxAge: 60 * 60 * 24 * 400,
+                }
+            );
+        }
+    }
+};
+
 function controlTheme(themeName, setThemeFunction) {
     const themeNameFilter = [
         "Christmas",
@@ -44,50 +92,3 @@ function controlTheme(themeName, setThemeFunction) {
     // Add schedule here
     return setThemeFunction(false);
 }
-
-export default function TablePage({ state, authorization }) {
-    const [isLoading, setIsLoading] = useState(true);
-    const [enableChristmas, setEnableChristmas] = useState(false);
-
-    useEffect(() => {
-        console.log(getCookie("theme") || "{}");
-        controlTheme("Christmas", setEnableChristmas);
-    }, []);
-
-    function _setEnableChristmas(checked) {
-        setEnableChristmas(checked);
-        if (checked) {
-            let newThemeCookie = JSON.parse(getCookie("theme") || "{}");
-            newThemeCookie["Christmas"] = true;
-            setCookie(
-                "theme",
-                JSON.stringify(newThemeCookie),
-                {
-                    path: "/",
-                    maxAge: 60 * 60 * 24 * 400,
-                }
-            );
-        }
-        else {
-            let newThemeCookie = JSON.parse(getCookie("theme") || "{}");
-            newThemeCookie["Christmas"] = false;
-            setCookie(
-                "theme",
-                JSON.stringify(newThemeCookie),
-                {
-                    path: "/",
-                    maxAge: 60 * 60 * 24 * 400,
-                }
-            );
-        }
-    }
-
-    return (
-        <>
-            {isLoading ? <Loader /> : <></>}
-            <NavbarTop state={state} authorization={authorization} enableChristmas={enableChristmas} _setEnableChristmas={_setEnableChristmas} />
-            <ClassesTable isLoading={isLoading} setIsLoading={setIsLoading} state={state} authorization={authorization} enableSnow={enableChristmas} />
-            {enableChristmas ? <Christmas /> : <></>}
-        </>
-    );
-};
