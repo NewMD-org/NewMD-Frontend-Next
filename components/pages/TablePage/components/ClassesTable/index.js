@@ -62,7 +62,7 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
 
     const checkSat = (obj) => {
         const classes = Object.keys(obj["day6"]);
-        var haveData = false;
+        let haveData = false;
         for (let index of classes) {
             if (obj["day6"][index]["classname"] !== "") {
                 haveData = true;
