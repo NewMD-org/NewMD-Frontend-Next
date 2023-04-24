@@ -9,7 +9,7 @@
     background-color: #333333;
     box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
     position: fixed;
-    width: 100vw;
+    width: 100%;
     z-index: 9;
     color: white;
 }

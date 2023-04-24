@@ -6,8 +6,6 @@ import ClassesTable from "./components/ClassesTable";
 import Loader from "./components/Loader";
 import Christmas from "../../Themes/Christmas";
 
-import styles from "./Table.module.css";
-
 
 function controlTheme(themeName, setThemeFunction) {
     const themeNameFilter = [

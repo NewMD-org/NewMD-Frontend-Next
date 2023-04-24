@@ -25,6 +25,7 @@
     overflow-y: scroll;
     border-collapse: separate;
     height: 100vh;
+    transition: all 0.3s;
 }
 
 .topLeftIndex {
