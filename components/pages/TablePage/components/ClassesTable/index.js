@@ -19,7 +19,7 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
     const [showSat, setShowSat] = useState(false);
 
     useEffect(() => {
-        if (retryTimes < 11000) {
+        if (retryTimes < 11) {
             fetchData(authorization);
         }
         else {
