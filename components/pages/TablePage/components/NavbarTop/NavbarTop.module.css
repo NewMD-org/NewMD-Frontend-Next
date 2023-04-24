@@ -9,7 +9,6 @@
     background-color: #333333;
     box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
     position: fixed;
-    display: block;
     width: 100%;
     z-index: 9;
     color: white;
@@ -156,14 +155,11 @@
 
     .header .menu_icon {
         display: none;
+        padding: 28px 20px;
     }
 
     .saveData {
         padding: 20px 20px;
-    }
-
-    .header .menu_icon {
-        padding: 28px 20px;
     }
 
     .header .logo {

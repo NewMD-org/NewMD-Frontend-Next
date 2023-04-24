@@ -1,12 +1,9 @@
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import Head from "next/head";
-
+import cookie from "react-cookies";
 import styles from "./Loader.module.css";
 
-
-function random(x) {
-    return Math.floor(Math.random() * x);
-};
 
 const messages = [
     "Your password stored in Mingdao's server isn't hashed!",
@@ -17,7 +14,7 @@ const messages = [
     "We will update your data at 24:00 every day."
 ];
 
-export default function Loader() {
+export default function Loader({ retryTimes }) {
     const [message, setMessage] = useState();
 
     useEffect(() => {
@@ -33,6 +30,13 @@ export default function Loader() {
                 <div className={styles.text_area}>
                     <p className={styles.title}>Do you know ?</p>
                     <p className={styles.content}>{message}</p>
+                    {retryTimes > 3 ? (
+                        <div className={styles.retry_times}>
+                            Retried {retryTimes} times
+                            <span>|</span>
+                            <Link href="/login" onClick={removeCookie}>Back to login</Link>
+                        </div>
+                    ) : <></>}
                 </div>
                 <div className={styles.bouncing_loader}>
                     <p>Loading</p>
@@ -44,3 +48,12 @@ export default function Loader() {
         </>
     );
 };
+
+function random(x) {
+    return Math.floor(Math.random() * x);
+};
+
+function removeCookie() {
+    cookie.remove("navigate");
+    sessionStorage.clear();
+}

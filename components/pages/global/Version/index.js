@@ -25,12 +25,10 @@ export default function Version() {
         <div
             className={styles.version}
             style={{
-                "--position": isTablePage ? "relative" : "fixed",
-                "--align": isTablePage ? "center" : "left"
+                "--position": isTablePage ? "relative" : "fixed"
             }}
         >
             <code className={styles.code}>Website v{packageJSON.version}</code>
-            {/* <span className={styles.bar}>|</span> */}
             <code className={styles.code}>API {APIversion}</code>
         </div>
     );
