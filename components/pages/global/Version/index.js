@@ -1,5 +1,5 @@
 import styles from "./Version.module.css";
-import * as packageJSON from "../../../../package.json";
+import packageJSON from "../../../../package.json";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
