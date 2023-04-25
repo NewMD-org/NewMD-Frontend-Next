@@ -81,7 +81,7 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
                         <th className={join("noselect", styles.indexMobile)}>08:15<br />|<br />09:05</th>
                         <td className={isBigScreen ? styles.data : styles.dataMobile}>
                             {isLoading ? (<></>) : (<>
-                                <div className={tableData["day1"]["1"].status ? styles.status : styles.status_hidden}>{tableData["day1"]["1"].status}</div>
+                                <div className={tableData["day1"]["1"].status ? styles.status : styles.status}>調</div>
                                 <div className={styles.classname} onClick={() => { setDetail({ "name": tableData["day1"]["1"]["classname"], "classID": tableData["day1"]["1"]["classID"] }); setShowDetail(true); }}>{tableData["day1"]["1"]["classname"]}</div>
                                 <div>{tableData["day1"]["1"]["teacher"]}</div>
                             </>)}

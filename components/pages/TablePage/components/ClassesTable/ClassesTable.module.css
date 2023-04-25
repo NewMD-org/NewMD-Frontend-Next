@@ -68,7 +68,14 @@
     background-color: rgba(0, 0, 0, 0.3);
     color: #fff;
     text-align: center;
-    padding: 5px 5px;
+    padding-top: 15px 3px 15px 3px;
+}
+
+@media (max-width: 430px) {
+    .dataMobile {
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
 }
 
 .status {
@@ -78,7 +85,7 @@
     top: 0;
     left: 0;
     z-index: 1;
-    line-height: 18px;
+    line-height: 16px;
     font-size: 16px;
     padding: 3px;
 }
@@ -90,10 +97,21 @@
     left: 0;
     width: 0;
     height: 0;
-    border-style: solid;
     border-width: 40px 40px 0 0;
+    border-style: solid;
     border-color: #007bff transparent transparent transparent;
     z-index: -1;
+}
+
+@media (max-width: 930px) {
+    .status {
+        line-height: 12px;
+        font-size: 12px;
+    }
+
+    .status::after {
+        border-width: 35px 35px 0 0;
+    }
 }
 
 .status_hidden {
@@ -101,7 +119,6 @@
 }
 
 .classname {
-    width: fit-content;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
