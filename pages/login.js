@@ -13,19 +13,29 @@ import Loader from "../components/pages/LoaderPage";
 export default function Login() {
     const router = useRouter();
 
-    const [isLoading, setLoading] = useState(true);
-    const [retryTimes, setRetryTimes] = useState(1);
+    const [isLoading, setLoading] = useState(false);
+    const [retryTimes, setRetryTimes] = useState(0);
 
     useEffect(() => {
-        if (retryTimes < 11) {
-            autoLogin();
+        if (isValidAuth()) {
+            if (retryTimes < 11) {
+                setLoading(true);
+                autoLogin();
+            }
+            else {
+                console.log("Auto login : failed");
+                sessionStorage.clear();
+                cookie.remove("navigate");
+                setLoading(false);
+            }
         }
         else {
-            console.log("Auto login : failed");
             sessionStorage.clear();
             cookie.remove("navigate");
+            console.log("Local Storage - authorization : invalid");
+            console.log("Auto login : failed");
             setLoading(false);
-        }
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [retryTimes]);
 
@@ -65,41 +75,37 @@ export default function Login() {
         console.log("Auto login : start");
         const t0 = performance.now();
         try {
-            if (isValidAuth()) {
-                console.log("Local Storage - authorization : found");
-                const rememberMe = jwt_decode(localStorage.getItem("authorization")).rememberMe === "true";
-                const ID = jwt_decode(localStorage.getItem("authorization")).userID;
-                const PWD = jwt_decode(localStorage.getItem("authorization")).userPWD;
+            console.log("Local Storage - authorization : found");
+            const rememberMe = jwt_decode(localStorage.getItem("authorization")).rememberMe === "true";
+            const ID = jwt_decode(localStorage.getItem("authorization")).userID;
+            const PWD = jwt_decode(localStorage.getItem("authorization")).userPWD;
 
-                if (cookie.load("navigate") === "true") {
-                    console.log("Cookie - navigate : found");
-                    const response = await new NewMD_API(20).login(ID, PWD, rememberMe.toString());
+            if (cookie.load("navigate") === "true") {
+                console.log("Cookie - navigate : found");
+                const response = await new NewMD_API(20).login(ID, PWD, rememberMe.toString());
 
-                    if (response["error"] === false) {
-                        localStorage.setItem("authorization", response["data"]["authorization"]);
-                        cookie.save("navigate", "true", { path: "/", maxAge: 60 * 60 * 24 * 7 });
-                        const t1 = performance.now();
-                        console.log(`Auto login : success (took ${Math.round(t1 - t0) / 1000} seconds)`);
-                        return router.replace({
-                            pathname: "/table",
-                            query: {
-                                "userDataStatus": response["data"]["userDataStatus"]
-                            }
-                        }, "/table");
-                    }
-                    else {
-                        throw Error("Auto login : error");
-                    };
+                if (response["error"] === false) {
+                    localStorage.setItem("authorization", response["data"]["authorization"]);
+                    cookie.save("navigate", "true", { path: "/", maxAge: 60 * 60 * 24 * 7 });
+                    const t1 = performance.now();
+                    console.log(`Auto login : success (took ${Math.round(t1 - t0) / 1000} seconds)`);
+                    return router.replace({
+                        pathname: "/table",
+                        query: {
+                            "userDataStatus": response["data"]["userDataStatus"]
+                        }
+                    }, "/table");
                 }
                 else {
-                    cookie.remove("navigate");
-                    console.log("Cookie - navigate : not found");
-                    console.log("Auto login : failed");
-                    return setLoading(false);
+                    throw Error("Auto login : error");
                 };
             }
             else {
-                throw new Error("Local Storage - authorization : invalid");
+                sessionStorage.clear();
+                cookie.remove("navigate");
+                console.log("Cookie - navigate : not found");
+                console.log("Auto login : failed");
+                return setLoading(false);
             };
         }
         catch (err) {
