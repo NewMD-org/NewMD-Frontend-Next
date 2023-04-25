@@ -10,6 +10,7 @@
         "lintfix": "next lint --fix"
     },
     "dependencies": {
+        "@vercel/analytics": "^1.0.0",
         "axios": "^1.1.3",
         "cookies-next": "^2.1.1",
         "eslint": "8.29.0",
