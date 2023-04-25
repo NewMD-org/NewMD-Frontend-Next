@@ -10,7 +10,7 @@ import Christmas from "../../Themes/Christmas";
 export default function TablePage({ state, authorization }) {
     const [isLoading, setIsLoading] = useState(true);
     const [enableChristmas, setEnableChristmas] = useState(false);
-    const [retryTimes, setRetryTimes] = useState(1);
+    const [retryTimes, setRetryTimes] = useState(0);
 
     useEffect(() => {
         console.log(getCookie("theme") || "{}");

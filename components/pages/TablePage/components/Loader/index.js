@@ -12,7 +12,7 @@ export default function Loader({ retryTimes }) {
             <div className={styles.text_area}>
                 <p className={styles.title}>Waiting for too long ?</p>
                 <p className={styles.content}>Try enabling the &quot;Save Data&quot; option!</p>
-                {retryTimes > 3 ? (
+                {retryTimes > 0 ? (
                     <div className={styles.retry_times}>
                         Retried {retryTimes} times
                         <span>|</span>
