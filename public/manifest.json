@@ -12,19 +12,19 @@
             "src": "logo144.png",
             "type": "image/png",
             "sizes": "144x144",
-            "purpose": "any"
+            "purpose": "maskable"
         },
         {
             "src": "logo192.png",
             "type": "image/png",
             "sizes": "192x192",
-            "purpose": "any"
+            "purpose": "maskable"
         },
         {
             "src": "logo512.png",
             "type": "image/png",
             "sizes": "512x512",
-            "purpose": "any"
+            "purpose": "maskable"
         }
     ],
     "start_url": ".",
