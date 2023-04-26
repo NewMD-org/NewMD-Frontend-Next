@@ -30,7 +30,7 @@ export default function Loader({ retryTimes }) {
                 <div className={styles.text_area}>
                     <p className={styles.title}>Do you know ?</p>
                     <p className={styles.content}>{message}</p>
-                    {retryTimes > 3 ? (
+                    {retryTimes > 0 ? (
                         <div className={styles.retry_times}>
                             Retried {retryTimes} times
                             <span>|</span>
