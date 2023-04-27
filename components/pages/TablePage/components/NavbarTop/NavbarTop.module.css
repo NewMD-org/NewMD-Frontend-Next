@@ -41,6 +41,8 @@
     clear: both;
     max-height: 0;
     transition: max-height .2s ease-out;
+    display: flex;
+    flex-direction: column;
 }
 
 .header .menu_icon {
@@ -107,24 +109,15 @@
 }
 
 .saveData {
-    height: 100%;
+    position: relative;
     display: block;
     padding: 12px 10px;
-    text-decoration: none;
-    text-align: right;
-    z-index: 999;
-}
-
-.saveData .switch {
-    margin-left: 5px;
-    z-index: -1;
-    pointer-events: none;
 }
 
 .logout a {
     color: inherit;
     text-decoration: none;
-    height: 100%;
+    /* height: 100%; */
     display: flex;
     align-items: center;
 }
@@ -133,7 +126,7 @@
     border-top: 1px solid gray;
 }
 
-.header li:hover {
+.logout:hover {
     background-color: #ffffff1a;
 }
 
@@ -151,6 +144,7 @@
         clear: none;
         float: right;
         max-height: none;
+        flex-direction: row;
     }
 
     .header .menu_icon {
@@ -159,7 +153,7 @@
     }
 
     .saveData {
-        padding: 20px 20px;
+        padding: 10px;
     }
 
     .header .logo {
