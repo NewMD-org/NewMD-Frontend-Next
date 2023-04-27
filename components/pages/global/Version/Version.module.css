@@ -15,8 +15,9 @@
 
 .code {
     margin: 0 4px 0 0;
-    padding: 1px 2px;
+    padding: 1px 4px;
     font-size: 95%;
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     color: #e83e8c;
     white-space: break-spaces;
     background-color: rgba(89, 99, 110, 0.527);

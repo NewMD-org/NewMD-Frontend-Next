@@ -9,40 +9,39 @@
     background-color: #333333;
     box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
     position: fixed;
+    top: 0;
     width: 100%;
     z-index: 9;
     color: white;
+    overflow: hidden;
 }
 
 .header ul {
     margin: 0;
     padding: 0;
     list-style: none;
-    overflow: hidden;
-}
-
-.header li a {
-    display: block;
-    padding: 12px 10px;
-    text-decoration: none;
-    text-align: right;
 }
 
 .header .logo {
     display: block;
+    height: 100%;
     color: inherit;
     float: left;
-    font-size: 1.5rem;
-    padding: 7px 5px;
+    font-size: 24px;
+    line-height: 50px;
+    padding: 0 5px;
     text-decoration: none;
 }
 
 .header .menu {
+    background-color: inherit;
     clear: both;
     max-height: 0;
     transition: max-height .2s ease-out;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    align-items: stretch;
 }
 
 .header .menu_icon {
@@ -108,36 +107,40 @@
     top: 0;
 }
 
-.saveData {
+.option {
     position: relative;
-    display: block;
-    padding: 12px 10px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin: 0 20px;
+    transition-duration: 0.3s;
+}
+
+.option * {
+    color: white;
 }
 
 .logout a {
-    color: inherit;
     text-decoration: none;
-    /* height: 100%; */
-    display: flex;
-    align-items: center;
 }
 
 .header li {
     border-top: 1px solid gray;
-}
-
-.logout:hover {
-    background-color: #ffffff1a;
+    cursor: pointer;
+    text-align: left;
+    height: 55px;
 }
 
 @media (min-width: 930px) {
+    .header {
+        height: 60px;
+        overflow: unset;
+    }
+
     .header li {
         float: left;
         border: none;
-    }
-
-    .header li a {
-        padding: 20px 30px;
+        height: auto;
     }
 
     .header .menu {
@@ -145,6 +148,9 @@
         float: right;
         max-height: none;
         flex-direction: row;
+        align-items: center;
+        margin-right: 10px;
+        gap: 10px;
     }
 
     .header .menu_icon {
@@ -152,12 +158,24 @@
         padding: 28px 20px;
     }
 
-    .saveData {
-        padding: 10px;
+    .option {
+        height: 100%;
+        padding: 5px 10px;
+        margin: 0;
+        border-radius: 10px;
+    }
+
+    .option:hover {
+        background-color: #ffffff1a;
     }
 
     .header .logo {
-        font-size: 2rem;
-        padding: 8px 20px;
+        padding: 0 20px;
+        font-size: 32px;
+        line-height: 60px;
     }
+}
+
+.nohover {
+    padding: 0;
 }
