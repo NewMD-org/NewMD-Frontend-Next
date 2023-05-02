@@ -28,11 +28,12 @@ export default function Attention({ setIsLoading, setShowAttention, setUserDataS
                     const t1 = performance.now();
                     console.log(`Save user data : success (took ${Math.round(t1 - t0) / 1000} seconds)`);
                     sessionStorage.setItem("userDataStatus", "true");
+                    console.log(response.data["table"]);
                     return router.replace({
                         pathname: "/table",
                         query: {
                             "userDataStatus": "true",
-                            "tableData": response.data["table"],
+                            "table": JSON.stringify(response.data["table"]),
                             "year": response.data["year"]
                         }
                     }, "/table");

@@ -115,14 +115,11 @@
 }
 
 .rememberme {
-    color: #e9f4fb;
-    margin-left: 30px;
-}
-
-.rememberme label {
-    display: block;
+    padding: 5px;
+    margin: auto;
     cursor: pointer;
-    padding-left: 10px;
+    width: fit-content;
+    color: #e9f4fb;
 }
 
 .centerDiv {
@@ -150,6 +147,7 @@
 .signin:hover {
     transition-duration: 0.5s;
     transform: scale(1.1);
+    background: #dba154;
 }
 
 .signin:after {

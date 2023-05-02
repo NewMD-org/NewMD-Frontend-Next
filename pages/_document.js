@@ -1,5 +1,8 @@
 import { Html, Head, Main, NextScript } from "next/document";
+import { createGetInitialProps } from "@mantine/next";
 
+
+const getInitialProps = createGetInitialProps();
 
 export default function Document() {
     return (
@@ -33,10 +36,10 @@ export default function Document() {
                 <meta property="og:image" content="https://i.imgur.com/tPYMyLP.png" />
 
                 {/* eslint-disable-next-line @next/next/google-font-display */}
-                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" />
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" />
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css"
-                    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossOrigin="anonymous" />
+                {/* <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" /> */}
+                {/* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" /> */}
+                {/* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css"
+                    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossOrigin="anonymous" /> */}
             </Head>
             <body>
                 <Main />
@@ -45,3 +48,5 @@ export default function Document() {
         </Html>
     );
 }
+
+Document.getInitialProps = getInitialProps;

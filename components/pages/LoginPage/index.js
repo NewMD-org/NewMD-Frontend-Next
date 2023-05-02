@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-
+import { Button, Checkbox } from "@mantine/core";
 import jwt_decode from "jwt-decode";
 import cookie from "react-cookies";
 
@@ -32,6 +32,7 @@ export default function LoginPage() {
     const IDRef = useRef();
     const PWDRef = useRef();
     const errRef = useRef();
+    const signinRef = useRef();
     const router = useRouter();
 
     const [ID, setID] = useState("");
@@ -129,20 +130,34 @@ export default function LoginPage() {
                                 <input type="password" name="PWD" ref={PWDRef} value={PWD} onChange={(e) => setPWD(e.target.value)} placeholder="Password" autoComplete="current-password" />
                                 <span className={styles.text_focusEffect}></span>
                             </div>
-                            <div className={join(styles.rememberme, "pretty", "p-default", "p-curve")}>
-                                <input id="rememberMe" type="checkbox" name="rememberMe" onChange={(e) => setRememberMe(e.target.checked ? "true" : "false")} checked={rememberMe === "true"} autoComplete="on" />
-                                <div className={join("state", "p-success-o")}>
-                                    <label htmlFor="rememberMe">Remember me for 7 days</label>
-                                </div>
+                            <div
+                                className={styles.rememberme}
+                                onClick={() => signinRef.current.click()}
+                            >
+                                <Checkbox
+                                    label="Remember me for 7 days"
+                                    color="green"
+                                    size="md"
+                                    style={{ pointerEvents: "none" }}
+
+                                    ref={signinRef}
+                                    checked={rememberMe === "true"}
+                                    onChange={(e) => setRememberMe(e.currentTarget.checked ? "true" : "false")}
+                                    autoComplete="on"
+                                />
                             </div>
                             <div className={styles.centerDiv}>
-                                {isLoading ? (
-                                    <button className={styles.signin} style={{ "cursor": "not-allowed" }} disabled>
-                                        <span className="spinner-border" aria-hidden="true"></span>
-                                    </button>
-                                ) : (
-                                    <button className={styles.signin}>Sign in</button>
-                                )}
+                                <Button
+                                    radius="xl"
+                                    size="xl"
+                                    className={styles.signin}
+                                    style={{ cursor: isLoading ? "not-allowed" : "pointer" }}
+                                    loading={isLoading}
+
+                                    onClick={handleSubmit}
+                                >
+                                    Sign in
+                                </Button>
                             </div>
                         </form>
                     </div>

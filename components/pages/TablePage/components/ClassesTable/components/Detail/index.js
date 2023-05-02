@@ -57,8 +57,8 @@ export default function Detail({ setShowDetail, setDetail, detail, state }) {
             let data = {};
             if (state["userDataStatus"] === "true") {
                 console.log("Getting VT : start (from database)");
-                const path = findPath(JSON.parse(state["tableData"]), classID);
-                const classObj = JSON.parse(state["tableData"])[path[0]][path[1]];
+                const path = findPath(JSON.parse(state["table"]), classID);
+                const classObj = JSON.parse(state["table"])[path[0]][path[1]];
                 data = {
                     meet: classObj["meet"],
                     classroom: classObj["classroom"]

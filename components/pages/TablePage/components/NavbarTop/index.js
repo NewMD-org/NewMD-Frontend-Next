@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import cookie from "react-cookies";
+import { Switch, Select } from "@mantine/core";
 import styles from "./NavbarTop.module.css";
 
 import NewMD_API from "../../../../api/NewMD_API";
@@ -9,10 +10,9 @@ import NewMD_API from "../../../../api/NewMD_API";
 import Attention from "./components/Attention";
 
 
-export default function NavbarTop({ state, authorization, enableChristmas, _setEnableChristmas }) {
+export default function NavbarTop({ state, authorization, decoration, setDecoration }) {
     const router = useRouter();
     const saveDataInput = useRef(null);
-    const setSnowInput = useRef(null);
     const menu = useRef(null);
 
     const [userDataStatus, setUserDataStatus] = useState(state["userDataStatus"].toString());
@@ -32,37 +32,44 @@ export default function NavbarTop({ state, authorization, enableChristmas, _setE
                 </label>
                 <ul className={styles.menu}>
                     <li>
-                        <div className={styles.saveData} style={{ cursor: "pointer" }} onClick={() => saveDataInput.current.click()}>
-                            Christmas Decoration
-                            <div className={join(styles.switch, "noselect", "pretty", "p-switch", "p-fill")}>
-                                <input type="checkbox" name="Enable Christmas Decoration" ref={saveDataInput} checked={enableChristmas} onChange={(e) => _setEnableChristmas(e.target.checked)} />
-                                <div className={"state p-success"}>
-                                    <label></label>
-                                </div>
-                            </div>
+                        <div className={join(styles.option, styles.nohover)} style={{ cursor: "pointer" }} >{/* onClick={() => setSnowInput.current.click()} */}
+                            <Select
+                                clearable
+                                placeholder="Pick a decoration"
+                                nothingFound="No options"
+                                size="xs"
+                                transitionProps={{ transition: "scale-y", duration: 200, timingFunction: "ease" }}
+                                maxDropdownHeight={150}
+
+                                value={decoration}
+                                onChange={setDecoration}
+                                data={["Christmas"]}
+                            />
                         </div>
                     </li>
                     <li>
-                        <div className={styles.saveData} style={isLoading ? { cursor: "not-allowed", color: "GrayText" } : { cursor: "pointer" }} onClick={() => setSnowInput.current.click()}>
-                            {isLoading ? (
-                                state["userDataStatus"] === "true" ? (
-                                    <>Deleting</>
-                                ) : (
-                                    <>Saving</>
-                                )
-                            ) : (
-                                <>Save Data</>
-                            )}
-                            <div className={join(styles.switch, "noselect", "pretty", "p-switch", "p-fill")}>
-                                <input type="checkbox" name="userDataStatus" ref={setSnowInput} checked={userDataStatus === "true"} disabled={isLoading} onChange={(e) => userDataStatusChange(e.target.checked)} />
-                                <div className={"state p-success"}>
-                                    <label></label>
-                                </div>
-                            </div>
+                        <div
+                            className={styles.option}
+                            style={isLoading ? { cursor: "not-allowed" } : {}}
+                            onClick={() => saveDataInput.current.click()}
+                        >
+                            <Switch
+                                name="userDataStatus"
+                                labelPosition="left"
+                                label={isLoading ? (state["userDataStatus"] === "true" ? "Deleting" : "Saving") : "Save Data"}
+                                size="md"
+                                color="green"
+                                style={{ pointerEvents: "none" }}
+
+                                ref={saveDataInput}
+                                checked={userDataStatus === "true"}
+                                disabled={isLoading}
+                                onChange={(e) => userDataStatusChange(e.target.checked)}
+                            />
                         </div>
                     </li>
                     <li>
-                        <div className={join(styles.logout, "noselect")}>
+                        <div className={join(styles.logout, styles.option)}>
                             <Link href="/logout">
                                 Logout
                             </Link>
@@ -88,7 +95,7 @@ export default function NavbarTop({ state, authorization, enableChristmas, _setE
                     pathname: "/table",
                     query: {
                         "userDataStatus": "false",
-                        "tableData": state["tableData"],
+                        "table": state["table"],
                         "year": state["year"]
                     }
                 }, "/table");

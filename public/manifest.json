@@ -2,6 +2,10 @@
     "short_name": "NewMD",
     "name": "NewMD - Timetable",
     "description": "Beautiful & fast version of Mingdao high school's timetable website",
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#2f3542",
+    "background_color": "#314159",
     "icons": [
         {
             "src": "logo144.png",
@@ -21,9 +25,5 @@
             "sizes": "512x512",
             "purpose": "maskable any"
         }
-    ],
-    "start_url": ".",
-    "display": "fullscreen",
-    "theme_color": "#2f3542",
-    "background_color": "#314159"
+    ]
 }

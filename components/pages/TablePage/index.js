@@ -7,88 +7,49 @@ import Loader from "./components/Loader";
 import Christmas from "../../Themes/Christmas";
 
 
+const themeNameFilter = [
+    "Christmas"
+];
+
 export default function TablePage({ state, authorization }) {
     const [isLoading, setIsLoading] = useState(true);
-    const [enableChristmas, setEnableChristmas] = useState(false);
+    const [decoration, setDecoration] = useState();
     const [retryTimes, setRetryTimes] = useState(0);
 
     useEffect(() => {
-        console.log(getCookie("theme") || "{}");
-        controlTheme("Christmas", setEnableChristmas);
+        const themeName = getCookie("theme");
+        if (themeNameFilter.includes(themeName)) {
+            setDecoration(themeName);
+        }
     }, []);
 
-    return (
-        <>
-            {isLoading ? <Loader retryTimes={retryTimes} /> : <></>}
-            <NavbarTop state={state} authorization={authorization} enableChristmas={enableChristmas} _setEnableChristmas={_setEnableChristmas} />
-            <ClassesTable isLoading={isLoading} setIsLoading={setIsLoading} state={state} authorization={authorization} enableSnow={enableChristmas} retryTimes={retryTimes} setRetryTimes={setRetryTimes} />
-            {enableChristmas ? <Christmas /> : <></>}
-        </>
-    );
-
-    function _setEnableChristmas(checked) {
-        setEnableChristmas(checked);
-        if (checked) {
-            let newThemeCookie = JSON.parse(getCookie("theme") || "{}");
-            newThemeCookie["Christmas"] = true;
-            setCookie(
-                "theme",
-                JSON.stringify(newThemeCookie),
-                {
-                    path: "/",
-                    maxAge: 60 * 60 * 24 * 400,
-                }
-            );
-        }
-        else {
-            let newThemeCookie = JSON.parse(getCookie("theme") || "{}");
-            newThemeCookie["Christmas"] = false;
-            setCookie(
-                "theme",
-                JSON.stringify(newThemeCookie),
-                {
-                    path: "/",
-                    maxAge: 60 * 60 * 24 * 400,
-                }
-            );
-        }
-    }
-};
-
-function controlTheme(themeName, setThemeFunction) {
-    const themeNameFilter = [
-        "Christmas",
-        // "NewYear"
-    ];
-    if (!themeNameFilter.includes(themeName)) return false;
-
-    if (hasCookie("theme") && (typeof (JSON.parse(getCookie("theme") || "{}")) === "object")) {
-        const themeCookie = JSON.parse(getCookie("theme") || "{}");
-        if (Object.values(themeCookie).filter(value => typeof (value) === "boolean")) {
-            setCookie(
-                "theme",
-                themeCookie,
-                {
-                    path: "/",
-                    maxAge: 60 * 60 * 24 * 400,
-                }
-            );
-            return setThemeFunction(themeCookie[themeName]);
-        }
-    }
-    else {
+    useEffect(() => {
+        console.log("Selected decoration : " + decoration);
         setCookie(
             "theme",
-            JSON.stringify({
-                "Christmas": false
-            }),
+            decoration,
             {
                 path: "/",
                 maxAge: 60 * 60 * 24 * 400,
             }
         );
-    }
+    }, [decoration]);
 
-    // Add schedule here
-    return setThemeFunction(false);
+    return (
+        <>
+            {isLoading ? <Loader retryTimes={retryTimes} /> : <></>}
+            <NavbarTop state={state} authorization={authorization} decoration={decoration} setDecoration={setDecoration} />
+            <ClassesTable isLoading={isLoading} setIsLoading={setIsLoading} state={state} authorization={authorization} decoration={decoration} retryTimes={retryTimes} setRetryTimes={setRetryTimes} />
+            {(() => {
+                switch (decoration) {
+                    case "Christmas": {
+                        return Christmas();
+                    }
+                    default: {
+                        return;
+                    }
+                }
+            })()}
+        </>
+    );
 }
