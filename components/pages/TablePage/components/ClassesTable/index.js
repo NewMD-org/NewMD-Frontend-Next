@@ -58,7 +58,7 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
 
     return (
         <>
-            {showDetail ? <Detail setShowDetail={setShowDetail} setDetail={setDetail} detail={detail} state={state} /> : <></>}
+            <Detail showDetail={showDetail} setShowDetail={setShowDetail} setDetail={setDetail} detail={detail} state={state} />
             <table className={styles.table} style={decoration === "Christmas" ? { paddingBottom: "60px" } : {}}>
                 <thead>
                     <tr className={"noselect"}>
