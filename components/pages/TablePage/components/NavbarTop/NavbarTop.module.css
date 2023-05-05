@@ -109,10 +109,8 @@
 
 .option {
     position: relative;
-    height: 100%;
     display: flex;
     align-items: center;
-    margin: 0 20px;
     transition-duration: 0.3s;
 }
 
@@ -122,6 +120,7 @@
 
 .logout a {
     text-decoration: none;
+    padding-right: 10px;
 }
 
 .header li {
