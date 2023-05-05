@@ -183,11 +183,12 @@
 
 .form>span {
     white-space: nowrap;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
     text-align: center;
     width: 42px;
-    padding: 8px 12px;
     font-size: 14px;
     line-height: 25px;
     color: var(--group-color);
@@ -196,23 +197,14 @@
     transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
 }
 
-.form>span:not(:first-child):not(:last-child),
-.form .field:not(:first-child):not(:last-child) {
-    border-radius: 0;
-}
-
-.form>span:first-child,
-.form .field:first-child {
+.form>span,
+.form .field {
     border-radius: 6px 0 0 6px;
 }
 
 .form>span:last-child,
 .form .field:last-child {
     border-radius: 0 6px 6px 0;
-}
-
-.form>span:not(:first-child),
-.form .field:not(:first-child) {
     margin-left: -2px;
 }
 
