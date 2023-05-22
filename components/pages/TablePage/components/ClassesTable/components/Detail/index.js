@@ -62,6 +62,11 @@ export default function Detail({ showDetail, setShowDetail, setDetail, detail, s
         <Modal
             centered
             className={styles.modal_container}
+            styles={{
+                content: { background: "linear-gradient(90deg,#243342,#362d53)" },
+                header: { background: "transparent" },
+                body: { background: "transparent" }
+            }}
             overlayProps={{
                 color: "#000000",
                 opacity: 0.55,
