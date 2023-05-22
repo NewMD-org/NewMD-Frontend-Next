@@ -62,6 +62,7 @@ export default function Detail({ showDetail, setShowDetail, setDetail, detail, s
         <Modal
             centered
             className={styles.modal_container}
+            radius="md"
             styles={{
                 content: { background: "linear-gradient(90deg,#243342,#362d53)" },
                 header: { background: "transparent" },
@@ -103,7 +104,7 @@ export default function Detail({ showDetail, setShowDetail, setDetail, detail, s
                                 <a className={join(styles.field, styles.meet, "yesselect")} href={message.meet} target="_blank" rel="noreferrer">{message.meet}</a>
                             </Tooltip>
                             <Tooltip
-                                label="Copy"
+                                label={copySuccess0 ? "Copied!" : "Copy"}
                             >
                                 <span
                                     onClick={() => {
@@ -137,7 +138,7 @@ export default function Detail({ showDetail, setShowDetail, setDetail, detail, s
                         </> : <>
                             <p className={join(styles.field, styles.classroom, "yesselect")}>{message.classroom}</p>
                             <Tooltip
-                                label="Copy"
+                                label={copySuccess1 ? "Copied!" : "Copy"}
                             >
                                 <span
                                     title="Copy"
