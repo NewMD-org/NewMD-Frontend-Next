@@ -4,11 +4,11 @@ import Image from "next/image";
 import { Button, Checkbox } from "@mantine/core";
 import jwt_decode from "jwt-decode";
 import cookie from "react-cookies";
+import styles from "./LoginPage.module.css";
 
 import NewMD_API from "../../api/NewMD_API";
 
-import { InstallPWA } from "./components/InstallPWA";
-import styles from "./LoginPage.module.css";
+import InstallPWA from "./components/InstallPWA";
 
 
 function join(...array) {
