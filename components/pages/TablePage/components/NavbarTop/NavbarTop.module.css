@@ -108,7 +108,9 @@
 }
 
 .option {
+    height: 100%;
     position: relative;
+    margin-left: 15px;
     display: flex;
     align-items: center;
     transition-duration: 0.3s;
@@ -118,8 +120,11 @@
     color: white;
 }
 
-.logout a {
+.logout {
     text-decoration: none;
+}
+
+.logout span {
     padding-right: 10px;
 }
 
