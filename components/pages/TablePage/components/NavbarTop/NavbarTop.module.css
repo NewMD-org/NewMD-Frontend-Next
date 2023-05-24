@@ -108,11 +108,11 @@
 }
 
 .option {
-    position: relative;
     height: 100%;
+    position: relative;
+    margin-left: 15px;
     display: flex;
     align-items: center;
-    margin: 0 20px;
     transition-duration: 0.3s;
 }
 
@@ -120,8 +120,12 @@
     color: white;
 }
 
-.logout a {
+.logout {
     text-decoration: none;
+}
+
+.logout span {
+    padding-right: 10px;
 }
 
 .header li {

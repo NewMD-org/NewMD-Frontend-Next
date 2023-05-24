@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./InstallPWA.module.css";
 
 
-export function InstallPWA() {
+export default function InstallPWA() {
     const [supportsPWA, setSupportsPWA] = useState(false);
     const [promptInstall, setPromptInstall] = useState(null);
 
