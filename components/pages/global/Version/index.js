@@ -2,6 +2,7 @@ import styles from "./Version.module.css";
 import packageJSON from "../../../../package.json";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import NewMD_API from "../../../api/NewMD_API";
 
@@ -14,9 +15,10 @@ export default function Version() {
 
     useEffect(() => {
         (async () => {
-            setAPIversion((await new NewMD_API(5).ping()).api);
+            setAPIversion((await new NewMD_API(5).ping()).version.current);
         })();
     }, []);
+
     useEffect(() => {
         setIsTablePage(router.pathname === "/table");
     }, [router.pathname]);
@@ -30,6 +32,9 @@ export default function Version() {
         >
             <code className={styles.code}>Website v{packageJSON.version}</code>
             <code className={styles.code}>API {APIversion}</code>
+            <Link className={styles.link} href="https://uptime.newmd.eu.org" >
+                Status Page
+            </Link>
         </div>
     );
 }
