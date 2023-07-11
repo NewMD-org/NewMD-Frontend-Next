@@ -3,9 +3,18 @@
 
 This version is base on [NewMD-Frontend](https://github.com/NewMD-org/NewMD-Frontend) and rebuild by Next.js
 
-## Frontend services
+## Powered by
+<img height="25px" src="https://github.com/NewMD-org/.github/assets/75195127/2dc253e2-797c-4a2b-b8ff-a1c9fc4517d2">
 
-More details : [**Better Uptime**](https://status.newmd.eu.org)
+![](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+
+![](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)
+![](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+
+## Frontend services uptime
+
+### More details : [**Uptime Kuma**](https://uptime.newmd.eu.org/)
 
 ### Main home page status
 
