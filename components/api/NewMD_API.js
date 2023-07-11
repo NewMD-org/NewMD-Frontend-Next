@@ -74,12 +74,23 @@ export default class NewMD_API {
     }
 
     async ping() {
-        const res = await axios.get((await testAPI()).availableURL[0] + "/ping",
+        let res = {
+            "service": String,
+            "uptime": String,
+            "version": {
+                "current": String,
+                "latest": String,
+                "upToDate": Boolean
+            }
+        };
+
+        res = (await axios.get((await testAPI()).availableURL[0] + "/ping",
             {
                 timeout: this.timeoutSeconds,
             }
-        );
-        return res.data;
+        )).data;
+
+        return res;
     }
 
     async login(ID, PWD, rememberMe) {
