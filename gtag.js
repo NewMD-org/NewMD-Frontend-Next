@@ -1,5 +1,7 @@
+const GA_TRACKING_ID = "G-SRJP48CE49";
+
 const pageView = url => {
-    window.gtag("config", process.env.GA_TRACKING_ID, {
+    window.gtag("config", GA_TRACKING_ID, {
         page_path: url,
     });
 };
@@ -14,7 +16,8 @@ const event = ({ action, category, label, value }) => {
 
 const gtag = {
     pageView,
-    event
+    event,
+    trackingID: GA_TRACKING_ID
 };
 
 export default gtag;
