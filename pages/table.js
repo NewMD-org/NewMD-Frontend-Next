@@ -26,7 +26,7 @@ export default function Table() {
 
         setAuthorization(localStorage.getItem("authorization"));
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    });
+    }, [router]);
 
     return (
         (userDataStatus && authorization) ? (
