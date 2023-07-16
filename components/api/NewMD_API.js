@@ -103,14 +103,16 @@ export default class NewMD_API {
             }
         };
 
-        try {
-            if (ID === "") {
-                throw new Error("Missing Username");
-            }
-            else if (PWD === "") {
-                throw new Error("Missing Password");
-            }
+        if (ID === "") {
+            response["message"] = "Missing Username";
+            return response;
+        }
+        else if (PWD === "") {
+            response["message"] = "Missing Password";
+            return response;
+        }
 
+        try {
             const res = await axios.post((await testAPI()).availableURL[0] + "/users/login",
                 JSON.stringify({ ID, PWD, rememberMe }),
                 {
@@ -127,13 +129,13 @@ export default class NewMD_API {
             response["data"]["userDataStatus"] = res.data["userDataStatus"];
         }
         catch (err) {
-            const ststusCodeFilter = [
+            const statusCodeFilter = [
                 400,
                 401,
                 500
             ];
 
-            if (ststusCodeFilter.includes(err.response?.status)) {
+            if (statusCodeFilter.includes(err.response?.status)) {
                 response["message"] = err.response?.data["message"];
             }
             else if (!err?.response) {
