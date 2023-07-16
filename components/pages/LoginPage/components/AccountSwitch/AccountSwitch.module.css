@@ -1,0 +1,76 @@
+.switch {
+    --switchLeftTextWidth: 170px;
+    --switchRightTextWidth: 130px;
+    --switchWidth: calc(var(--switchLeftTextWidth) + var(--switchRightTextWidth));
+    --switchHeight: 30px;
+
+    position: relative;
+    width: var(--switchWidth);
+    margin: auto;
+    padding-right: var(--switchRightTextWidth);
+    background: rgb(184, 184, 184);
+    border-radius: 5px;
+    overflow: hidden;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: var(--switchHeight);
+    color: #155FFF;
+}
+
+.switch:before {
+    content: var(--switchRightText);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: var(--switchRightTextWidth);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.switchCheckbox {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 2;
+}
+
+.switchCheckbox:checked+.switchLabel:before {
+    width: var(--switchRightTextWidth);
+    transform: translateX(var(--switchLeftTextWidth));
+}
+
+.switchCheckbox+.switchLabel {
+    position: relative;
+    width: var(--switchLeftTextWidth);
+    display: block;
+    user-select: none;
+    pointer-events: none;
+}
+
+.switchCheckbox+.switchLabel:before {
+    content: "";
+    background: #fff;
+    height: 100%;
+    width: var(--switchLeftTextWidth);
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 5px;
+    transform: translateX(0);
+    transition: all 0.3s ease;
+    transition-property: all;
+}
+
+.switchCheckbox+.switchLabel .switchText {
+    position: relative;
+}
