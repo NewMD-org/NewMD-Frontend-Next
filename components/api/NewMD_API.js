@@ -111,6 +111,10 @@ export default class NewMD_API {
             response["message"] = "Missing Password";
             return response;
         }
+        else if (!isValidID(ID)) {
+            response["message"] = "Invalid ID";
+            return response;
+        }
 
         try {
             const res = await axios.post((await testAPI()).availableURL[0] + "/users/login",
@@ -199,5 +203,38 @@ export default class NewMD_API {
                 },
             }
         );
+    }
+}
+
+function isValidID(id) {
+    let studIdNumber = id.toUpperCase();
+
+    if (studIdNumber.length != 10) {
+        return false;
+    }
+    if (isNaN(studIdNumber.substr(1, 9)) || (!/^[A-Z]$/.test(studIdNumber.substr(0, 1)))) {
+        return false;
+    }
+
+    var idHeader = "ABCDEFGHJKLMNPQRSTUVXYWZIO";
+
+    studIdNumber = (idHeader.indexOf(studIdNumber.substring(0, 1)) + 10) + "" + studIdNumber.substr(1, 9);
+    let s = parseInt(studIdNumber.substr(0, 1)) +
+        parseInt(studIdNumber.substr(1, 1)) * 9 +
+        parseInt(studIdNumber.substr(2, 1)) * 8 +
+        parseInt(studIdNumber.substr(3, 1)) * 7 +
+        parseInt(studIdNumber.substr(4, 1)) * 6 +
+        parseInt(studIdNumber.substr(5, 1)) * 5 +
+        parseInt(studIdNumber.substr(6, 1)) * 4 +
+        parseInt(studIdNumber.substr(7, 1)) * 3 +
+        parseInt(studIdNumber.substr(8, 1)) * 2 +
+        parseInt(studIdNumber.substr(9, 1));
+
+    let checkNum = parseInt(studIdNumber.substr(10, 1));
+    if ((s % 10) == 0 || (10 - s % 10) == checkNum) {
+        return true;
+    }
+    else {
+        return false;
     }
 }

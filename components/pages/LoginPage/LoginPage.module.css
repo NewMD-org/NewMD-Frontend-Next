@@ -74,7 +74,7 @@
 }
 
 .textfield input {
-    color: #000000;
+    color: var(--IDtextColor);
     padding: 0 25px;
     height: var(--textfieldHeight);
     width: 100%;
@@ -87,7 +87,7 @@
 }
 
 .textfield input::placeholder {
-    color: #000000;
+    color: #808080;
 }
 
 .textfield .text_focusEffect {
@@ -101,6 +101,7 @@
     background: rgb(38, 145, 217);
     opacity: 0;
     transition: .5s;
+    z-index: -1;
 }
 
 .textfield input:focus~.text_focusEffect {
@@ -177,6 +178,9 @@
     outline: 0;
 }
 
+.signIn span {
+    margin: 0;
+}
 
 @media (max-height: 630px) {
     .logo {
