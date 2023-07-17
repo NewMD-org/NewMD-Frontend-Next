@@ -1156,7 +1156,7 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
                     }, "/table");
                 }
                 else {
-                    throw Error("Joanne is smart");
+                    throw Error("Failed to read data");
                 };
             }
             else {
@@ -1177,19 +1177,29 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
                     }, "/table");
                 }
                 else {
-                    throw Error("Joanne is smart");
+                    throw Error("Failed to read data");
                 };
             };
-            console.log("Getting table data : start (test)");
         }
-        catch (err) {
-            if (!err?.response) {
+        catch (error) {
+            console.log(error.response.status);
+            if (!error?.response) {
                 console.log("Getting table data : no server response");
+            }
+            else if (error.response.status === 403) {
+                console.log("Getting table data : failed to verify");
+                sessionStorage.clear();
+                localStorage.clear();
+                cookie.remove("navigate");
+                router.push({
+                    pathname: "/login"
+                }, "/login");
+            }
+            else {
+                await sleep(2);
+                setRetryTimes(retryTimes => retryTimes + 1);
+                console.log(`Retrying getting table data : retried ${retryTimes} time(s)`);
             };
-
-            await sleep(2);
-            setRetryTimes(retryTimes => retryTimes + 1);
-            console.log(`Retrying getting table data : retried ${retryTimes} time(s)`);
         };
     };
 }
