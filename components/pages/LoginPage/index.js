@@ -21,7 +21,8 @@ export default function LoginPage() {
 
     const [ID, setID] = useState("");
     const [PWD, setPWD] = useState("");
-    const [rememberMe, setRememberMe] = useState("");
+    const [isValidID, setIsValidID] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false);
     const [errMsg, setErrMsg] = useState("");
     const [isLoading, setLoading] = useState(false);
     const [oldAccount, setOldAccount] = useState(false);
@@ -32,24 +33,24 @@ export default function LoginPage() {
         IDRef.current.focus();
 
         const JWT = localStorage.getItem("authorization");
-        const decodedJWT = (isValidAuth(JWT) ? jwt_decode(JWT) : {});
-        const defaultRememberMe = (isValidAuth(JWT) ? decodedJWT.rememberMe === "true" : false);
-
-        setID(defaultRememberMe ? decodedJWT.userID : "");
-        setPWD(defaultRememberMe ? decodedJWT.userPWD : "");
-        setRememberMe(defaultRememberMe.toString());
+        if (checkValidAuth(JWT)) {
+            const decodedJWT = (checkValidAuth(JWT) ? jwt_decode(JWT) : {});
+            setID(decodedJWT.userID);
+            setPWD(decodedJWT.userPWD);
+            setRememberMe(decodedJWT.rememberMe);
+            setOldAccount(!(decodedJWT.userID === decodedJWT.userPWD));
+        }
+        else {
+            localStorage.clear();
+            sessionStorage.clear();
+            cookie.remove("navigate");
+        }
     }, []);
 
     useEffect(() => {
         setErrMsg("");
         closeErrorMessage();
-    }, [ID, PWD, closeErrorMessage, rememberMe]);
-
-    useEffect(() => {
-        setPWD(oldAccount ? "" : ID);
-        IDRef.current.focus();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [oldAccount]);
+    }, [ID, PWD, rememberMe, closeErrorMessage]);
 
     return (
         <>
@@ -61,11 +62,16 @@ export default function LoginPage() {
                     </div>
                     <div className={styles.center}>
                         <AccountSwitch
-                            leftText={"I don't have password"}
-                            rightText={"I have password"}
+                            leftText={"我沒有密碼"}
+                            rightText={"我有密碼"}
 
                             checked={oldAccount}
-                            onChange={(e) => setOldAccount(e.target.checked)}
+                            onChange={(e) => {
+                                const checked = e.target.checked;
+                                setOldAccount(checked);
+                                setPWD(checked ? "" : ID);
+                                IDRef.current.focus();
+                            }}
                         />
                         <form
                             className={styles.form}
@@ -79,12 +85,19 @@ export default function LoginPage() {
                                 <input
                                     type="text"
                                     name="ID"
-                                    placeholder="Username"
+                                    placeholder="身份證字號"
                                     autoComplete="username"
+                                    style={{
+                                        "--IDtextColor": isValidID ? "black" : "#df0000"
+                                    }}
 
                                     ref={IDRef}
                                     value={ID}
-                                    onChange={(e) => setID(e.target.value)}
+                                    onChange={(e) => {
+                                        let inputID = e.target.value;
+                                        setID(inputID);
+                                        setIsValidID(checkValidID(inputID));
+                                    }}
                                 />
                                 <span className={styles.text_focusEffect} />
                             </div>
@@ -92,7 +105,7 @@ export default function LoginPage() {
                                 <input
                                     type="password"
                                     name="PWD"
-                                    placeholder="Password"
+                                    placeholder="密碼"
                                     autoComplete="current-password"
 
                                     ref={PWDRef}
@@ -109,8 +122,8 @@ export default function LoginPage() {
                                 className={styles.rememberMe}
 
                                 ref={signInRef}
-                                checked={rememberMe === "true"}
-                                onChange={(e) => setRememberMe(e.currentTarget.checked ? "true" : "false")}
+                                checked={rememberMe}
+                                onChange={(e) => setRememberMe(e.currentTarget.checked)}
                                 autoComplete="on"
                             />
                             <Button
@@ -122,7 +135,7 @@ export default function LoginPage() {
 
                                 onClick={handleSubmit}
                             >
-                                Sign in
+                                {isLoading ? "" : "Sign in"}
                             </Button>
                         </form>
                     </div>
@@ -156,7 +169,7 @@ export default function LoginPage() {
         setLoading(true);
 
         try {
-            const response = await new NewMD_API(20).login(ID, oldAccount ? PWD : ID, rememberMe);
+            const response = await new NewMD_API(20).login(ID, oldAccount ? PWD : ID, rememberMe.toString());
             if (response["error"] === false) {
                 cookie.save("navigate", "true", { path: "/", maxAge: 60 * 60 * 24 * 7 });
                 localStorage.setItem("authorization", response["data"]["authorization"]);
@@ -205,7 +218,7 @@ function join(...classes) {
     return classes.join(" ");
 }
 
-function isValidAuth(JWT) {
+function checkValidAuth(JWT) {
     try {
         return [
             typeof (JWT) === "string",
@@ -216,4 +229,37 @@ function isValidAuth(JWT) {
     catch (err) {
         return false;
     };
+}
+
+function checkValidID(id) {
+    let studIdNumber = id.toUpperCase();
+
+    if (studIdNumber.length != 10) {
+        return false;
+    }
+    if (isNaN(studIdNumber.substr(1, 9)) || (!/^[A-Z]$/.test(studIdNumber.substr(0, 1)))) {
+        return false;
+    }
+
+    var idHeader = "ABCDEFGHJKLMNPQRSTUVXYWZIO";
+
+    studIdNumber = (idHeader.indexOf(studIdNumber.substring(0, 1)) + 10) + "" + studIdNumber.substr(1, 9);
+    let s = parseInt(studIdNumber.substr(0, 1)) +
+        parseInt(studIdNumber.substr(1, 1)) * 9 +
+        parseInt(studIdNumber.substr(2, 1)) * 8 +
+        parseInt(studIdNumber.substr(3, 1)) * 7 +
+        parseInt(studIdNumber.substr(4, 1)) * 6 +
+        parseInt(studIdNumber.substr(5, 1)) * 5 +
+        parseInt(studIdNumber.substr(6, 1)) * 4 +
+        parseInt(studIdNumber.substr(7, 1)) * 3 +
+        parseInt(studIdNumber.substr(8, 1)) * 2 +
+        parseInt(studIdNumber.substr(9, 1));
+
+    let checkNum = parseInt(studIdNumber.substr(10, 1));
+    if ((s % 10) == 0 || (10 - s % 10) == checkNum) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }

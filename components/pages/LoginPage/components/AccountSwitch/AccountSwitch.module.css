@@ -1,6 +1,6 @@
 .switch {
-    --switchLeftTextWidth: 170px;
-    --switchRightTextWidth: 130px;
+    --switchLeftTextWidth: 95px;
+    --switchRightTextWidth: 80px;
     --switchWidth: calc(var(--switchLeftTextWidth) + var(--switchRightTextWidth));
     --switchHeight: 30px;
 
