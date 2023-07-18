@@ -50,6 +50,7 @@ export default function LoginPage() {
     useEffect(() => {
         setErrMsg("");
         closeErrorMessage();
+        setIsValidID(checkValidID(ID));
     }, [ID, PWD, rememberMe, closeErrorMessage]);
 
     return (
@@ -93,11 +94,7 @@ export default function LoginPage() {
 
                                     ref={IDRef}
                                     value={ID}
-                                    onChange={(e) => {
-                                        let inputID = e.target.value;
-                                        setID(inputID);
-                                        setIsValidID(checkValidID(inputID));
-                                    }}
+                                    onInput={(e) => setID(e.target.value)}
                                 />
                                 <span className={styles.text_focusEffect} />
                             </div>
@@ -107,10 +104,13 @@ export default function LoginPage() {
                                     name="PWD"
                                     placeholder="密碼"
                                     autoComplete="current-password"
+                                    style={{
+                                        "--IDtextColor": "black"
+                                    }}
 
                                     ref={PWDRef}
                                     value={PWD}
-                                    onChange={(e) => setPWD(e.target.value)}
+                                    onInput={(e) => setPWD(e.target.value)}
                                 />
                                 <span className={styles.text_focusEffect} />
                             </div>
