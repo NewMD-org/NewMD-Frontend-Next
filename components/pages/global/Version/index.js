@@ -31,8 +31,8 @@ export default function Version() {
             }}
         >
             <code className={styles.code}>Website v{packageJSON.version}</code>
-            <code className={styles.code}>API {APIversion}</code>
-            <Link className={styles.link} href="https://uptime.newmd.eu.org" >
+            <code className={styles.code}>API v{APIversion}</code>
+            <Link className={styles.link} href="https://uptime.newmd.eu.org" target="_blank">
                 Status Page
             </Link>
         </div>
