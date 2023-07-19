@@ -80,6 +80,7 @@ export default function LoginPage() {
                                 "--textfieldPWDHeight": oldAccount ? "var(--textfieldHeight)" : "0",
                                 "--movement": oldAccount ? "0" : "var(--textfieldHeight)"
                             }}
+                            onKeyDown={(e) => e.key === "Enter" ? handleSubmit(e) : ""}
                             onSubmit={handleSubmit}
                         >
                             <div className={styles.textfield}>
