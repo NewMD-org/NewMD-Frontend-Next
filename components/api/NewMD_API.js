@@ -104,15 +104,18 @@ export default class NewMD_API {
         };
 
         if (ID === "") {
-            response["message"] = "Missing Username";
+            // Missing ID
+            response["message"] = "請輸入身份證字號";
             return response;
         }
         else if (PWD === "") {
-            response["message"] = "Missing Password";
+            // Missing password
+            response["message"] = "請輸入密碼";
             return response;
         }
         else if (!isValidID(ID)) {
-            response["message"] = "Invalid ID";
+            // Invalid ID
+            response["message"] = "請輸入有效的身份證字號";
             return response;
         }
 
@@ -132,21 +135,13 @@ export default class NewMD_API {
             response["data"]["authorization"] = res.headers["authorization"];
             response["data"]["userDataStatus"] = res.data["userDataStatus"];
         }
-        catch (err) {
-            const statusCodeFilter = [
-                400,
-                401,
-                500
-            ];
-
-            if (statusCodeFilter.includes(err.response?.status)) {
-                response["message"] = err.response?.data["message"];
-            }
-            else if (!err?.response) {
-                response["message"] = "No Server Response";
+        catch (error) {
+            if (error.response?.status === 401) {
+                response["message"] = "身份證字號或密碼錯誤";
             }
             else {
-                response["message"] = "Unexpected Error";
+                // Unexpected error
+                response["message"] = "發生錯誤，請再試一次";
             }
         };
 

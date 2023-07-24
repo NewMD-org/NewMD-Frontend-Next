@@ -32,10 +32,10 @@ export default function NavbarTop({ state, authorization, decoration, setDecorat
                 </label>
                 <ul className={styles.menu}>
                     <li>
-                        <div className={join(styles.option, styles.nohover)} style={{ cursor: "pointer" }} >{/* onClick={() => setSnowInput.current.click()} */}
+                        <div className={join(styles.option, styles.nohover)} style={{ cursor: "pointer" }}>
                             <Select
                                 clearable
-                                placeholder="Pick a decoration"
+                                placeholder="選擇一個主題"
                                 nothingFound="No options"
                                 size="xs"
                                 transitionProps={{ transition: "scale-y", duration: 200, timingFunction: "ease" }}
@@ -43,7 +43,7 @@ export default function NavbarTop({ state, authorization, decoration, setDecorat
 
                                 value={decoration}
                                 onChange={setDecoration}
-                                data={["Christmas"]}
+                                data={["聖誕節"]}
                             />
                         </div>
                     </li>
@@ -56,7 +56,7 @@ export default function NavbarTop({ state, authorization, decoration, setDecorat
                             <Switch
                                 name="userDataStatus"
                                 labelPosition="left"
-                                label={isLoading ? (state["userDataStatus"] === "true" ? "Deleting" : "Saving") : "Save Data"}
+                                label={isLoading ? (state["userDataStatus"] === "true" ? "正在刪除" : "正在儲存") : "儲存資料"}
                                 size="md"
                                 color="green"
                                 style={{ pointerEvents: "none" }}
@@ -71,7 +71,7 @@ export default function NavbarTop({ state, authorization, decoration, setDecorat
                     <li>
                         <Link href="/logout" className={join(styles.logout, styles.option)}>
                             <span>
-                                Logout
+                                登出
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-logout" width="24" height="24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>

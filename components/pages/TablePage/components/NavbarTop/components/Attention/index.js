@@ -75,12 +75,12 @@ export default function Attention({ setIsLoading, setShowAttention, setUserDataS
         <div className={join(styles.modal_container, "noselect")}>
             <div className={styles.outside_close} onClick={() => closeModal()}></div>
             <div className={join(styles.modal, "fadeIn")} style={{ "--fadeInDuration": "1s" }}>
-                <h1 className={styles.modal__title}>Attention !</h1>
-                <p className={styles.modal__text}>Enabling the &quot;Save Data&quot; option means that your account and password will be stored in our server!</p>
-                <p className={styles.modal__footer}>Please head to our <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" title="Privacy Policy">Privacy Policy</a> page for more information.</p>
+                <h1 className={styles.modal__title}>注意 !</h1>
+                <p className={styles.modal__text}>啟用儲存功能可以加快課表的讀取速度，不過您的身份證字號和密碼會被儲存在我們的伺服器以便我們更新您的課表</p>
+                <p className={styles.modal__footer}>請查看 <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" title="Privacy Policy">隱私權條款</a> 來了解更多資訊</p>
                 <div className={styles.button_container}>
-                    <button className={styles.button_cancel} onClick={() => closeModal()}>Cancel</button>
-                    <button className={styles.button_continue} onClick={() => setAgree(true)}>Continue &rarr;</button>
+                    <button className={styles.button_cancel} onClick={() => closeModal()}>取消</button>
+                    <button className={styles.button_continue} onClick={() => setAgree(true)}>確認</button>
                 </div>
             </div>
         </div >

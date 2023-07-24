@@ -116,7 +116,7 @@ export default function LoginPage() {
                                 <span className={styles.text_focusEffect} />
                             </div>
                             <Checkbox
-                                label="Remember me for 7 days"
+                                label="在這個裝置上記住我 (7天)"
                                 color="green"
                                 size="md"
                                 style={{ cursor: "pointer" }}
@@ -136,7 +136,7 @@ export default function LoginPage() {
 
                                 onClick={handleSubmit}
                             >
-                                {isLoading ? "" : "Sign in"}
+                                {isLoading ? "" : "登入"}
                             </Button>
                         </form>
                     </div>
@@ -184,15 +184,30 @@ export default function LoginPage() {
                 }, "/table");
             }
             else {
-                if (response["message"] === "Missing Username") {
-                    IDRef.current.focus();
+                switch (response["message"]) {
+                    case "請輸入身份證字號": {
+                        IDRef.current.focus();
+                        break;
+                    }
+                    case "請輸入密碼": {
+                        PWDRef.current.focus();
+                        break;
+                    }
+                    case "請輸入有效的身份證字號": {
+                        IDRef.current.focus();
+                        break;
+                    }
+                    case "身份證字號或密碼錯誤": {
+                        IDRef.current.focus();
+                        break;
+                    }
+                    default: {
+                        throw new Error("Unexpected error");
+                    }
                 }
-                else if (response["message"] === "Missing Password") {
-                    PWDRef.current.focus();
-                }
-
                 setErrMsg(response["message"]);
                 showErrorMessage();
+
                 console.log(`Manual login : ${response["message"]}`);
                 console.log("Manual login : failed");
                 console.log("Clear local storage, session storage and cookie");
@@ -202,7 +217,7 @@ export default function LoginPage() {
             };
         }
         catch (err) {
-            setErrMsg("Manual login : unexpected error");
+            setErrMsg("發生錯誤，請再試一次");
             showErrorMessage();
             console.log("Remove cookie : navigate");
             cookie.remove("navigate");
