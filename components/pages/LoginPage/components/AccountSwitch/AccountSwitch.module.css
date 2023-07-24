@@ -13,9 +13,9 @@
     overflow: hidden;
     text-align: center;
     font-size: 15px;
-    font-weight: 500;
+    font-weight: bold;
     line-height: var(--switchHeight);
-    color: #155FFF;
+    color: #0069f3;
 }
 
 .switch:before {
@@ -59,7 +59,7 @@
 
 .switchCheckbox+.switchLabel:before {
     content: "";
-    background: #fff;
+    background: #f1f1f1;
     height: 100%;
     width: var(--switchLeftTextWidth);
     position: absolute;

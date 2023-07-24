@@ -129,6 +129,11 @@
     background-color: rgb(180, 180, 180);
 }
 
+.rememberMe input:checked {
+    background-color: #1da2b9;
+    border-color: #1da2b9;
+}
+
 .rememberMe * {
     cursor: pointer;
 }

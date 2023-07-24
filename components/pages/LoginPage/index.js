@@ -117,7 +117,7 @@ export default function LoginPage() {
                             </div>
                             <Checkbox
                                 label="在這個裝置上記住我 (7天)"
-                                color="green"
+                                color="cyan"
                                 size="md"
                                 style={{ cursor: "pointer" }}
                                 className={styles.rememberMe}
