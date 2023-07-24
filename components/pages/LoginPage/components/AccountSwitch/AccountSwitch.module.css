@@ -9,7 +9,7 @@
     margin: auto;
     padding-right: var(--switchRightTextWidth);
     background: rgb(184, 184, 184);
-    border-radius: 5px;
+    border-radius: var(--switchHeight);
     overflow: hidden;
     text-align: center;
     font-size: 15px;
@@ -65,7 +65,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    border-radius: 5px;
+    border-radius: var(--switchHeight);
     transform: translateX(0);
     transition: all 0.3s ease;
     transition-property: all;
