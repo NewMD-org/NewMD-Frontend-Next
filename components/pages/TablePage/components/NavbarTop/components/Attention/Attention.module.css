@@ -1,55 +1,27 @@
-.modal_container {
-    position: fixed;
-    z-index: 9998;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-}
-
-.outside_close {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    z-index: 9998;
-}
-
-.modal {
-    width: 40rem;
-    display: block;
-    padding: 3rem 1rem;
-    border-radius: .8rem;
-    color: hsl(220, 50%, 90%);
-    background: linear-gradient(to right, hsl(210, 30%, 20%), hsl(255, 30%, 25%));
-    z-index: 9999;
-}
-
 .modal__title {
-    margin-left: 1rem;
-    font-size: 2rem;
-    font-weight: bold;
+    position: relative;
+    font-size: 25px;
+    font-weight: 500;
+    width: 90%;
+    margin-top: -40px;
+    margin-left: 5px;
+    margin-bottom: 0;
+    z-index: 1001;
+    animation: fadeIn 0.2s;
 }
 
 .modal__text {
-    padding: 0 2rem;
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
-    line-height: 2;
+    line-height: 25px;
+    width: 100%;
+    margin-bottom: 5px;
 }
 
 .modal__footer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: right;
+    text-align: right;
     padding: 0 2rem;
     margin-bottom: 2rem;
     font-size: 0.7rem;
     line-height: 2;
-    white-space: pre;
 }
 
 .button_container {
@@ -62,7 +34,6 @@
 
 .button_cancel {
     padding: 0.5rem 1.6rem;
-    border: 1px solid hsla(0, 0%, 100%, .2);
     border-radius: 100rem;
     color: inherit;
     background: transparent;
@@ -73,18 +44,17 @@
     transition: .2s;
     cursor: pointer;
     background: hsl(0, 58%, 35%);
-    border-color: hsl(0, 58%, 35%);
+    border: 1px solid hsl(0, 58%, 35%);
 }
 
 .button_cancel:hover,
 .button_cancel:focus {
-    background: hsl(0, 58%, 49%);
-    border-color: hsl(0, 58%, 49%);
+    background: hsl(0, 58%, 43%);
+    border-color: hsl(0, 58%, 43%);
 }
 
 .button_continue {
     padding: 0.5rem 1.6rem;
-    border: 1px solid hsla(0, 0%, 100%, .2);
     border-radius: 100rem;
     color: inherit;
     background: transparent;
@@ -95,11 +65,11 @@
     transition: .2s;
     cursor: pointer;
     background: hsl(150, 58%, 35%);
-    border-color: hsl(150, 58%, 35%);
+    border: 1px solid hsl(150, 58%, 35%);
 }
 
 .button_continue:hover,
 .button_continue:focus {
-    background: hsl(150, 58%, 49%);
-    border-color: hsl(150, 58%, 49%);
+    background: hsl(150, 58%, 43%);
+    border-color: hsl(150, 58%, 43%);
 }

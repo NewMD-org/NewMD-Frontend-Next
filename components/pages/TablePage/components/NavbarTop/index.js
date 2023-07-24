@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import cookie from "react-cookies";
@@ -21,7 +21,7 @@ export default function NavbarTop({ state, authorization, decoration, setDecorat
 
     return (
         <>
-            {showAttention ? <Attention setIsLoading={setIsLoading} setShowAttention={setShowAttention} setUserDataStatus={setUserDataStatus} authorization={authorization} /> : <></>}
+            <Attention setIsLoading={setIsLoading} showAttention={showAttention} setShowAttention={setShowAttention} setUserDataStatus={setUserDataStatus} authorization={authorization} />
             <header className={styles.header}>
                 <Link href="/" className={join(styles.logo, "noselect")} onClick={removeCookie}>
                     NewMD
