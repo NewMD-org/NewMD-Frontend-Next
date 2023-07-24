@@ -135,24 +135,32 @@
 
 .signIn {
     position: absolute;
+    left: 0;
+    right: 0;
+    inset: 1;
     margin: 40px auto 0 auto;
+    border-radius: 4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.25em;
     background: #dba154;
     width: 140px;
     height: 50px;
-    left: 0;
-    right: 0;
     transition: transform 0.3s;
     transform: translateY(calc((var(--movement) + 30px) * -1));
 }
 
 .signIn:focus-visible,
 .signIn:hover {
-    transition-duration: 0.5s;
-    transform: scale(1.1) translateY(calc((var(--movement) + 30px) * -1));
-    background: #dba154;
+    background: #daad72;
+    transition: transform 0.3s;
+    transform: translateY(calc((var(--movement) + 30px) * -1));
 }
 
-.signIn:after {
+.signIn::after {
     pointer-events: none;
     content: "";
     display: block;
@@ -167,15 +175,11 @@
     box-shadow: 0 0 10px 10px white;
 }
 
-.signIn:active:after {
+.signIn:active::after {
     box-shadow: 0 0 0 0 white;
     position: absolute;
     opacity: 1;
     transition: 0s;
-}
-
-.signIn:focus {
-    outline: 0;
 }
 
 .signIn span {
