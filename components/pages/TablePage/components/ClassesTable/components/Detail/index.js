@@ -54,15 +54,18 @@ export default function Detail({ showDetail, setShowDetail, setDetail, detail, s
     }, [showDetail]);
 
     const closeModal = useCallback(_ => {
-        setDetail({ "name": null, "classID": null });
+        setTimeout(() => {
+            setDetail({ "name": null, "classID": null });
+        }, 200);
         setShowDetail(false);
     }, [setDetail, setShowDetail]);
 
     return (
         <Modal
+            title={detail["name"]}
             centered
-            className={styles.modal_container}
             radius="md"
+            className={styles.modal_container}
             styles={{
                 content: { background: "linear-gradient(90deg,#243342,#362d53)" },
                 header: { background: "transparent" },
@@ -82,15 +85,14 @@ export default function Detail({ showDetail, setShowDetail, setDetail, detail, s
             opened={opened}
             onClose={closeModal}
         >
-            <h1 className={styles.modal__title}>{detail["name"]}</h1>
             <div className={styles.field_container}>
                 {isLoading ? <>
                     <div className={styles.spinner_container}>
                         <div className={styles.spinner}></div>
                     </div>
                     <div className={styles.text_area}>
-                        <p className={styles.title}>Waiting for too long ?</p>
-                        <p className={styles.content}>Try enabling the &quot;Save Data&quot; option !</p>
+                        <p className={styles.title}>不想等待太久 ?</p>
+                        <p className={styles.content}>啟用「儲存資料」的選項可以極大的縮減查詢課表的時間</p>
                     </div>
                 </> : <>
                     <p className={styles.modal__text}>Google Meet</p>

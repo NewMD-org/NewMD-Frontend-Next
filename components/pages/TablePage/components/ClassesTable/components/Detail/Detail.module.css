@@ -12,16 +12,6 @@
     --group-background-focus: #678efe;
 }
 
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
 @keyframes move-up {
     0% {
         top: 50%;
@@ -101,31 +91,23 @@
     text-align: center;
 }
 
-.modal__title {
-    position: relative;
+.modal_container>div>section>div>h2 {
     font-size: 25px;
     font-weight: 500;
-    width: 90%;
-    margin-top: -40px;
-    margin-left: 5px;
-    margin-bottom: 0;
-    z-index: 1001;
-    animation: fadeIn 0.2s;
 }
 
 .modal__text {
     line-height: 25px;
     width: 100%;
-    margin-bottom: 5px;
+    margin: 5px 0;
 }
 
 .modal__text:not(:first-child) {
-    margin-top: 25px;
+    margin-top: 15px;
 }
 
 .field_container {
     position: relative;
-    animation: fadeIn 0.3s;
     margin: 0 15px 15px 15px;
 }
 

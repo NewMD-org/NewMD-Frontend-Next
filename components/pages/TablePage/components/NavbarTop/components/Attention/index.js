@@ -82,8 +82,10 @@ export default function Attention({ setIsLoading, showAttention, setShowAttentio
 
     return (
         <Modal
+            title="注意!"
             centered
             radius="md"
+            className={styles.modal_container}
             styles={{
                 content: { background: "linear-gradient(90deg,#243342,#362d53)" },
                 header: { background: "transparent" },
@@ -103,7 +105,6 @@ export default function Attention({ setIsLoading, showAttention, setShowAttentio
             opened={opened}
             onClose={closeModal}
         >
-            <h1 className={styles.modal__title}>注意 !</h1>
             <p className={styles.modal__text}>啟用儲存功能可以加快課表的讀取速度，不過您的身份證字號和密碼會被我們儲存，以便更新您的課表</p>
             <p className={styles.modal__footer}>請查看 <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" title="Privacy Policy">隱私權條款</a> 來了解更多資訊</p>
             <div className={styles.button_container}>

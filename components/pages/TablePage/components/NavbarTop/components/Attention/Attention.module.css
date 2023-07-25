@@ -1,26 +1,19 @@
-.modal__title {
-    position: relative;
+.modal_container>div>section>div>h2 {
     font-size: 25px;
     font-weight: 500;
-    width: 90%;
-    margin-top: -40px;
-    margin-left: 5px;
-    margin-bottom: 0;
-    z-index: 1001;
-    animation: fadeIn 0.2s;
 }
 
 .modal__text {
     line-height: 25px;
     width: 100%;
     margin-bottom: 5px;
+    margin: 0;
 }
 
 .modal__footer {
     text-align: right;
-    padding: 0 2rem;
-    margin-bottom: 2rem;
-    font-size: 0.7rem;
+    margin: 10px 20px 20px 0px;
+    font-size: 13px;
     line-height: 2;
 }
 
