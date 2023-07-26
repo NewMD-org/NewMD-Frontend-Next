@@ -52,7 +52,7 @@ export default function Table() {
                     <meta name="distribution" content="local" />
                     <meta name="revisit-after" content="1" />
                 </Head>
-                <TablePage state={{ "userDataStatus": userDataStatus, "table": router.query["table"] || null, "year": router.query["year"] || null }} authorization={authorization} />
+                <TablePage state={{ "userDataStatus": userDataStatus, "table": router.query["table"] || null, "year": router.query["year"] || null, "updateAt": router.query["updateAt"] || null }} authorization={authorization} />
             </>
         ) : (
             <></>

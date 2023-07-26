@@ -195,7 +195,8 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
                         query: {
                             "userDataStatus": state["userDataStatus"],
                             "table": JSON.stringify(response.data["table"]),
-                            "year": response.data["year"]
+                            "year": response.data["year"],
+                            "updateAt": response.data["updatedAt"]
                         }
                     }, "/table");
                 }
@@ -216,7 +217,8 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
                         query: {
                             "userDataStatus": state["userDataStatus"],
                             "table": JSON.stringify(response.data["table"]),
-                            "year": response.data["year"]
+                            "year": response.data["year"],
+                            "updateAt": new Date().toISOString()
                         }
                     }, "/table");
                 }
@@ -226,7 +228,6 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
             };
         }
         catch (error) {
-            console.log(error.response.status);
             if (!error?.response) {
                 console.log("Getting table data : no server response");
             }

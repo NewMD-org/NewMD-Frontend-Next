@@ -110,22 +110,38 @@
 .option {
     height: 100%;
     position: relative;
-    margin-left: 15px;
+    margin: 0 15px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     transition-duration: 0.3s;
+    text-decoration: none;
 }
 
 .option * {
     color: white;
 }
 
+.saveData>div>div>label {
+    padding-right: 5px;
+}
+
+.updateAt {
+    font-size: 15px;
+    line-height: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+
 .logout {
-    text-decoration: none;
+    display: flex;
+    align-items: center;
 }
 
 .logout span {
-    padding-right: 10px;
+    padding-right: 5px;
 }
 
 .header li {
@@ -133,6 +149,12 @@
     cursor: pointer;
     text-align: left;
     height: 55px;
+}
+
+@media (min-width: 418px) {
+    .updateAt div {
+        display: flex;
+    }
 }
 
 @media (min-width: 930px) {
@@ -173,6 +195,10 @@
         background-color: #ffffff1a;
     }
 
+    .updateAt {
+        display: none;
+    }
+
     .header .logo {
         padding: 0 20px;
         font-size: 32px;
@@ -180,6 +206,7 @@
     }
 }
 
-.nohover {
-    padding: 0;
+.setDecoration:hover {
+    cursor: default;
+    background: none;
 }
