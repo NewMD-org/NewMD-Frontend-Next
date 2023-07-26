@@ -92,7 +92,7 @@ export default function Detail({ showDetail, setShowDetail, setDetail, detail, s
                     </div>
                     <div className={styles.text_area}>
                         <p className={styles.title}>不想等待太久 ?</p>
-                        <p className={styles.content}>啟用「儲存資料」的選項可以極大的縮減查詢課表的時間</p>
+                        <p className={styles.content}>啟用「儲存課表」的選項可以極大的縮減查詢課表的時間</p>
                     </div>
                 </> : <>
                     <p className={styles.modal__text}>Google Meet</p>
