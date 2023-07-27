@@ -5,6 +5,7 @@
     margin-bottom: 4px;
     font-size: 11px;
     text-align: center;
+    z-index: 999;
 }
 
 @media (max-width: 930px) {

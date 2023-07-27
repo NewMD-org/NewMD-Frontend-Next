@@ -11,7 +11,7 @@
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 9;
+    z-index: 999;
     color: white;
     overflow: hidden;
 }
@@ -209,4 +209,8 @@
 .setDecoration:hover {
     cursor: default;
     background: none;
+}
+
+.menu_btn:not(:checked) * {
+    user-select: none;
 }
