@@ -22,18 +22,10 @@ export default function NavbarTop({ state, authorization, decoration, setDecorat
     const [showMenu, setShowMenu] = useState(getWindowDimensions().width >= 930);
 
     useEffect(() => {
-        setShowMenu(false);
-    }, [isBigScreen]);
-
-    useEffect(() => {
         async function handleResize() {
-            let windowWiderThan930 = getWindowDimensions().width >= 930;
-            if (isBigScreen !== windowWiderThan930) {
-                setIsBigScreen(windowWiderThan930);
-            }
-            if (showMenu !== windowWiderThan930) {
-                setShowMenu(windowWiderThan930);
-            }
+            let windowWiderThan930 = getWindowDimensions().width > 930;
+            setIsBigScreen(windowWiderThan930);
+            setShowMenu(windowWiderThan930);
         }
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
@@ -95,7 +87,7 @@ export default function NavbarTop({ state, authorization, decoration, setDecorat
 
                                     ref={saveDataInput}
                                     checked={userDataStatus === "true"}
-                                    disabled={isLoading || (!showMenu || !state["updateAt"])}
+                                    disabled={isLoading || !showMenu || !state["updateAt"]}
                                     onChange={(e) => userDataStatusChange(e.target.checked)}
                                 />
                                 <div className={styles.updateAt}>
