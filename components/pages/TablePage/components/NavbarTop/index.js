@@ -124,7 +124,7 @@ export default function NavbarTop({ state, authorization, decoration, setDecorat
                 router.replace({
                     pathname: "/table",
                     query: {
-                        "userDataStatus": "alse",
+                        "userDataStatus": "false",
                         "table": state["table"],
                         "year": state["year"],
                         "updateAt": state["updateAt"]
