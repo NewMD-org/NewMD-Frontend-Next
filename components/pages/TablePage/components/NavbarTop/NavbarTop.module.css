@@ -1,17 +1,14 @@
-.outside_close {
-    position: fixed;
-    z-index: 8;
-    width: 100%;
-    height: 100%;
-}
-
 .header {
     background-color: #333333;
     box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
     position: fixed;
     top: 0;
     width: 100%;
+<<<<<<< HEAD
     z-index: 999;
+=======
+    z-index: 9999;
+>>>>>>> 183f038 (Fix UI layout on table page)
     color: white;
     overflow: hidden;
 }
@@ -110,7 +107,7 @@
 .option {
     height: 100%;
     position: relative;
-    margin: 0 15px;
+    padding: 0 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -157,7 +154,7 @@
     }
 }
 
-@media (min-width: 930px) {
+@media (min-width: 931px) {
     .header {
         height: 60px;
         overflow: unset;
