@@ -138,6 +138,13 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
                                             </div>
                                             <div
                                                 className={styles.classname}
+                                                tabIndex={0}
+                                                onKeyUp={(event) => {
+                                                    if (event.key === "Enter") {
+                                                        setDetail({ "name": table[`day${x}`][y]["classname"], "classID": table[`day${x}`][y]["classID"] });
+                                                        setShowDetail(true);
+                                                    }
+                                                }}
                                                 onClick={() => {
                                                     setDetail({ "name": table[`day${x}`][y]["classname"], "classID": table[`day${x}`][y]["classID"] });
                                                     setShowDetail(true);

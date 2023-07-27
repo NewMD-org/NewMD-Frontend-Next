@@ -129,6 +129,7 @@
 
 .meet {
     cursor: pointer;
+    width: 0%;
 }
 
 .classroom {
@@ -154,8 +155,8 @@
 }
 
 .form {
-    position: sticky;
     display: flex;
+    flex-direction: row-reverse;
     width: 100%;
 }
 
@@ -181,13 +182,13 @@
 
 .form>span,
 .form .field {
-    border-radius: 6px 0 0 6px;
+    border-radius: 0 6px 6px 0;
 }
 
 .form>span:last-child,
 .form .field:last-child {
-    border-radius: 0 6px 6px 0;
-    margin-left: -2px;
+    border-radius: 6px 0 0 6px;
+    margin-right: -2px;
 }
 
 .form .field {
@@ -198,14 +199,20 @@
     margin-bottom: 0;
 }
 
+.form>span:focus-visible,
 .form>span:hover {
+    outline: none;
     color: var(--group-color-focus);
     background: var(--group-background-focus);
     border-color: var(--group-border-focus);
 }
 
-.form:hover>.field,
-.form:hover>.field_none {
+.field:focus-visible,
+.field:hover,
+.field_none:focus-visible,
+.field_none:hover,
+.form>span:focus-visible~.field,
+.form>span:hover~.field {
     outline: none;
     border-color: var(--group-border-focus);
 }

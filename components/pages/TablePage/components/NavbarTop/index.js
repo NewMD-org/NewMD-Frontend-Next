@@ -19,14 +19,25 @@ export default function NavbarTop({ state, authorization, decoration, setDecorat
     const [userDataStatus, setUserDataStatus] = useState(state["userDataStatus"].toString());
     const [isLoading, setIsLoading] = useState(false);
     const [showAttention, setShowAttention] = useState(false);
+    const [showMenu, setShowMenu] = useState(getWindowDimensions().width >= 930);
+
+    useEffect(() => {
+        setShowMenu(false);
+    }, [isBigScreen]);
 
     useEffect(() => {
         async function handleResize() {
-            setIsBigScreen(getWindowDimensions().width > 930);
+            let windowWiderThan930 = getWindowDimensions().width >= 930;
+            if (isBigScreen !== windowWiderThan930) {
+                setIsBigScreen(windowWiderThan930);
+            }
+            if (showMenu !== windowWiderThan930) {
+                setShowMenu(windowWiderThan930);
+            }
         }
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, []);
+    }, [isBigScreen, showMenu, state]);
 
     return (
         <>
@@ -35,8 +46,14 @@ export default function NavbarTop({ state, authorization, decoration, setDecorat
                 <Link href="/" className={join(styles.logo, "noselect")} onClick={removeCookie}>
                     NewMD
                 </Link>
-                <input className={styles.menu_btn} type="checkbox" id="menu-btn" ref={menu} />
-                <label className={styles.menu_icon} htmlFor="menu-btn">
+                <input className={styles.menu_btn} type="checkbox" id="menu-btn" ref={menu} checked={showMenu} />
+                <label
+                    className={styles.menu_icon}
+                    tabIndex={0}
+                    htmlFor="menu-btn"
+                    onClick={() => setShowMenu(preValue => !preValue)}
+                    onKeyUp={(event) => setShowMenu(preValue => (event.key === " ") ? !preValue : preValue)}
+                >
                     <span className={styles.navicon}></span>
                 </label>
                 <ul className={styles.menu}>
@@ -49,6 +66,7 @@ export default function NavbarTop({ state, authorization, decoration, setDecorat
                                 size="xs"
                                 transitionProps={{ transition: "scale-y", duration: 200, timingFunction: "ease" }}
                                 maxDropdownHeight={150}
+                                disabled={!showMenu}
 
                                 value={decoration}
                                 onChange={setDecoration}
@@ -77,7 +95,7 @@ export default function NavbarTop({ state, authorization, decoration, setDecorat
 
                                     ref={saveDataInput}
                                     checked={userDataStatus === "true"}
-                                    disabled={isLoading}
+                                    disabled={isLoading || (!showMenu || !state["updateAt"])}
                                     onChange={(e) => userDataStatusChange(e.target.checked)}
                                 />
                                 <div className={styles.updateAt}>
@@ -92,7 +110,7 @@ export default function NavbarTop({ state, authorization, decoration, setDecorat
                         </Tooltip>
                     </li>
                     <li>
-                        <Link href="/logout" className={join(styles.option)}>
+                        <Link href="/logout" className={join(styles.option)} tabIndex={showMenu - 1}>
                             <div className={styles.logout}>
                                 <span>
                                     登出
