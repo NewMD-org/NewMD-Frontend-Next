@@ -4,11 +4,7 @@
     position: fixed;
     top: 0;
     width: 100%;
-<<<<<<< HEAD
-    z-index: 999;
-=======
     z-index: 9999;
->>>>>>> 183f038 (Fix UI layout on table page)
     color: white;
     overflow: hidden;
 }

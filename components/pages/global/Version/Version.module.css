@@ -5,11 +5,7 @@
     margin-bottom: 4px;
     font-size: 11px;
     text-align: center;
-<<<<<<< HEAD
-    z-index: 999;
-=======
     z-index: 9999;
->>>>>>> 183f038 (Fix UI layout on table page)
 }
 
 @media (max-width: 930px) {
