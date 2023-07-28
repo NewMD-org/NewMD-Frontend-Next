@@ -41,48 +41,42 @@
 }
 
 .center {
-    padding-top: 3%;
-    padding-left: 10%;
-    padding-right: 10%;
-    width: 100%;
+    margin: 60px auto 0 auto;
+    width: 90%;
 }
 
-.errmsg {
+.errorMessage {
+    width: fit-content;
+    padding-right: 40px;
     background-color: lightpink;
     color: firebrick;
-    font-weight: bold;
-    padding: 0.5rem;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 400px;
-    margin-bottom: 0.5rem;
-    border-radius: 3px;
 }
 
-.offscreen {
-    position: absolute;
-    left: -9999px;
+.errorMessage svg {
+    color: firebrick;
 }
 
 .form {
-    margin: auto;
+    --textfieldHeight: 50px;
+    position: relative;
+    margin: 30px auto 0 auto;
     width: 100%;
-    max-width: 400px;
+    max-width: 350px;
 }
 
 .textfield {
     position: relative;
     width: 100%;
     background: #e9f4fb;
-    margin: 30px 0;
+    margin: 0 0 30px 0;
     border-radius: 100px;
     z-index: 999;
 }
 
 .textfield input {
-    color: #000000;
+    color: var(--IDtextColor);
     padding: 0 25px;
-    height: 50px;
+    height: var(--textfieldHeight);
     width: 100%;
     font-size: 16px;
     background: transparent;
@@ -93,7 +87,7 @@
 }
 
 .textfield input::placeholder {
-    color: #000000;
+    color: #808080;
 }
 
 .textfield .text_focusEffect {
@@ -102,11 +96,12 @@
     pointer-events: none;
     left: 0px;
     width: 0%;
-    height: 50px;
+    height: var(--textfieldHeight);
     border-radius: 100px;
     background: rgb(38, 145, 217);
     opacity: 0;
     transition: .5s;
+    z-index: -1;
 }
 
 .textfield input:focus~.text_focusEffect {
@@ -114,43 +109,63 @@
     opacity: 0.4;
 }
 
-.rememberme {
-    padding: 5px;
+.textfieldPWD {
+    overflow: hidden;
+    transition-duration: 0.2s;
+    transform-origin: top;
+    transform: scaleY(var(--textfieldPWDHeight));
+}
+
+.rememberMe {
     margin: auto;
     cursor: pointer;
     width: fit-content;
     color: #e9f4fb;
+    transition-duration: 0.3s;
+    transform: translateY(calc((var(--movement) + 30px) * -1));
 }
 
-.centerDiv {
-    text-align: center;
+.rememberMe input {
+    background-color: rgb(180, 180, 180);
 }
 
-.signin {
-    position: relative;
-    margin-top: 60px;
-    background: #dba154;
-    width: 60%;
-    height: 60px;
-    border: none;
-    border-radius: 100px;
-    font-size: 18px;
-    color: #e9f4fb;
-    font-weight: 700;
+.rememberMe input:checked {
+    background-color: #1da2b9;
+    border-color: #1da2b9;
+}
+
+.rememberMe * {
     cursor: pointer;
-    outline: none;
-    transition-duration: 0.4s;
-    -webkit-transition-duration: 0.4s;
 }
 
-.signin:focus-visible,
-.signin:hover {
-    transition-duration: 0.5s;
-    transform: scale(1.1);
+.signIn {
+    position: absolute;
+    left: 0;
+    right: 0;
+    inset: 1;
+    margin: 40px auto 0 auto;
+    border-radius: 4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.25em;
     background: #dba154;
+    width: 140px;
+    height: 50px;
+    transition: transform 0.3s;
+    transform: translateY(calc((var(--movement) + 30px) * -1));
 }
 
-.signin:after {
+.signIn:focus-visible,
+.signIn:hover {
+    background: #daad72;
+    transition: transform 0.3s;
+    transform: translateY(calc((var(--movement) + 30px) * -1));
+}
+
+.signIn::after {
     pointer-events: none;
     content: "";
     display: block;
@@ -165,17 +180,16 @@
     box-shadow: 0 0 10px 10px white;
 }
 
-.signin:active:after {
+.signIn:active::after {
     box-shadow: 0 0 0 0 white;
     position: absolute;
     opacity: 1;
     transition: 0s;
 }
 
-.signin:focus {
-    outline: 0;
+.signIn span {
+    margin: 0;
 }
-
 
 @media (max-height: 630px) {
     .logo {

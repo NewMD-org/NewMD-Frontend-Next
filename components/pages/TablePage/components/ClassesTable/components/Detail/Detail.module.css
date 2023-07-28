@@ -12,16 +12,6 @@
     --group-background-focus: #678efe;
 }
 
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
 @keyframes move-up {
     0% {
         top: 50%;
@@ -101,31 +91,23 @@
     text-align: center;
 }
 
-.modal__title {
-    position: relative;
+.modal_container>div>section>div>h2 {
     font-size: 25px;
     font-weight: 500;
-    width: 90%;
-    margin-top: -40px;
-    margin-left: 5px;
-    margin-bottom: 0;
-    z-index: 1001;
-    animation: fadeIn 0.2s;
 }
 
 .modal__text {
     line-height: 25px;
     width: 100%;
-    margin-bottom: 5px;
+    margin: 5px 0;
 }
 
 .modal__text:not(:first-child) {
-    margin-top: 25px;
+    margin-top: 15px;
 }
 
 .field_container {
     position: relative;
-    animation: fadeIn 0.3s;
     margin: 0 15px 15px 15px;
 }
 
@@ -147,6 +129,7 @@
 
 .meet {
     cursor: pointer;
+    width: 0%;
 }
 
 .classroom {
@@ -172,8 +155,8 @@
 }
 
 .form {
-    position: sticky;
     display: flex;
+    flex-direction: row-reverse;
     width: 100%;
 }
 
@@ -199,13 +182,13 @@
 
 .form>span,
 .form .field {
-    border-radius: 6px 0 0 6px;
+    border-radius: 0 6px 6px 0;
 }
 
 .form>span:last-child,
 .form .field:last-child {
-    border-radius: 0 6px 6px 0;
-    margin-left: -2px;
+    border-radius: 6px 0 0 6px;
+    margin-right: -2px;
 }
 
 .form .field {
@@ -216,14 +199,20 @@
     margin-bottom: 0;
 }
 
+.form>span:focus-visible,
 .form>span:hover {
+    outline: none;
     color: var(--group-color-focus);
     background: var(--group-background-focus);
     border-color: var(--group-border-focus);
 }
 
-.form:hover>.field,
-.form:hover>.field_none {
+.field:focus-visible,
+.field:hover,
+.field_none:focus-visible,
+.field_none:hover,
+.form>span:focus-visible~.field,
+.form>span:hover~.field {
     outline: none;
     border-color: var(--group-border-focus);
 }

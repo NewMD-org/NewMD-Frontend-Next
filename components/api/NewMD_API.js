@@ -103,14 +103,23 @@ export default class NewMD_API {
             }
         };
 
-        try {
-            if (ID === "") {
-                throw new Error("Missing Username");
-            }
-            else if (PWD === "") {
-                throw new Error("Missing Password");
-            }
+        if (ID === "") {
+            // Missing ID
+            response["message"] = "請輸入身份證字號";
+            return response;
+        }
+        else if (PWD === "") {
+            // Missing password
+            response["message"] = "請輸入密碼";
+            return response;
+        }
+        else if (!isValidID(ID)) {
+            // Invalid ID
+            response["message"] = "請輸入有效的身份證字號";
+            return response;
+        }
 
+        try {
             const res = await axios.post((await testAPI()).availableURL[0] + "/users/login",
                 JSON.stringify({ ID, PWD, rememberMe }),
                 {
@@ -126,21 +135,13 @@ export default class NewMD_API {
             response["data"]["authorization"] = res.headers["authorization"];
             response["data"]["userDataStatus"] = res.data["userDataStatus"];
         }
-        catch (err) {
-            const ststusCodeFilter = [
-                400,
-                401,
-                500
-            ];
-
-            if (ststusCodeFilter.includes(err.response?.status)) {
-                response["message"] = err.response?.data["message"];
-            }
-            else if (!err?.response) {
-                response["message"] = "No Server Response";
+        catch (error) {
+            if (error.response?.status === 401) {
+                response["message"] = "身份證字號或密碼錯誤";
             }
             else {
-                response["message"] = "Unexpected Error";
+                // Unexpected error
+                response["message"] = "發生錯誤，請再試一次";
             }
         };
 
@@ -197,5 +198,38 @@ export default class NewMD_API {
                 },
             }
         );
+    }
+}
+
+function isValidID(id) {
+    let studIdNumber = id.toUpperCase();
+
+    if (studIdNumber.length != 10) {
+        return false;
+    }
+    if (isNaN(studIdNumber.substr(1, 9)) || (!/^[A-Z]$/.test(studIdNumber.substr(0, 1)))) {
+        return false;
+    }
+
+    var idHeader = "ABCDEFGHJKLMNPQRSTUVXYWZIO";
+
+    studIdNumber = (idHeader.indexOf(studIdNumber.substring(0, 1)) + 10) + "" + studIdNumber.substr(1, 9);
+    let s = parseInt(studIdNumber.substr(0, 1)) +
+        parseInt(studIdNumber.substr(1, 1)) * 9 +
+        parseInt(studIdNumber.substr(2, 1)) * 8 +
+        parseInt(studIdNumber.substr(3, 1)) * 7 +
+        parseInt(studIdNumber.substr(4, 1)) * 6 +
+        parseInt(studIdNumber.substr(5, 1)) * 5 +
+        parseInt(studIdNumber.substr(6, 1)) * 4 +
+        parseInt(studIdNumber.substr(7, 1)) * 3 +
+        parseInt(studIdNumber.substr(8, 1)) * 2 +
+        parseInt(studIdNumber.substr(9, 1));
+
+    let checkNum = parseInt(studIdNumber.substr(10, 1));
+    if ((s % 10) == 0 || (10 - s % 10) == checkNum) {
+        return true;
+    }
+    else {
+        return false;
     }
 }

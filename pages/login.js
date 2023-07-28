@@ -76,7 +76,7 @@ export default function Login() {
         const t0 = performance.now();
         try {
             console.log("Local Storage - authorization : found");
-            const rememberMe = jwt_decode(localStorage.getItem("authorization")).rememberMe === "true";
+            const rememberMe = jwt_decode(localStorage.getItem("authorization")).rememberMe;
             const ID = jwt_decode(localStorage.getItem("authorization")).userID;
             const PWD = jwt_decode(localStorage.getItem("authorization")).userPWD;
 

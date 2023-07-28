@@ -30,9 +30,9 @@ export default function Version() {
                 "--position": isTablePage ? "relative" : "fixed"
             }}
         >
-            <code className={styles.code}>Website v{packageJSON.version}</code>
+            <code className={styles.code}>Website {packageJSON.version}</code>
             <code className={styles.code}>API {APIversion}</code>
-            <Link className={styles.link} href="https://uptime.newmd.eu.org" >
+            <Link className={styles.link} href="https://uptime.newmd.eu.org" target="_blank">
                 Status Page
             </Link>
         </div>

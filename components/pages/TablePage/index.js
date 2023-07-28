@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { hasCookie, getCookie, setCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 
 import NavbarTop from "./components/NavbarTop";
 import ClassesTable from "./components/ClassesTable";
@@ -8,7 +8,7 @@ import Christmas from "../../Themes/Christmas";
 
 
 const themeNameFilter = [
-    "Christmas"
+    "聖誕節"
 ];
 
 export default function TablePage({ state, authorization }) {
@@ -42,7 +42,7 @@ export default function TablePage({ state, authorization }) {
             <ClassesTable isLoading={isLoading} setIsLoading={setIsLoading} state={state} authorization={authorization} decoration={decoration} retryTimes={retryTimes} setRetryTimes={setRetryTimes} />
             {(() => {
                 switch (decoration) {
-                    case "Christmas": {
+                    case "聖誕節": {
                         return Christmas();
                     }
                     default: {

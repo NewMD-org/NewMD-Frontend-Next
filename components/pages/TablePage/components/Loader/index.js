@@ -10,13 +10,13 @@ export default function Loader({ retryTimes }) {
                 <div className={styles.spinner}></div>
             </div>
             <div className={styles.text_area}>
-                <p className={styles.title}>Waiting for too long ?</p>
-                <p className={styles.content}>Try enabling the &quot;Save Data&quot; option!</p>
+                <p className={styles.title}>不想等待太久 ?</p>
+                <p className={styles.content}>啟用「儲存課表」的選項可以極大的縮減查詢課表的時間</p>
                 {retryTimes > 0 ? (
                     <div className={styles.retry_times}>
-                        Retried {retryTimes} times
+                        嘗試登入 {retryTimes} 次
                         <span>|</span>
-                        <Link href="/login" onClick={removeCookie}>Back to login</Link>
+                        <Link href="/login" onClick={removeCookie}>回到登入畫面</Link>
                     </div>
                 ) : <></>}
             </div>

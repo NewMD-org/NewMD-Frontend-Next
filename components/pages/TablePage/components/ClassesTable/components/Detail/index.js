@@ -54,15 +54,18 @@ export default function Detail({ showDetail, setShowDetail, setDetail, detail, s
     }, [showDetail]);
 
     const closeModal = useCallback(_ => {
-        setDetail({ "name": null, "classID": null });
+        setTimeout(() => {
+            setDetail({ "name": null, "classID": null });
+        }, 200);
         setShowDetail(false);
     }, [setDetail, setShowDetail]);
 
     return (
         <Modal
+            title={detail["name"]}
             centered
-            className={styles.modal_container}
             radius="md"
+            className={styles.modal_container}
             styles={{
                 content: { background: "linear-gradient(90deg,#243342,#362d53)" },
                 header: { background: "transparent" },
@@ -82,15 +85,14 @@ export default function Detail({ showDetail, setShowDetail, setDetail, detail, s
             opened={opened}
             onClose={closeModal}
         >
-            <h1 className={styles.modal__title}>{detail["name"]}</h1>
             <div className={styles.field_container}>
                 {isLoading ? <>
                     <div className={styles.spinner_container}>
                         <div className={styles.spinner}></div>
                     </div>
                     <div className={styles.text_area}>
-                        <p className={styles.title}>Waiting for too long ?</p>
-                        <p className={styles.content}>Try enabling the &quot;Save Data&quot; option !</p>
+                        <p className={styles.title}>不想等待太久 ?</p>
+                        <p className={styles.content}>啟用「儲存課表」的選項可以極大的縮減查詢課表的時間</p>
                     </div>
                 </> : <>
                     <p className={styles.modal__text}>Google Meet</p>
@@ -99,19 +101,23 @@ export default function Detail({ showDetail, setShowDetail, setDetail, detail, s
                             <p className={styles.field_none}>{message.meet}</p>
                         </> : <>
                             <Tooltip
-                                label="Open in new tab"
-                            >
-                                <a className={join(styles.field, styles.meet, "yesselect")} href={message.meet} target="_blank" rel="noreferrer">{message.meet}</a>
-                            </Tooltip>
-                            <Tooltip
                                 label={copySuccess0 ? "Copied!" : "Copy"}
+                                events={{ touch: true, focus: true }}
                             >
                                 <span
+                                    tabIndex={0}
+                                    onKeyUp={(event) => {
+                                        if (event.key === " ") {
+                                            copyToClipboard(message.meet);
+                                            setCopySuccess0(true);
+                                        }
+                                    }}
                                     onClick={() => {
                                         copyToClipboard(message.meet);
                                         setCopySuccess0(true);
                                     }}
                                     onMouseLeave={() => setCopySuccess0(false)}
+                                    onBlur={() => setCopySuccess0(false)}
                                 >
                                     {copySuccess0 ? <>
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clipboard-check" width="24" height="24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -129,6 +135,11 @@ export default function Detail({ showDetail, setShowDetail, setDetail, detail, s
                                     </>}
                                 </span>
                             </Tooltip>
+                            <Tooltip
+                                label="Open in new tab"
+                            >
+                                <a className={join(styles.field, styles.meet, "yesselect")} href={message.meet} target="_blank" rel="noreferrer">{message.meet}</a>
+                            </Tooltip>
                         </>}
                     </div>
                     <p className={styles.modal__text}>Classroom Code</p>
@@ -136,17 +147,25 @@ export default function Detail({ showDetail, setShowDetail, setDetail, detail, s
                         {message.classroom === "none" ? <>
                             <p className={styles.field_none}>{message.classroom}</p>
                         </> : <>
-                            <p className={join(styles.field, styles.classroom, "yesselect")}>{message.classroom}</p>
                             <Tooltip
                                 label={copySuccess1 ? "Copied!" : "Copy"}
+                                events={{ touch: true, focus: true }}
                             >
                                 <span
                                     title="Copy"
+                                    tabIndex={0}
+                                    onKeyUp={(event) => {
+                                        if (event.key === " ") {
+                                            copyToClipboard(message.classroom);
+                                            setCopySuccess1(true);
+                                        }
+                                    }}
                                     onClick={() => {
                                         copyToClipboard(message.classroom);
                                         setCopySuccess1(true);
                                     }}
                                     onMouseLeave={() => setCopySuccess1(false)}
+                                    onBlur={() => setCopySuccess1(false)}
                                 >
                                     {copySuccess1 ? <>
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clipboard-check" width="24" height="24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -164,6 +183,7 @@ export default function Detail({ showDetail, setShowDetail, setDetail, detail, s
                                     </>}
                                 </span>
                             </Tooltip>
+                            <p className={join(styles.field, styles.classroom, "yesselect")}>{message.classroom}</p>
                         </>}
                     </div>
                 </>}
