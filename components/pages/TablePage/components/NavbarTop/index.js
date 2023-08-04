@@ -8,6 +8,7 @@ import styles from "./NavbarTop.module.css";
 import NewMD_API from "../../../../api/NewMD_API";
 
 import Attention from "./components/Attention";
+import InstallPWA from "./components/InstallPWA";
 
 
 export default function NavbarTop({ state, authorization, decoration, setDecoration }) {
@@ -115,6 +116,10 @@ export default function NavbarTop({ state, authorization, decoration, setDecorat
                             </div>
                         </Link>
                     </li>
+                    <InstallPWA
+                        showMenu={showMenu}
+                        styles={styles}
+                    />
                 </ul>
             </header >
         </>
