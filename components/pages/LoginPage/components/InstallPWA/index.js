@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import styles from "./InstallPWA.module.css";
 
 
@@ -16,20 +17,20 @@ export default function InstallPWA() {
         };
 
         window.addEventListener("beforeinstallprompt", handler);
-        return () => window.removeEventListener("transitionend", handler);
+        return () => window.removeEventListener("beforeinstallprompt", handler);
     }, []);
 
     const install = evt => {
         evt.preventDefault();
         if (!promptInstall) {
             return;
-        };
+        }
         promptInstall.prompt();
     };
 
     if (!supportsPWA) {
         return null;
-    };
+    }
 
     return (
         <div className={styles.pwa_container}>

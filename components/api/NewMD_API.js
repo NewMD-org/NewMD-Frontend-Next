@@ -1,96 +1,66 @@
 import axios from "axios";
 
 
-const apiURL0 = "https://cloud0.newmd.eu.org";
-const apiURL1 = "https://cloud1.newmd.eu.org";
+const apiURLs = ["https://cloud0.newmd.eu.org", "https://cloud1.newmd.eu.org"];
 
 async function testAPI() {
-    console.log("Refresh NewMD_API: start");
+    const availableURLs = await Promise.all(apiURLs.map(async url => {
+        try {
+            const response = await axios.get(`${url}/ping`, {
+                timeout: 2 * 1000,
+                validateStatus: status => status >= 200 && status < 500
+            });
 
-    let errorMsg = null;
-    let status0 = false;
-    let status1 = false;
-
-    let availableURL = [];
-
-    try {
-        const cloud0 = await axios.get(`${apiURL0}/ping`, {
-            timeout: 2 * 1000,
-            validateStatus: function (status) {
-                return status >= 200 && status < 500; // default
+            if (response.data["service"] === "up") {
+                console.log(`Refresh NewMD_API: ${url} available`);
+                return url;
             }
-        });
-
-        if (cloud0.data["service"] === "up") {
-            status0 = true;
-            availableURL.push(cloud0.config?.url.replace("/ping", ""));
-            console.log("Refresh NewMD_API: cloud0 available");
         }
-        else {
-            throw new Error("cloud0 unavailable");
-        };
-    } catch (_) {
-        console.log("Refresh NewMD_API: cloud0 unavailable");
-    };
-
-    try {
-        const cloud1 = await axios.get(`${apiURL1}/ping`, {
-            timeout: 2 * 1000
-        });
-
-        if (cloud1.data["service"] === "up") {
-            status1 = true;
-            availableURL.push(cloud1.config?.url.replace("/ping", ""));
-            console.log("Refresh NewMD_API: cloud1 available");
+        catch (_) {
+            console.log(`Refresh NewMD_API: ${url} unavailable`);
         }
-        else {
-            throw new Error("cloud1 unavailable");
-        };
-    } catch (_) {
-        console.log("Refresh NewMD_API: cloud1 unavailable");
-    };
+    }));
 
-    if (availableURL[0]) {
-        console.log("Refresh NewMD_API: using " + availableURL[0]);
-    }
-    else {
-        errorMsg = "Refresh NewMD_API: all services unavailable";
+    const availableURL = availableURLs.find(Boolean);
+
+    if (!availableURL) {
         console.log("Refresh NewMD_API: all services unavailable");
+        throw new Error("All services unavailable");
     }
+
+    console.log("Refresh NewMD_API: using " + availableURL);
 
     return {
-        errorMsg,
         availableURL,
-        availability: {
-            "cloud0": status0,
-            "cloud1": status1,
-        }
+        availability: availableURLs.reduce((acc, url, idx) => ({ ...acc, [`cloud${idx}`]: Boolean(url) }), {})
     };
 }
 
 export default class NewMD_API {
     constructor(timeoutSec) {
         this.timeoutSeconds = timeoutSec * 1000 | 0;
+        this.api = null;
+    }
+
+    async init() {
+        this.api = await testAPI();
+    }
+
+    async request(method, url, data, jwt) {
+        const headers = jwt ? { "Authorization": jwt } : {};
+        if (data) headers["Content-Type"] = "application/json";
+        return await axios({
+            method,
+            url: this.api.availableURL + url,
+            data,
+            timeout: this.timeoutSeconds,
+            headers,
+        });
     }
 
     async ping() {
-        let res = {
-            "service": String,
-            "uptime": String,
-            "version": {
-                "current": String,
-                "latest": String,
-                "upToDate": Boolean
-            }
-        };
-
-        res = (await axios.get((await testAPI()).availableURL[0] + "/ping",
-            {
-                timeout: this.timeoutSeconds,
-            }
-        )).data;
-
-        return res;
+        const res = await this.request("get", "/ping");
+        return res.data;
     }
 
     async login(ID, PWD, rememberMe) {
@@ -104,31 +74,20 @@ export default class NewMD_API {
         };
 
         if (ID === "") {
-            // Missing ID
             response["message"] = "請輸入身份證字號";
             return response;
         }
         else if (PWD === "") {
-            // Missing password
             response["message"] = "請輸入密碼";
             return response;
         }
         else if (!isValidID(ID)) {
-            // Invalid ID
             response["message"] = "請輸入有效的身份證字號";
             return response;
         }
 
         try {
-            const res = await axios.post((await testAPI()).availableURL[0] + "/users/login",
-                JSON.stringify({ ID, PWD, rememberMe }),
-                {
-                    timeout: this.timeoutSeconds,
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
+            const res = await this.request("post", "/users/login", JSON.stringify({ ID, PWD, rememberMe }));
 
             response["error"] = false;
             response["message"] = res.data["message"];
@@ -140,7 +99,6 @@ export default class NewMD_API {
                 response["message"] = "身份證字號或密碼錯誤";
             }
             else {
-                // Unexpected error
                 response["message"] = "發生錯誤，請再試一次";
             }
         };
@@ -149,55 +107,28 @@ export default class NewMD_API {
     }
 
     async table(jwt) {
-        return await axios.get((await testAPI()).availableURL[0] + "/table?meetURL=false",
-            {
-                timeout: this.timeoutSeconds,
-                headers: {
-                    "Authorization": jwt,
-                },
-            }
-        );
+        const res = await this.request("get", "/table?meetURL=false", null, jwt);
+        return res;
     }
 
     async viewvt(year, classID) {
-        return await axios.get((await testAPI()).availableURL[0] + `/viewvt?year=${year}&classID=${classID}`,
-            {
-                timeout: this.timeoutSeconds,
-            }
-        );
+        const res = await this.request("get", `/viewvt?year=${year}&classID=${classID}`);
+        return res;
     }
 
     async read(jwt) {
-        return await axios.get((await testAPI()).availableURL[0] + "/database/read",
-            {
-                timeout: this.timeoutSeconds,
-                headers: {
-                    "Authorization": jwt,
-                },
-            }
-        );
+        const res = await this.request("get", "/database/read", null, jwt);
+        return res;
     }
 
     async save(jwt) {
-        return await axios.get((await testAPI()).availableURL[0] + "/database/save",
-            {
-                timeout: this.timeoutSeconds,
-                headers: {
-                    "Authorization": jwt,
-                },
-            }
-        );
+        const res = await this.request("get", "/database/save", null, jwt);
+        return res;
     }
 
     async delete(jwt) {
-        return await axios.get((await testAPI()).availableURL[0] + "/database/delete",
-            {
-                timeout: this.timeoutSeconds,
-                headers: {
-                    "Authorization": jwt,
-                },
-            }
-        );
+        const res = await this.request("get", "/database/delete", null, jwt);
+        return res;
     }
 }
 

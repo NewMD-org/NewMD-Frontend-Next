@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import styles from "./InstallPWA.module.css";
 
 
@@ -7,29 +8,27 @@ export default function InstallPWA({ styles: _styles, showMenu }) {
     const [promptInstall, setPromptInstall] = useState(null);
 
     useEffect(() => {
-        console.log("PWA : checking for PWA support");
         const handler = e => {
             e.preventDefault();
-            console.log("PWA : PWA supported");
             setSupportsPWA(true);
             setPromptInstall(e);
         };
 
         window.addEventListener("beforeinstallprompt", handler);
-        return () => window.removeEventListener("transitionend", handler);
+        return () => window.removeEventListener("beforeinstallprompt", handler);
     }, []);
 
     const install = evt => {
         evt.preventDefault();
         if (!promptInstall) {
             return null;
-        };
+        }
         promptInstall.prompt();
     };
 
     if (!supportsPWA) {
         return null;
-    };
+    }
 
     return promptInstall ? (
         <li>
@@ -37,7 +36,7 @@ export default function InstallPWA({ styles: _styles, showMenu }) {
                 className={_styles.option}
                 tabIndex={showMenu - 1}
                 onClick={install}
-                onKeyUp={(event) => event.key === "Enter" ? install(event) : ""}
+                onKeyUp={(event) => event.key === "Enter" ? install(event) : null}
             >
                 <div className={styles.install}>
                     Install NewMD
@@ -47,5 +46,5 @@ export default function InstallPWA({ styles: _styles, showMenu }) {
                 </div>
             </div >
         </li >
-    ) : (<></>);
+    ) : null;
 };
