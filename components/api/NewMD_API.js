@@ -87,7 +87,8 @@ export default class NewMD_API {
         }
 
         try {
-            const res = await this.request("post", "/users/login", JSON.stringify({ ID, PWD, rememberMe }));
+            const data = { ID, PWD, rememberMe };
+            const res = await this.request("post", "/users/login", data, null);
 
             response["error"] = false;
             response["message"] = res.data["message"];
@@ -128,6 +129,12 @@ export default class NewMD_API {
 
     async delete(jwt) {
         const res = await this.request("get", "/database/delete", null, jwt);
+        return res;
+    }
+
+    async suggestClassname(original, replacement, jwt) {
+        const data = { original, replacement };
+        const res = await this.request("post", "/classnamesuggestion", data, jwt);
         return res;
     }
 }
