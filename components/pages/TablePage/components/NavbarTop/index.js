@@ -3,11 +3,12 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import cookie from "react-cookies";
 import { Switch, Select, Tooltip } from "@mantine/core";
-import styles from "./NavbarTop.module.css";
 
 import NewMD_API from "../../../../api/NewMD_API";
 
+import styles from "./NavbarTop.module.css";
 import Attention from "./components/Attention";
+import InstallPWA from "./components/InstallPWA";
 
 
 export default function NavbarTop({ state, authorization, decoration, setDecoration }) {
@@ -115,17 +116,23 @@ export default function NavbarTop({ state, authorization, decoration, setDecorat
                             </div>
                         </Link>
                     </li>
+                    <InstallPWA
+                        showMenu={showMenu}
+                        styles={styles}
+                    />
                 </ul>
             </header >
         </>
     );
 
     async function deleteData(token) {
+        const API_5s = new NewMD_API(5);
+        await API_5s.init();
+
         setIsLoading(true);
         try {
-            console.log("Delete user data : start");
             const t0 = performance.now();
-            const response = await new NewMD_API(5).delete(token);
+            const response = await API_5s.delete(token);
             if (response.status === 200) {
                 setUserDataStatus("false");
                 const t1 = performance.now();
@@ -142,14 +149,13 @@ export default function NavbarTop({ state, authorization, decoration, setDecorat
                 }, "/table");
             }
             else {
-                throw Error("Joanne is smart");
+                throw new Error("Failed to delete user data");
             };
         }
         catch (err) {
             setUserDataStatus("true");
-            console.log("Delete user data : failed");
             if (!err?.response) {
-                console.log("Delete user data : no server response");
+                console.error("Delete user data: no server response");
             }
             else if (err.response?.status === 403) {
                 router.replace({
@@ -157,7 +163,7 @@ export default function NavbarTop({ state, authorization, decoration, setDecorat
                 }, "/login");
             }
         };
-        return setIsLoading(false);
+        setIsLoading(false);
     };
 
     function userDataStatusChange(checked) {

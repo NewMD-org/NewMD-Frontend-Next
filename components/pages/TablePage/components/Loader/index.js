@@ -1,5 +1,6 @@
 import Link from "next/link";
 import cookie from "react-cookies";
+
 import styles from "./Loader.module.css";
 
 

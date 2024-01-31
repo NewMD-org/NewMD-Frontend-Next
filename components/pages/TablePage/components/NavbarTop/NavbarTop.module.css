@@ -22,7 +22,7 @@
     float: left;
     font-size: 24px;
     line-height: 50px;
-    padding: 0 5px;
+    padding: 0 20px;
     text-decoration: none;
 }
 
@@ -193,7 +193,6 @@
     }
 
     .header .logo {
-        padding: 0 20px;
         font-size: 32px;
         line-height: 60px;
     }

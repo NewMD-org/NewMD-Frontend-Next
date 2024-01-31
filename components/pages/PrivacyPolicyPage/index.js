@@ -1,8 +1,7 @@
 import Image from "next/image";
 
-import Message from "./components/Message";
-
 import styles from "./PrivacyPolicyPage.module.css";
+import Message from "./components/Message";
 
 
 function join(...array) {

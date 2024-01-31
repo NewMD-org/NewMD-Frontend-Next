@@ -13,49 +13,6 @@ export default function Attention({ setIsLoading, showAttention, setShowAttentio
 
     const [opened, { open, close }] = useDisclosure(false);
 
-    const saveData = async (token) => {
-        setIsLoading(true);
-        try {
-            console.log("Save user data : start");
-            const t0 = performance.now();
-            const saveResponse = await new NewMD_API(60).save(token);
-            if (saveResponse.status === 200) {
-                const readResponse = await new NewMD_API(40).read(token);
-                if (readResponse.status === 200) {
-                    setUserDataStatus("true");
-                    const t1 = performance.now();
-                    console.log(`Save user data : success (took ${Math.round(t1 - t0) / 1000} seconds)`);
-                    sessionStorage.setItem("userDataStatus", "true");
-                    return router.replace({
-                        pathname: "/table",
-                        query: {
-                            "userDataStatus": "true",
-                            "table": JSON.stringify(readResponse.data["table"]),
-                            "year": readResponse.data["year"],
-                            "updateAt": readResponse.data["updatedAt"]
-                        }
-                    }, "/table");
-                }
-                else {
-                    throw Error("Joanne is smart");
-                };
-            }
-            else {
-                throw Error("Joanne is smart");
-            };
-        }
-        catch (err) {
-            setUserDataStatus("false");
-            if (!err?.response) {
-                console.log("Save user data : no server response");
-            };
-            console.log("Save user data : failed");
-        }
-        finally {
-            setIsLoading(false);
-        };
-    };
-
     useEffect(() => {
         if (showAttention) {
             open();
@@ -102,4 +59,50 @@ export default function Attention({ setIsLoading, showAttention, setShowAttentio
             </div>
         </Modal>
     );
+
+    async function saveData(token) {
+        const API_60s = new NewMD_API(60);
+        await API_60s.init();
+        const API_40s = new NewMD_API(40);
+        await API_40s.init();
+
+        setIsLoading(true);
+        try {
+            const t0 = performance.now();
+            const saveResponse = await API_60s.save(token);
+            if (saveResponse.status === 200) {
+                const readResponse = await API_40s.read(token);
+                if (readResponse.status === 200) {
+                    setUserDataStatus("true");
+                    const t1 = performance.now();
+                    sessionStorage.setItem("userDataStatus", "true");
+                    return router.replace({
+                        pathname: "/table",
+                        query: {
+                            "userDataStatus": "true",
+                            "table": JSON.stringify(readResponse.data["table"]),
+                            "year": readResponse.data["year"],
+                            "updateAt": readResponse.data["updatedAt"]
+                        }
+                    }, "/table");
+                }
+                else {
+                    throw new Error("Failed to read user data after save");
+                };
+            }
+            else {
+                throw new Error("Failed to save user data");
+            };
+        }
+        catch (err) {
+            setUserDataStatus("false");
+            if (!err?.response) {
+                console.error("Save user data: no server response");
+            }
+            console.error("Save user data: failed");
+        }
+        finally {
+            setIsLoading(false);
+        };
+    };
 }

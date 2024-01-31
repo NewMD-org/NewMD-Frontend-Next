@@ -1,0 +1,8 @@
+.modal_container>div {
+    z-index: 202;
+}
+
+.modal_container>div>section>div>h2 {
+    font-size: 25px;
+    font-weight: 500;
+}

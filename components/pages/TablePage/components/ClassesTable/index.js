@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import cookie from "react-cookies";
 import axios from "axios";
-import styles from "./ClassesTable.module.css";
 
 import NewMD_API from "../../../../api/NewMD_API";
 
+import styles from "./ClassesTable.module.css";
 import Detail from "./components/Detail";
 
 
@@ -23,7 +23,7 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
             fetchData(authorization);
         }
         else {
-            console.log("Getting table data : failed");
+            console.log("Getting table data: failed");
             sessionStorage.clear();
             cookie.remove("navigate");
             router.push({
@@ -35,10 +35,7 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
 
     useEffect(() => {
         if (state["table"] ? true : false) {
-            (async function () {
-                setTable(isBigScreen ? JSON.parse(state["table"]) : await shortenTable(JSON.parse(state["table"])));
-                setIsLoading(false);
-            })();
+            setIsLoading(false);
             async function handleResize() {
                 setIsBigScreen(getWindowDimensions().width > 930);
             }
@@ -49,11 +46,7 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
     }, [state]);
 
     useEffect(() => {
-        console.log(`Screen size : ${isBigScreen ? "big" : "small"}`);
-        (async function () {
-            setTable(isBigScreen ? JSON.parse(state["table"]) : await shortenTable(JSON.parse(state["table"])));
-        })();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        console.log(`Screen size: ${isBigScreen ? "big" : "small"}`);
     }, [isBigScreen]);
 
     return (
@@ -174,86 +167,64 @@ export default function ClassesTable({ isLoading, setIsLoading, state, authoriza
 
     function checkSat(obj) {
         const classes = Object.keys(obj["day6"]);
-        let haveData = false;
-        for (let index of classes) {
-            if (obj["day6"][index]["classname"] !== "") {
-                haveData = true;
-                break;
-            };
-        };
-        return haveData;
-    };
+        return classes.some(index => obj["day6"][index]["classname"] !== "");
+    }
 
     async function fetchData(token) {
+        const API_40s = new NewMD_API(40);
+        await API_40s.init();
+
         setIsLoading(true);
         const t0 = performance.now();
 
         try {
-            if (state["userDataStatus"] === "true") {
-                console.log("Getting table data : start (from database)");
-                const response = await new NewMD_API(40).read(token);
-                if (response.status === 200) {
-                    setTable(isBigScreen ? response.data["table"] : await shortenTable(response.data["table"]));
-                    setShowSat(checkSat(response.data["table"]));
-                    const t1 = performance.now();
-                    console.log(`Getting table data : success (took ${Math.round(t1 - t0) / 1000} seconds)`);
-                    router.replace({
-                        pathname: "/table",
-                        query: {
-                            "userDataStatus": state["userDataStatus"],
-                            "table": JSON.stringify(response.data["table"]),
-                            "year": response.data["year"],
-                            "updateAt": response.data["updatedAt"]
-                        }
-                    }, "/table");
-                }
-                else {
-                    throw Error("Failed to read data");
+            const apiMethod = state["userDataStatus"] === "true" ? "read" : "table";
+            console.log(`Getting table data: start (${apiMethod === "read" ? "from database" : "direct"})`);
+
+            const response = await API_40s[apiMethod](token);
+
+            if (response.status === 200) {
+                const { table, year, updatedAt } = response.data;
+                const shortenedTable = await shortenTable(table);
+                setTable(shortenedTable);
+                setShowSat(checkSat(table));
+
+                const t1 = performance.now();
+                console.log(`Getting table data: success (took ${Math.round(t1 - t0) / 1000} seconds)`);
+
+                const query = {
+                    "userDataStatus": state["userDataStatus"],
+                    "table": JSON.stringify(table),
+                    "year": year,
+                    "updateAt": apiMethod === "read" ? updatedAt : new Date().toISOString()
                 };
+
+                router.replace({ pathname: "/table", query }, "/table");
             }
             else {
-                console.log("Getting table data : start (direct)");
-                const response = await new NewMD_API(40).table(token);
-                if (response.status === 200) {
-                    setTable(isBigScreen ? response.data["table"] : await shortenTable(response.data["table"]));
-                    setShowSat(checkSat(response.data["table"]));
-                    const t1 = performance.now();
-                    console.log(`Getting table data : success (took ${Math.round(t1 - t0) / 1000} seconds)`);
-                    router.replace({
-                        pathname: "/table",
-                        query: {
-                            "userDataStatus": state["userDataStatus"],
-                            "table": JSON.stringify(response.data["table"]),
-                            "year": response.data["year"],
-                            "updateAt": new Date().toISOString()
-                        }
-                    }, "/table");
-                }
-                else {
-                    throw Error("Failed to read data");
-                };
-            };
+                throw Error("Failed to read data");
+            }
         }
         catch (error) {
-            if (!error?.response) {
-                console.log("Getting table data : no server response");
-            }
-            else if (error.response.status === 403) {
-                console.log("Getting table data : failed to verify");
-                sessionStorage.clear();
-                localStorage.clear();
-                cookie.remove("navigate");
-                router.push({
-                    pathname: "/login"
-                }, "/login");
-            }
-            else {
-                await sleep(2);
-                setRetryTimes(retryTimes => retryTimes + 1);
-                console.log(`Retrying getting table data : retried ${retryTimes} time(s)`);
-            };
-        };
-    };
+            handleFetchDataError(error);
+        }
+    }
+
+    async function handleFetchDataError(error) {
+        if (!error?.response) {
+            console.log("Getting table data: no server response");
+        }
+        else if (error.response.status === 403) {
+            console.log("Getting table data: failed to verify");
+            sessionStorage.clear();
+            localStorage.clear();
+            cookie.remove("navigate");
+            router.push({ pathname: "/login" }, "/login");
+        }
+        await sleep(2);
+        setRetryTimes(retryTimes => retryTimes + 1);
+        console.log(`Retrying getting table data: retried ${retryTimes} time(s)`);
+    }
 }
 
 function join(...array) {
@@ -269,25 +240,22 @@ async function shortenTable(data) {
     const t0 = performance.now();
 
     let dataString = JSON.stringify(data);
-
     let replacements = [];
 
     try {
-        console.log("Getting classname replacement : start");
+        console.log("Getting classname replacement: start");
         const replacementJSON = await axios.get("https://raw.githubusercontent.com/NewMD-org/Configurations/main/Frontend/classnameReplacement.json");
         replacements = replacementJSON.data ? replacementJSON.data["replacements"] : [];
 
         const t1 = performance.now();
-        console.log(`Getting classname replacement : success (took ${Math.round(t1 - t0) / 1000} seconds)`);
+        console.log(`Getting classname replacement: success (took ${Math.round(t1 - t0) / 1000} seconds)`);
     }
     catch (err) {
         replacements = [];
-        console.log("Getting classname replacement : failed");
+        console.log("Getting classname replacement: failed");
     };
 
-    for (let replacement of replacements) {
-        dataString = dataString.replace(new RegExp(replacement[0], "gm"), replacement[1]);
-    };
+    dataString = replacements.reduce((acc, replacement) => acc.replace(new RegExp(replacement[0], "gm"), replacement[1]), dataString);
 
     return JSON.parse(dataString);
 }

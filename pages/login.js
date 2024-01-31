@@ -11,14 +11,16 @@ import Loader from "../components/pages/LoaderPage";
 
 
 export default function Login() {
+    const MAX_RETRY_TIMES = 10;
+
     const router = useRouter();
 
     const [isLoading, setLoading] = useState(false);
     const [retryTimes, setRetryTimes] = useState(0);
 
     useEffect(() => {
-        if (isValidAuth()) {
-            if (retryTimes < 11) {
+        if (isValidAuth(localStorage.getItem("authorization"))) {
+            if (retryTimes <= MAX_RETRY_TIMES) {
                 setLoading(true);
                 autoLogin();
             }
@@ -72,23 +74,28 @@ export default function Login() {
     );
 
     async function autoLogin() {
-        console.log("Auto login : start");
+        const API_20s = new NewMD_API(20);
+        await API_20s.init();
+
+        console.log("Auto login: start");
         const t0 = performance.now();
+
         try {
-            console.log("Local Storage - authorization : found");
-            const rememberMe = jwt_decode(localStorage.getItem("authorization")).rememberMe;
-            const ID = jwt_decode(localStorage.getItem("authorization")).userID;
-            const PWD = jwt_decode(localStorage.getItem("authorization")).userPWD;
+            console.log("Local Storage - authorization: found");
+            const decodedToken = jwt_decode(localStorage.getItem("authorization"));
+            const rememberMe = decodedToken.rememberMe;
+            const ID = decodedToken.userID;
+            const PWD = decodedToken.userPWD;
 
             if (cookie.load("navigate") === "true") {
-                console.log("Cookie - navigate : found");
-                const response = await new NewMD_API(20).login(ID, PWD, rememberMe.toString());
+                console.log("Cookie - navigate: found");
+                const response = await API_20s.login(ID, PWD, rememberMe.toString());
 
                 if (response["error"] === false) {
                     localStorage.setItem("authorization", response["data"]["authorization"]);
                     cookie.save("navigate", "true", { path: "/", maxAge: 60 * 60 * 24 * 7 });
                     const t1 = performance.now();
-                    console.log(`Auto login : success (took ${Math.round(t1 - t0) / 1000} seconds)`);
+                    console.log(`Auto login: success (took ${Math.round(t1 - t0) / 1000} seconds)`);
                     return router.replace({
                         pathname: "/table",
                         query: {
@@ -97,21 +104,22 @@ export default function Login() {
                     }, "/table");
                 }
                 else {
-                    throw Error("Auto login : error");
+                    throw new Error("Auto login: error");
                 };
             }
             else {
                 sessionStorage.clear();
                 cookie.remove("navigate");
-                console.log("Cookie - navigate : not found");
+                console.log("Cookie - navigate: not found");
                 console.log("Auto login : failed");
                 return setLoading(false);
             };
         }
         catch (err) {
+            console.log(err.message);
             await sleep(2);
             setRetryTimes(retryTimes => retryTimes + 1);
-            console.log(`Retrying auto login : retried ${retryTimes} time(s)`);
+            console.log(`Retrying auto login: retried ${retryTimes} time(s)`);
         };
     };
 }
@@ -120,13 +128,14 @@ async function sleep(seconds) {
     return new Promise(resolve => setTimeout(resolve, seconds * 1000));
 }
 
-function isValidAuth() {
+function isValidAuth(JWT) {
     try {
-        return [
-            typeof (localStorage.getItem("authorization")) === "string",
-            JSON.stringify(Object.keys(jwt_decode(localStorage.getItem("authorization")))) === JSON.stringify(["userID", "userPWD", "rememberMe", "iat", "exp"]),
-            jwt_decode(localStorage.getItem("authorization")).exp >= (new Date().getTime() / 1000)
-        ].every(test => test === true);
+        const decodedJWT = jwt_decode(JWT);
+        console.log(decodedJWT);
+        const expectedKeys = ["userID", "userPWD", "rememberMe", "iat", "exp"];
+        const hasExpectedKeys = expectedKeys.every(key => decodedJWT.hasOwnProperty(key));
+        const isNotExpired = decodedJWT.exp >= (new Date().getTime() / 1000);
+        return hasExpectedKeys && isNotExpired;
     }
     catch (err) {
         return false;
