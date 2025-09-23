@@ -69,6 +69,29 @@
     }
 }
 
+.title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.suggestion {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 14px;
+    padding: 3px 5px;
+    background-color: #be8c4a;
+    border-radius: 14px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.suggestionIcon {
+    width: 14px;
+    height: 14px;
+}
+
 .text_area {
     margin: 0 auto 10px auto;
     display: flex;
@@ -94,6 +117,44 @@
 .modal_container>div>section>div>h2 {
     font-size: 25px;
     font-weight: 500;
+}
+
+.hideDetail>div>section {
+    transform: scale(0.9) !important;
+    opacity: 0 !important;
+    animation: popHide 0.15s linear;
+    animation-iteration-count: 1;
+}
+
+@keyframes popHide {
+    from {
+        transform: scale(1) !important;
+        opacity: 1 !important;
+    }
+
+    to {
+        transform: scale(0.9) !important;
+        opacity: 0 !important;
+    }
+}
+
+.showDetail>div>section {
+    transform: scale(1);
+    opacity: 1;
+    animation: popShow 0.15s linear;
+    animation-iteration-count: 1;
+}
+
+@keyframes popShow {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .modal__text {

@@ -5,10 +5,10 @@ import { useDisclosure } from "@mantine/hooks";
 import { Button, Checkbox, Dialog, Text } from "@mantine/core";
 import jwt_decode from "jwt-decode";
 import cookie from "react-cookies";
-import styles from "./LoginPage.module.css";
 
 import NewMD_API from "../../api/NewMD_API";
 
+import styles from "./LoginPage.module.css";
 import InstallPWA from "./components/InstallPWA";
 import AccountSwitch from "./components/AccountSwitch";
 
@@ -33,8 +33,8 @@ export default function LoginPage() {
         IDRef.current.focus();
 
         const JWT = localStorage.getItem("authorization");
-        if (checkValidAuth(JWT)) {
-            const decodedJWT = (checkValidAuth(JWT) ? jwt_decode(JWT) : {});
+        if (isValidAuth(JWT)) {
+            const decodedJWT = (isValidAuth(JWT) ? jwt_decode(JWT) : {});
             setID(decodedJWT.userID);
             setPWD(decodedJWT.userPWD);
             setRememberMe(decodedJWT.rememberMe);
@@ -163,6 +163,9 @@ export default function LoginPage() {
     );
 
     async function handleSubmit(e) {
+        const API_20s = new NewMD_API(20);
+        await API_20s.init();
+
         console.log("Manual login : start");
         const t0 = performance.now();
         console.log(`ID : ${ID}\nPWD : ${PWD}\nrememberMe : ${rememberMe}`);
@@ -170,7 +173,7 @@ export default function LoginPage() {
         setLoading(true);
 
         try {
-            const response = await new NewMD_API(20).login(ID, oldAccount ? PWD : ID, rememberMe.toString());
+            const response = await API_20s.login(ID, oldAccount ? PWD : ID, rememberMe.toString());
             if (response["error"] === false) {
                 cookie.save("navigate", "true", { path: "/", maxAge: 60 * 60 * 24 * 7 });
                 localStorage.setItem("authorization", response["data"]["authorization"]);
@@ -227,20 +230,17 @@ export default function LoginPage() {
     };
 };
 
-/**
- * Join multiple classes
- */
 function join(...classes) {
     return classes.join(" ");
 }
 
-function checkValidAuth(JWT) {
+function isValidAuth(JWT) {
     try {
-        return [
-            typeof (JWT) === "string",
-            JSON.stringify(Object.keys(jwt_decode(JWT))) === JSON.stringify(["userID", "userPWD", "rememberMe", "iat", "exp"]),
-            jwt_decode(JWT).exp >= (new Date().getTime() / 1000)
-        ].every(test => test === true);
+        const decodedJWT = jwt_decode(JWT);
+        const expectedKeys = ["userID", "userPWD", "rememberMe", "iat", "exp"];
+        const hasExpectedKeys = expectedKeys.every(key => decodedJWT.hasOwnProperty(key));
+        const isNotExpired = decodedJWT.exp >= (new Date().getTime() / 1000);
+        return hasExpectedKeys && isNotExpired;
     }
     catch (err) {
         return false;
@@ -248,34 +248,20 @@ function checkValidAuth(JWT) {
 }
 
 function checkValidID(id) {
-    let studIdNumber = id.toUpperCase();
+    const studIdNumber = id.toUpperCase();
 
-    if (studIdNumber.length != 10) {
+    if (studIdNumber.length !== 10) {
         return false;
     }
     if (isNaN(studIdNumber.substr(1, 9)) || (!/^[A-Z]$/.test(studIdNumber.substr(0, 1)))) {
         return false;
     }
 
-    var idHeader = "ABCDEFGHJKLMNPQRSTUVXYWZIO";
+    const idHeader = "ABCDEFGHJKLMNPQRSTUVXYWZIO";
 
-    studIdNumber = (idHeader.indexOf(studIdNumber.substring(0, 1)) + 10) + "" + studIdNumber.substr(1, 9);
-    let s = parseInt(studIdNumber.substr(0, 1)) +
-        parseInt(studIdNumber.substr(1, 1)) * 9 +
-        parseInt(studIdNumber.substr(2, 1)) * 8 +
-        parseInt(studIdNumber.substr(3, 1)) * 7 +
-        parseInt(studIdNumber.substr(4, 1)) * 6 +
-        parseInt(studIdNumber.substr(5, 1)) * 5 +
-        parseInt(studIdNumber.substr(6, 1)) * 4 +
-        parseInt(studIdNumber.substr(7, 1)) * 3 +
-        parseInt(studIdNumber.substr(8, 1)) * 2 +
-        parseInt(studIdNumber.substr(9, 1));
+    const transformedIdNumber = (idHeader.indexOf(studIdNumber.substring(0, 1)) + 10) + "" + studIdNumber.substr(1, 9);
+    const s = [...transformedIdNumber.substring(0, 10)].reduce((sum, digit, index) => sum + parseInt(digit) * (9 - index), 0);
+    const checkNum = parseInt(transformedIdNumber.substr(10, 1));
 
-    let checkNum = parseInt(studIdNumber.substr(10, 1));
-    if ((s % 10) == 0 || (10 - s % 10) == checkNum) {
-        return true;
-    }
-    else {
-        return false;
-    }
+    return (s % 10) === 0 || (10 - s % 10) === checkNum;
 }

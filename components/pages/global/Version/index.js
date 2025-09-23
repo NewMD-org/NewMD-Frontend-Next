@@ -1,9 +1,9 @@
-import styles from "./Version.module.css";
 import packageJSON from "../../../../package.json";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
+import styles from "./Version.module.css";
 import NewMD_API from "../../../api/NewMD_API";
 
 
@@ -15,7 +15,10 @@ export default function Version() {
 
     useEffect(() => {
         (async () => {
-            setAPIversion((await new NewMD_API(5).ping()).version.current);
+            const API_5s = new NewMD_API(5);
+            await API_5s.init();
+
+            setAPIversion((await API_5s.ping()).version.current);
         })();
     }, []);
 

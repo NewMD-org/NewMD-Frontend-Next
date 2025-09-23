@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import styles from "./InstallPWA.module.css";
 
 
@@ -16,24 +17,24 @@ export default function InstallPWA() {
         };
 
         window.addEventListener("beforeinstallprompt", handler);
-        return () => window.removeEventListener("transitionend", handler);
+        return () => window.removeEventListener("beforeinstallprompt", handler);
     }, []);
 
-    const onClick = evt => {
+    const install = evt => {
         evt.preventDefault();
         if (!promptInstall) {
             return;
-        };
+        }
         promptInstall.prompt();
     };
 
     if (!supportsPWA) {
         return null;
-    };
+    }
 
     return (
         <div className={styles.pwa_container}>
-            <button className={styles.pwa_button} id="setup_button" aria-label="Install app" title="Install app" onClick={onClick}>
+            <button className={styles.pwa_button} id="setup_button" ariaLabel="Install app" title="Install app" onClick={install}>
                 Install NewMD
             </button>
         </div>

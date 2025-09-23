@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import cookie from "react-cookies";
+
 import styles from "./Loader.module.css";
 
 

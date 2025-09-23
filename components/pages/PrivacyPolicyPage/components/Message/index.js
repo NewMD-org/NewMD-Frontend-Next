@@ -1,6 +1,6 @@
 import { useState } from "react";
-import styles from "./Message.module.css";
 
+import styles from "./Message.module.css";
 import Chinese from "./components/Chinese";
 import English from "./components/English";
 
